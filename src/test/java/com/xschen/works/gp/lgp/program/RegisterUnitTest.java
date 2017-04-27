@@ -43,4 +43,13 @@ public class RegisterUnitTest {
       assertThat(register.getValue()).isCloseTo(0.12, within(0.01));
    }
 
+   @Test
+   public void test_makeCopy() {
+      Register clone = register.makeCopy();
+
+      assertThat(clone.getIndex()).isEqualTo(0);
+      assertTrue(clone.isConstant());
+      assertThat(clone.getValue()).isEqualTo(0.1);
+   }
+
 }
