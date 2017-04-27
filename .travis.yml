@@ -1,3 +1,3 @@
 language: java
 
-mvn test -B -Punit-test
+mvn test cobertura:cobertura coveralls:report -B -Punit-test

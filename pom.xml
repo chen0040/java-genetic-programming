@@ -165,11 +165,21 @@
                         <artifactId>coveralls-maven-plugin</artifactId>
                         <version>4.3.0</version>
                         <configuration>
-                            <repoToken>fvLwG7DNP6m3i9LRjnhYX0J5LKC2FaN08</repoToken>
+                            
                         </configuration>
                     </plugin>
 
-
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>cobertura-maven-plugin</artifactId>
+                        <version>2.7</version>
+                        <configuration>
+                            <format>xml</format>
+                            <maxmem>256m</maxmem>
+                            <!-- aggregated reports for multi-module projects -->
+                            <aggregate>true</aggregate>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
