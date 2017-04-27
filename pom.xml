@@ -160,6 +160,15 @@
                         </executions>
                     </plugin>
 
+                    <plugin>
+                        <groupId>org.eluder.coveralls</groupId>
+                        <artifactId>coveralls-maven-plugin</artifactId>
+                        <version>4.3.0</version>
+                        <configuration>
+                            <repoToken>fvLwG7DNP6m3i9LRjnhYX0J5LKC2FaN08</repoToken>
+                        </configuration>
+                    </plugin>
+
 
                 </plugins>
             </build>
