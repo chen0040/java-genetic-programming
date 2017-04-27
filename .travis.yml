@@ -1,3 +1,9 @@
 language: java
+jdk: oraclejdk8
 
-mvn test cobertura:cobertura coveralls:report -B -Punit-test
+cache:
+  directories:
+  - $HOME/.m2
+
+script:
+  - ./mvnw test cobertura:cobertura coveralls:report -B -Punit-test
