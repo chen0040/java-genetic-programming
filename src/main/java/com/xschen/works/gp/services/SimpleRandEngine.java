@@ -1,6 +1,8 @@
 package com.xschen.works.gp.services;
 
 
+import org.apache.commons.math3.distribution.NormalDistribution;
+
 import java.util.Random;
 
 
@@ -14,5 +16,11 @@ public class SimpleRandEngine implements RandEngine {
    @Override
    public double uniform(){
       return random.nextDouble();
+   }
+
+
+   @Override public double normal(double mean, double sd) {
+      NormalDistribution normal = new NormalDistribution(mean, sd);
+      return normal.sample();
    }
 }

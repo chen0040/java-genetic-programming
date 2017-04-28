@@ -10,10 +10,12 @@ import static org.testng.Assert.*;
 
 /**
  * Created by xschen on 28/4/2017.
+ * Simple random engine that uses java-built-in Random class for randomization
  */
 public class SimpleRandEngineUnitTest {
 
    private RandEngine randEngine;
+
    @BeforeMethod
    public void setUp(){
       randEngine = new SimpleRandEngine();

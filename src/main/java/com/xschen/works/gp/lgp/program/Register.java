@@ -1,6 +1,7 @@
 package com.xschen.works.gp.lgp.program;
 
 
+import com.xschen.works.gp.services.RandEngine;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -37,8 +38,8 @@ public class Register {
       return clone;
    }
 
-   public void mutate(NormalDistribution stdNormalDistribution, double sd){
-      value += stdNormalDistribution.sample() * sd;
+   public void mutate(RandEngine randomEngine, double sd){
+      value += randomEngine.normal(0, 1.0) * sd;
    }
 
    @Override
