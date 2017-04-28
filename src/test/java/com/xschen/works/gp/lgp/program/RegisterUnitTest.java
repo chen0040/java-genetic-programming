@@ -1,5 +1,7 @@
 package com.xschen.works.gp.lgp.program;
 
+import com.xschen.works.gp.services.RandEngine;
+import com.xschen.works.gp.services.SimpleRandEngine;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
@@ -16,18 +18,19 @@ import static org.testng.Assert.*;
 public class RegisterUnitTest {
 
    private Register register;
-   private NormalDistribution stdNormalDistribution;
+   private RandEngine randEngine;
 
    @BeforeMethod
    public void setUp(){
+
       register = new Register();
 
       register.setConstant(true);
       register.setValue(0.1);
       register.setIndex(0);
 
-      stdNormalDistribution = Mockito.mock(NormalDistribution.class);
-      Mockito.when(stdNormalDistribution.sample()).thenReturn(0.1);
+      randEngine = Mockito.mock(RandEngine.class);
+      Mockito.when(randEngine.normal(0, 1.0)).thenReturn(0.1);
    }
 
    @Test
@@ -39,7 +42,7 @@ public class RegisterUnitTest {
 
    @Test
    public void test_mutate(){
-      register.mutate(stdNormalDistribution, 0.2);
+      register.mutate(randEngine, 0.2);
       assertThat(register.getValue()).isCloseTo(0.12, within(0.01));
    }
 
