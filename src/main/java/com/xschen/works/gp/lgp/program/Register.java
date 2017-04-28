@@ -47,4 +47,30 @@ public class Register {
    }
 
 
+   @Override public boolean equals(Object o) {
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
+
+      Register register = (Register) o;
+
+      if (constant != register.constant)
+         return false;
+      if (Double.compare(register.value, value) != 0)
+         return false;
+      return index == register.index;
+
+   }
+
+
+   @Override public int hashCode() {
+      int result;
+      long temp;
+      result = (constant ? 1 : 0);
+      temp = Double.doubleToLongBits(value);
+      result = 31 * result + (int) (temp ^ (temp >>> 32));
+      result = 31 * result + index;
+      return result;
+   }
 }
