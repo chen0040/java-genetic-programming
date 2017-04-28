@@ -1,4 +1,4 @@
-package com.xschen.works.gp.lgp.program;
+package com.xschen.works.gp.services;
 
 
 import java.util.Random;
@@ -7,8 +7,11 @@ import java.util.Random;
 /**
  * Created by xschen on 28/4/2017.
  */
-public class RandEngine {
+public class SimpleRandEngine implements RandEngine {
+
    private Random random = new Random(System.currentTimeMillis());
+
+   @Override
    public double uniform(){
       return random.nextDouble();
    }

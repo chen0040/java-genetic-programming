@@ -1,11 +1,12 @@
 package com.xschen.works.gp.lgp.program;
 
 
+import com.xschen.works.gp.services.RandEngine;
+import com.xschen.works.gp.services.SimpleRandEngine;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.testng.Assert.*;
 
 
 /**
@@ -20,7 +21,7 @@ public class ConstantSetUnitTest {
    @BeforeMethod
    public void setUp(){
       constantSet = new ConstantSet();
-      randEngine = new RandEngine();
+      randEngine = new SimpleRandEngine();
 
       for(int i=0; i < 10; i++) {
          constantSet.add(0.1 * i, 1.0);
