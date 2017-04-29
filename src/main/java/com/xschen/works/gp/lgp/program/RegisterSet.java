@@ -3,6 +3,7 @@ package com.xschen.works.gp.lgp.program;
 
 import com.xschen.works.gp.services.RandEngine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import java.util.List;
  * Created by xschen on 28/4/2017.
  * Containers for the mutable registers
  */
-public class RegisterSet {
+public class RegisterSet implements Serializable {
+   private static final long serialVersionUID = 8315754939056946190L;
    private final List<Register> registers = new ArrayList<>();
    private final List<Double> weights = new ArrayList<>();
 

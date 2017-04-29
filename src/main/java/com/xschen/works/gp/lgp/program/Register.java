@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
+import java.io.Serializable;
+
 
 /**
  * Created by xschen on 27/4/2017.
@@ -18,8 +20,9 @@ import org.apache.commons.math3.distribution.NormalDistribution;
  */
 @Getter
 @Setter
-public class Register {
+public class Register implements Serializable {
 
+   private static final long serialVersionUID = 8423690373685553734L;
    // denote whether the register is read-only
    private boolean constant;
 
