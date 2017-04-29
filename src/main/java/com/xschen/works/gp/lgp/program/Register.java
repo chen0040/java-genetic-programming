@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class Register implements Serializable {
+public class Register implements Serializable, Indexable<Register> {
 
    private static final long serialVersionUID = 8423690373685553734L;
    // denote whether the register is read-only
