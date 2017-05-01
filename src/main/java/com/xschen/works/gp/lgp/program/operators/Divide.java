@@ -2,6 +2,7 @@ package com.xschen.works.gp.lgp.program.operators;
 
 import com.xschen.works.gp.lgp.enums.OperatorExecutionStatus;
 import com.xschen.works.gp.lgp.program.Operator;
+import com.xschen.works.gp.lgp.program.ProgramManager;
 import com.xschen.works.gp.lgp.program.Register;
 
 
@@ -20,7 +21,7 @@ public class Divide extends Operator {
 
    public Divide(){
       super("/");
-      this.undefined = 1;
+      this.undefined = ProgramManager.DEFAULT_UNDEFINED_LOW;
    }
 
    @Override public Operator makeCopy() {

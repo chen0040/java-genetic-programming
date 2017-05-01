@@ -3,6 +3,7 @@ package com.xschen.works.gp.lgp.program.operators;
 
 import com.xschen.works.gp.lgp.enums.OperatorExecutionStatus;
 import com.xschen.works.gp.lgp.program.Operator;
+import com.xschen.works.gp.lgp.program.ProgramManager;
 import com.xschen.works.gp.lgp.program.Register;
 
 
@@ -13,7 +14,7 @@ public class Log extends Operator {
 
    private static final long serialVersionUID = -602302230080927334L;
 
-   private double undefined = 1.0;
+   private double undefined = ProgramManager.DEFAULT_UNDEFINED_LOW;
 
    public Log(){
       super("log");
