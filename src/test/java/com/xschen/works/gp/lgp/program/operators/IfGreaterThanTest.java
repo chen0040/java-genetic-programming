@@ -13,20 +13,36 @@ import static org.testng.Assert.*;
 /**
  * Created by xschen on 1/5/2017.
  */
-public class CosineUnitTest {
+public class IfGreaterThanTest {
 
    @Test
-   public void test(){
-      Operator op = new Cosine();
+   public void test_greater() {
+      Operator op = new IfGreaterThan();
 
       Register reg1 = new Register();
       Register reg2 = new Register();
+
+      reg1.setValue(3);
+      reg2.setValue(1);
+
       Register destination = new Register();
 
-      reg1.setValue(Math.PI);
-
       assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
-
-      assertThat(destination.getValue()).isEqualTo(-1.0);
    }
+
+   @Test
+   public void test_not_greater() {
+      Operator op = new IfGreaterThan();
+
+      Register reg1 = new Register();
+      Register reg2 = new Register();
+
+      reg1.setValue(1);
+      reg2.setValue(3);
+
+      Register destination = new Register();
+
+      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_SKIP_NEXT_INSTRUCTION);
+   }
+
 }

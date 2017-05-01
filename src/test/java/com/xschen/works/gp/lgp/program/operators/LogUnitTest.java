@@ -13,37 +13,35 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 /**
  * Created by xschen on 1/5/2017.
  */
-public class DivideUnitTest {
+public class LogUnitTest {
 
    @Test
-   public void test_divide_by_nonzero(){
-      Operator op = new Divide();
+   public void test_log_by_nonzero(){
+      Operator op = new Log();
 
       Register reg1 = new Register();
       Register reg2 = new Register();
       Register destination = new Register();
 
       reg1.setValue(2);
-      reg2.setValue(2);
 
       assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
-      assertThat(destination.getValue()).isEqualTo(1);
+      assertThat(destination.getValue()).isEqualTo(Math.log(2));
    }
 
    @Test
-   public void test_divide_by_zero(){
-      Operator op = new Divide();
+   public void test_log_by_zero(){
+      Operator op = new Log();
 
       Register reg1 = new Register();
       Register reg2 = new Register();
       Register destination = new Register();
 
-      reg1.setValue(2);
-      reg2.setValue(0);
+      reg1.setValue(0);
 
       assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
-      assertThat(destination.getValue()).isEqualTo(2 + ProgramManager.DEFAULT_UNDEFINED_LOW);
+      assertThat(destination.getValue()).isEqualTo(ProgramManager.DEFAULT_UNDEFINED_LOW);
    }
 }

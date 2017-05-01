@@ -1,6 +1,7 @@
 package com.xschen.works.gp.lgp.program.operators;
 
 
+import com.xschen.works.gp.lgp.enums.OperatorExecutionStatus;
 import com.xschen.works.gp.lgp.program.Operator;
 import com.xschen.works.gp.lgp.program.Register;
 import org.testng.annotations.Test;
@@ -23,7 +24,7 @@ public class SineUnitTest {
 
       reg1.setValue(Math.PI / 2.0);
 
-      op.execute(reg1, reg2, destination);
+      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(1.0);
    }

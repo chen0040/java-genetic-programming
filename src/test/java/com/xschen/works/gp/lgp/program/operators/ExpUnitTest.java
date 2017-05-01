@@ -1,6 +1,7 @@
 package com.xschen.works.gp.lgp.program.operators;
 
 
+import com.xschen.works.gp.lgp.enums.OperatorExecutionStatus;
 import com.xschen.works.gp.lgp.program.Operator;
 import com.xschen.works.gp.lgp.program.Register;
 import org.testng.annotations.Test;
@@ -23,7 +24,7 @@ public class ExpUnitTest {
 
       reg1.setValue(-1);
 
-      op.execute(reg1, reg2, destination);
+      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(Math.exp(-1));
    }
