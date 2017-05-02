@@ -42,6 +42,31 @@ public class InstructionHelper {
       }
    }
 
+   public static void initialize(Instruction instruction, Program program, RandEngine randEngine) {
+      instruction.setOperator(program.getOperatorSet().any(randEngine));
+
+      double p_const = 0.5;
+      double r = randEngine.uniform();
+      if( r < p_const) {
+         instruction.setOperand1(program.getConstantSet().any(randEngine));
+      } else {
+         instruction.setOperand1(program.getRegisterSet().any(randEngine));
+      }
+
+      if(instruction.getOperand1().isConstant()){
+         instruction.setOperand2(program.getRegisterSet().any(randEngine));
+      } else {
+         r = randEngine.uniform();
+
+         if(r < p_const) {
+            instruction.setOperand2(program.getConstantSet().any(randEngine));
+         } else {
+            instruction.setOperand2(program.getRegisterSet().any(randEngine));
+         }
+      }
+      instruction.setTargetOperand(program.getRegisterSet().any(randEngine));
+   }
+
    public static void mutateRegister(Program program, Instruction instruction, RandEngine randEngine, double p_const) {
       double r = randEngine.uniform();
       if (r < 0.5) {

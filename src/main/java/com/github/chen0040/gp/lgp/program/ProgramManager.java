@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -23,10 +25,27 @@ public class ProgramManager implements Serializable {
    private double undefinedLow = DEFAULT_UNDEFINED_LOW;
    private double undefinedHigh = 1000000;
 
+   private int registerCount;
+   private List<Double> constants = new ArrayList<>();
+   private List<Double> constantWeights = new ArrayList<>();
+   private OperatorSet operatorSet = new OperatorSet();
+
    public double undefined(){
       if(useUndefinedLow){
          return undefinedLow;
       }
       return undefinedHigh;
+   }
+
+
+   public double constantWeight(int index) {
+      if(index >= constantWeights.size()) {
+         return 1.0;
+      }
+      return constantWeights.get(index);
+   }
+
+   public double constant(int index) {
+      return constants.get(index);
    }
 }

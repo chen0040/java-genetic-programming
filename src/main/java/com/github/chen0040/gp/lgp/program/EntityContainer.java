@@ -113,4 +113,9 @@ public class EntityContainer<T extends Indexable<T>> {
    public T any(RandEngine randEngine) {
       return anyOther(null, randEngine);
    }
+
+
+   public double getWeight(int index) {
+      return weights.get(index);
+   }
 }
