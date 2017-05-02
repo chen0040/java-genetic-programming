@@ -98,13 +98,9 @@ public class Program {
 
    public void execute(FitnessCase fitness_case)
    {
-      int inputRegisterCount = Math.min(registerSet.size(), fitness_case.inputCount());
+      int inputRegisterCount = registerSet.size();
       for(int i=0; i < inputRegisterCount; ++i) {
-         registerSet.get(i).setValue(fitness_case.readInput(i));
-      }
-
-      for(int i=inputRegisterCount; i < registerSet.size(); ++i) {
-         registerSet.get(i).setValue(0);
+         registerSet.get(i).setValue(fitness_case.readInput(i % fitness_case.inputCount()));
       }
 
       OperatorExecutionStatus command = OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION;
@@ -179,5 +175,9 @@ public class Program {
 
       cost = that.cost;
       costValid = that.costValid;
+   }
+
+   public long effectiveInstructionCount() {
+      return instructions.stream().filter(instruction -> !instruction.isStructuralIntron()).count();
    }
 }
