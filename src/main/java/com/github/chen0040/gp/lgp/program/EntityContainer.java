@@ -108,4 +108,9 @@ public class EntityContainer<T extends Indexable<T>> {
       result = 31 * result + weights.hashCode();
       return result;
    }
+
+
+   public T any(RandEngine randEngine) {
+      return anyOther(null, randEngine);
+   }
 }
