@@ -1,7 +1,10 @@
 package com.github.chen0040.gp.lgp.program;
 
 
-import com.github.chen0040.gp.lgp.gp.InstructionHelper;
+import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
+import com.github.chen0040.gp.lgp.gp.BasicFitnessCase;
+import com.github.chen0040.gp.lgp.gp.FitnessCase;
+import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,7 +53,7 @@ public class Program {
       }
 
       Set<Integer> Reff = new HashSet<>();
-      int io_register_count = manager.getIoRegisterCount();
+      int io_register_count = manager.getRegisterCount();
       for (int i = 0; i < io_register_count; ++i)
       {
          Reff.add(i);
@@ -91,6 +94,70 @@ public class Program {
             }
          }
       }
+   }
+
+   public void execute(FitnessCase fitness_case)
+   {
+      int inputRegisterCount = Math.min(registerSet.size(), fitness_case.inputCount());
+      for(int i=0; i < inputRegisterCount; ++i) {
+         registerSet.get(i).setValue(fitness_case.readInput(i));
+      }
+
+      for(int i=inputRegisterCount; i < registerSet.size(); ++i) {
+         registerSet.get(i).setValue(0);
+      }
+
+      OperatorExecutionStatus command = OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION;
+      Instruction current_effective_instruction = null;
+      Instruction prev_effective_instruction = null;
+      for (Instruction instruction : instructions)
+      {
+         if (instruction.isStructuralIntron())
+         {
+            continue;
+         }
+         prev_effective_instruction = current_effective_instruction;
+         current_effective_instruction = instruction;
+         if (command == OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION)
+         {
+            command = current_effective_instruction.execute();
+            //fitness_case.ReportProgress(instruction.Operator, instruction.Operand1, instruction.Operand2, instruction.DestinationRegister, RegisterSet);
+         }
+         else
+         {
+            // Xianshun says:
+            // as suggested in Linear Genetic Programming
+            // the condictional construct is restricted to single condictional construct
+            // an example of single conditional construct would be
+            // line 1: if(register[a])
+            // line 2: <action1>
+            // line 3: <action2>
+            // if register[a]==true, then <action1> and <action2> are executed
+            // if register[a]==false, then <action1> is skipped and <action2> is executed
+            // <action1> and <action2> are restricted to effective instruction
+            if (prev_effective_instruction.getOperator().isConditionalConstruct())
+            {
+               command = OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION;
+            }
+         }
+      }
+
+
+      int outputRegisterCount = Math.min(registerSet.size(), fitness_case.outputCount());
+      for (int i = 0; i < outputRegisterCount; ++i)
+      {
+         fitness_case.writeOutput(i, registerSet.get(i).getValue());
+      }
+   }
+
+   public double[] execute(double[] input){
+      BasicFitnessCase fitnessCase = new BasicFitnessCase(input.length, input.length);
+      execute(fitnessCase);
+      double[] output = new double[input.length];
+      for(int i=0; i < output.length; ++i) {
+         output[i] = fitnessCase.readOutput(i);
+      }
+      return output;
    }
 
 

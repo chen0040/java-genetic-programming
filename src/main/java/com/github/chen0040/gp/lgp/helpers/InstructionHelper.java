@@ -1,4 +1,4 @@
-package com.github.chen0040.gp.lgp.gp;
+package com.github.chen0040.gp.lgp.helpers;
 
 
 import com.github.chen0040.gp.lgp.program.*;

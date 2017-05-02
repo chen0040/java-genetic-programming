@@ -25,8 +25,8 @@ public class ProgramManager implements Serializable {
    private double undefinedLow = DEFAULT_UNDEFINED_LOW;
    private double undefinedHigh = 1000000;
 
-   // number of registers that serves as input and output register of a linear program
-   private int ioRegisterCount;
+   // number of registers of a linear program
+   private int registerCount;
    private List<Double> constants = new ArrayList<>();
    private List<Double> constantWeights = new ArrayList<>();
    private OperatorSet operatorSet = new OperatorSet();

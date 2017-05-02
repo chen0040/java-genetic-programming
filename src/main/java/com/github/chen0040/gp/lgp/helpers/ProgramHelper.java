@@ -1,6 +1,7 @@
-package com.github.chen0040.gp.lgp.gp;
+package com.github.chen0040.gp.lgp.helpers;
 
 
+import com.github.chen0040.gp.lgp.gp.FitnessCase;
 import com.github.chen0040.gp.lgp.program.*;
 import com.github.chen0040.gp.services.RandEngine;
 
@@ -19,7 +20,7 @@ public class ProgramHelper {
          program.getConstantSet().add(programManager.constant(i), programManager.constantWeight(i));
       }
 
-      final int registerCount = programManager.getIoRegisterCount();
+      final int registerCount = programManager.getRegisterCount();
       for(int i=0; i < registerCount; ++i) {
          program.getRegisterSet().add(new Register(), 1.0);
       }
