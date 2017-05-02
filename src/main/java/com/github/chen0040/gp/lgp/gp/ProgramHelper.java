@@ -4,6 +4,9 @@ package com.github.chen0040.gp.lgp.gp;
 import com.github.chen0040.gp.lgp.program.*;
 import com.github.chen0040.gp.services.RandEngine;
 
+import java.util.List;
+import java.util.function.BiFunction;
+
 
 /**
  * Created by xschen on 2/5/2017.
@@ -16,7 +19,7 @@ public class ProgramHelper {
          program.getConstantSet().add(programManager.constant(i), programManager.constantWeight(i));
       }
 
-      final int registerCount = programManager.getRegisterCount();
+      final int registerCount = programManager.getIoRegisterCount();
       for(int i=0; i < registerCount; ++i) {
          program.getRegisterSet().add(new Register(), 1.0);
       }
@@ -36,5 +39,15 @@ public class ProgramHelper {
       }
 
 
+   }
+
+   public static double evaluateCost(Program program, ProgramManager manager, List<FitnessCase> cases, BiFunction<Program, List<FitnessCase>, Double> evaluator) {
+      program.markStructuralIntrons(manager);
+
+      if(evaluator != null){
+         return evaluator.apply(program.makeCopy(), cases);
+      } else {
+         throw new RuntimeException("Cost evaluator for the linear program is not specified!");
+      }
    }
 }

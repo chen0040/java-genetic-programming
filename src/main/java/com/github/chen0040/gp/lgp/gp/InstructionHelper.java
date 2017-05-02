@@ -1,10 +1,10 @@
 package com.github.chen0040.gp.lgp.gp;
 
 
-import com.github.chen0040.gp.lgp.program.Instruction;
-import com.github.chen0040.gp.lgp.program.Program;
-import com.github.chen0040.gp.lgp.program.Register;
+import com.github.chen0040.gp.lgp.program.*;
 import com.github.chen0040.gp.services.RandEngine;
+
+import java.util.List;
 
 
 /**
@@ -96,5 +96,27 @@ public class InstructionHelper {
          instruction.setOperand1(arg1);
          instruction.setOperand2(arg2);
       }
+   }
+
+
+   public static Instruction makeCopy(Instruction that, RegisterSet registerSet, ConstantSet constantSet, OperatorSet operatorSet) {
+
+      Instruction clone = new Instruction();
+      if(that.getOperand1().isConstant()) {
+         clone.setOperand1(constantSet.get(that.getOperand1().getIndex()));
+      } else {
+         clone.setOperand1(registerSet.get(that.getOperand1().getIndex()));
+      }
+
+      if(that.getOperand2().isConstant()) {
+         clone.setOperand2(constantSet.get(that.getOperand2().getIndex()));
+      } else {
+         clone.setOperand2(registerSet.get(that.getOperand2().getIndex()));
+      }
+
+      clone.setOperator(operatorSet.get(that.getOperator().getIndex()));
+      clone.setTargetOperand(registerSet.get(that.getTargetOperand().getIndex()));
+
+      return clone;
    }
 }

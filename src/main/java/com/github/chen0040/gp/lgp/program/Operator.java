@@ -26,6 +26,10 @@ public abstract class Operator implements Serializable, Indexable<Operator> {
       this.index = index;
    }
 
+   public boolean isConditionalConstruct() {
+      return conditionalConstruct;
+   }
+
 
    public Operator(String symbol)
    {
