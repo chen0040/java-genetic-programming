@@ -180,4 +180,28 @@ public class Program {
    public long effectiveInstructionCount() {
       return instructions.stream().filter(instruction -> !instruction.isStructuralIntron()).count();
    }
+
+   @Override
+   public String toString()
+   {
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < instructions.size(); ++i)
+      {
+         sb.append("instruction[").append(i).append("]: ").append(instructions.get(i)).append("\n");
+      }
+      if (costValid)
+      {
+         sb.append("fitness: ").append(cost);
+      }
+      else
+      {
+         sb.append("Invalid Fitness");
+      }
+      return sb.toString();
+   }
+
+   public void invalidateCost(){
+      costValid = false;
+   }
+
 }

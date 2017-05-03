@@ -23,4 +23,9 @@ public class SimpleRandEngine implements RandEngine {
       NormalDistribution normal = new NormalDistribution(mean, sd);
       return normal.sample();
    }
+
+
+   @Override public int nextInt(int upper) {
+      return random.nextInt(upper);
+   }
 }

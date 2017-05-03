@@ -31,6 +31,12 @@ public class ProgramManager implements Serializable {
    private List<Double> constantWeights = new ArrayList<>();
    private OperatorSet operatorSet = new OperatorSet();
 
+   private double microMutateConstantStandardDeviation = 1;
+   private double microMutateOperatorRate = 0.5;
+   private double microMutateRegisterRate = 0.5;
+   private double microMutateConstantRate = 0.5;
+
+
    public double undefined(){
       if(useUndefinedLow){
          return undefinedLow;
