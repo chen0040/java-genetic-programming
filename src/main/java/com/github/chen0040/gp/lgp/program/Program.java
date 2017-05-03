@@ -123,7 +123,7 @@ public class Program {
          {
             // Xianshun says:
             // as suggested in Linear Genetic Programming
-            // the condictional construct is restricted to single condictional construct
+            // the conditional construct is restricted to single condictional construct
             // an example of single conditional construct would be
             // line 1: if(register[a])
             // line 2: <action1>
