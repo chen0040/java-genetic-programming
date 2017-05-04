@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program;
 
 
+import com.github.chen0040.gp.exceptions.InvalidCostException;
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import com.github.chen0040.gp.lgp.gp.BasicFitnessCase;
 import com.github.chen0040.gp.lgp.gp.FitnessCase;
@@ -8,6 +9,7 @@ import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +21,8 @@ import java.util.Set;
  */
 @Getter
 @Setter
-public class Program {
+public class Program implements Serializable, Comparable<Program> {
+   private static final long serialVersionUID = -9169643464218638898L;
    private RegisterSet registerSet = new RegisterSet();
    private ConstantSet constantSet = new ConstantSet();
    private OperatorSet operatorSet = new OperatorSet();
@@ -204,4 +207,13 @@ public class Program {
       costValid = false;
    }
 
+
+   @Override public int compareTo(Program o) {
+      if(!costValid || !o.costValid) {
+         throw new InvalidCostException("cost of the programs involved in the comparison is not valid for comparison");
+      }
+
+      return Double.compare(cost, o.cost);
+
+   }
 }

@@ -5,6 +5,9 @@ import com.github.chen0040.gp.lgp.helpers.ProgramHelper;
 import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.program.ProgramManager;
 import com.github.chen0040.gp.services.RandEngine;
+import com.github.chen0040.gp.utils.TournamentSelection;
+import com.github.chen0040.gp.utils.TournamentSelectionResult;
+import com.github.chen0040.gp.utils.TupleTwo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,20 +41,21 @@ public class Population {
       return currentGeneration >= manager.getMaxGeneration();
    }
 
-   /*
-   public void evolve()
+
+   public void evolve(ProgramManager manager, RandEngine randEngine)
    {
-      int iPopSize=this.mConfig.PopulationSize;
+      int iPopSize = manager.getPopulationSize();
       int program_count=0;
       while(program_count < iPopSize)
       {
-         KeyValuePair<LGPProgram, LGPProgram> tournament_winners=new KeyValuePair<LGPProgram, LGPProgram>();
-         KeyValuePair<LGPProgram, LGPProgram> tournament_losers=new KeyValuePair<LGPProgram, LGPProgram>();
-         mReproductionSelectionInstructionFactory.Select(this, ref tournament_winners, ref tournament_losers);
 
-         LGPProgram tp1=tournament_winners.Key.Clone();
-         LGPProgram tp2=tournament_winners.Value.Clone();
+         TournamentSelectionResult<Program> tournament = TournamentSelection.select(programs, randEngine);
+         TupleTwo<Program> tournament_winners = tournament.getWinners();
 
+         Program tp1=tournament_winners._1().makeCopy();
+         Program tp2=tournament_winners._2().makeCopy();
+
+         /*
          double r=DistributionModel.GetUniform();
          if (r < this.mConfig.CrossoverRate)
          {
@@ -116,11 +120,11 @@ public class Population {
          if(loser2==tournament_losers.Value)
          {
             ++program_count;
-         }
+         }*/
       }
 
 
 
-      mCurrentGeneration++;
-   }*/
+      currentGeneration++;
+   }
 }

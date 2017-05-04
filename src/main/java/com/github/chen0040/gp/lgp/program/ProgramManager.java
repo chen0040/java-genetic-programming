@@ -37,6 +37,7 @@ public class ProgramManager implements Serializable {
    private double microMutateConstantRate = 0.5;
 
    private int maxGeneration = 1000;
+   private int populationSize = 1000;
 
 
    public double undefined(){
