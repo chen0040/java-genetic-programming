@@ -62,30 +62,34 @@ public class Population {
             Crossover.apply(tp1, tp2, manager, randEngine);
          }
 
+         r = randEngine.uniform();
+         if (r < manager.getMacroMutationRate())
+         {
+            MacroMutation.mutate(tp1, manager, randEngine);
+         }
+
+         r = randEngine.uniform();
+         if (r < manager.getMacroMutationRate())
+         {
+            MacroMutation.mutate(tp2, manager, randEngine);
+         }
+
+         r=randEngine.uniform();
+         if(r < manager.getMicroMutationRate())
+         {
+            MicroMutation.mutate(tp1, manager, randEngine);
+         }
+
+         r=randEngine.uniform();
+         if(r < manager.getMicroMutationRate())
+         {
+            MicroMutation.mutate(tp2, manager, randEngine);
+         }
+         
          /*
-         r = DistributionModel.GetUniform();
-         if (r < this.mConfig.MacroMutationRate)
-         {
-            mMutationInstructionFactory.Mutate(this, tp1);
-         }
+        
 
-         r = DistributionModel.GetUniform();
-         if (r < this.mConfig.MacroMutationRate)
-         {
-            mMutationInstructionFactory.Mutate(this, tp2);
-         }
-
-         r=DistributionModel.GetUniform();
-         if(r < this.mConfig.MicroMutationRate)
-         {
-            tp1.MicroMutate(mGaussian);
-         }
-
-         r=DistributionModel.GetUniform();
-         if(r < this.mConfig.MicroMutationRate)
-         {
-            tp2.MicroMutate(mGaussian);
-         }
+         
 
          if(! tp1.IsFitnessValid)
          {

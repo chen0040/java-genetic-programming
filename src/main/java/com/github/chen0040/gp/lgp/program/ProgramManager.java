@@ -32,10 +32,22 @@ public class ProgramManager implements Serializable {
    private List<Double> constantWeights = new ArrayList<>();
    private OperatorSet operatorSet = new OperatorSet();
 
+   // SEC: parameters for micro-mutation
+   // BEGIN
    private double microMutateConstantStandardDeviation = 1;
    private double microMutateOperatorRate = 0.5;
    private double microMutateRegisterRate = 0.5;
    private double microMutateConstantRate = 0.5;
+   // END
+
+   // SEC: parameters for macro-mutation
+   // BEGIN
+   private boolean effectiveMutation = false;
+   private double macroMutateInsertionRate = 0.5;
+   private double macroMutateDeletionRate = 0.5;
+   private int macroMutateMaxProgramLength = 100;
+   private int macroMutateMinProgramLength = 20;
+   // END
 
    private int maxGeneration = 1000;
    private int populationSize = 1000;
@@ -53,6 +65,9 @@ public class ProgramManager implements Serializable {
    private int maxDifferenceOfSegmentLength = 5;
    private double insertionProbability = 0.5;
    // END
+
+   private double macroMutationRate = 0.75;
+   private double microMutationRate = 0.25;
 
    public double undefined(){
       if(useUndefinedLow){

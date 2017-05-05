@@ -99,6 +99,77 @@ public class Program implements Serializable, Comparable<Program> {
       }
    }
 
+   public void MarkStructuralIntrons(int stop_point, Set<Integer> Reff, ProgramManager manager)
+   {
+         /*
+        Source: Brameier, M 2004  On Linear Genetic Programming (thesis)
+
+        Algorithm 3.1 (detection of structural introns)
+        1. Let set R_eff always contain all registers that are effective at the current program
+           position. R_eff := { r | r is output register }.
+           Start at the last program instruction and move backwards.
+        2. Mark the next preceding operation in program with:
+            destination register r_dest element-of R_eff.
+           If such an instruction is not found then go to 5.
+        3. If the operation directly follows a branch or a sequence of branches then mark these
+           instructions too. Otherwise remove r_dest from R_eff .
+        4. Insert each source (operand) register r_op of newly marked instructions in R_eff
+           if not already contained. Go to 2.
+        5. Stop. All unmarked instructions are introns.
+        */
+
+      // Xianshun says:
+      // this is a variant of Algorithm 3.1 that run Algorithm 3.1 until stop_point and return the Reff at that stage
+
+      int instruction_count = instructions.size();
+      for (int i = instruction_count - 1; i > stop_point; i--)
+      {
+         instructions.get(i).setStructuralIntron(true);
+      }
+
+      Reff.clear();
+      int register_count = manager.getRegisterCount();
+      for (int i = 0; i < register_count; ++i)
+      {
+         Reff.add(i);
+      }
+
+      Instruction current_instruction = null;
+      Instruction prev_instruction = null;
+      for (int i = instruction_count - 1; i > stop_point; i--)
+      {
+         prev_instruction = current_instruction;
+         current_instruction = instructions.get(i);
+         // prev_instruction is not an structural intron and the current_instruction
+         // is a condictional construct then, the current_instruction is not structural intron either
+         // this directly follows from Step 3 of Algorithm 3.1
+         if (current_instruction.getOperator().isConditionalConstruct() && prev_instruction != null)
+         {
+            if (!prev_instruction.isStructuralIntron())
+            {
+               current_instruction.setStructuralIntron(false);
+            }
+         }
+         else
+         {
+            if (Reff.contains(current_instruction.getTargetOperand().getIndex()))
+            {
+               current_instruction.setStructuralIntron(false);
+               Reff.remove(current_instruction.getTargetOperand().getIndex());
+
+               if (!current_instruction.getOperand1().isConstant())
+               {
+                  Reff.add(current_instruction.getOperand1().getIndex());
+               }
+               if (!current_instruction.getOperand2().isConstant())
+               {
+                  Reff.add(current_instruction.getOperand2().getIndex());
+               }
+            }
+         }
+      }
+   }
+
    public void execute(FitnessCase fitness_case)
    {
       int inputRegisterCount = registerSet.size();
