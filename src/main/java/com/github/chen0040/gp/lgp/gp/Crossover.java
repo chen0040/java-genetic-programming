@@ -2,6 +2,8 @@ package com.github.chen0040.gp.lgp.gp;
 
 
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverType;
+import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
+import com.github.chen0040.gp.lgp.helpers.ProgramHelper;
 import com.github.chen0040.gp.lgp.program.Instruction;
 import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.program.ProgramManager;
@@ -78,7 +80,8 @@ public class Crossover {
          {
             Instruction instruction=instructions2.get(i);
             Instruction instruction_cloned=instruction.makeCopy();
-            s.add(instruction_cloned);
+
+            s.add(InstructionHelper.reassign2Program(instruction_cloned, gp1));
          }
 
          instructions1.addAll(i1, s);
@@ -219,7 +222,7 @@ public class Crossover {
          }
          for (int i = 0; i < instructions2_2.size(); ++i)
          {
-            instructions1.add(instructions2_2.get(i));
+            instructions1.add(InstructionHelper.reassign2Program(instructions2_2.get(i), gp1));
          }
 
          for (int i = 0; i < i2; ++i)
@@ -229,7 +232,7 @@ public class Crossover {
 
          for (int i = 0; i < instructions1_2.size(); ++i)
          {
-            instructions2.add(instructions1_2.get(i));
+            instructions2.add(InstructionHelper.reassign2Program(instructions1_2.get(i), gp2));
          }
 
          gp1.invalidateCost();
@@ -340,7 +343,7 @@ public class Crossover {
       }
       for(int i=0; i < ls2; ++i)
       {
-         instructions1.add(instructions2_2.get(i));
+         instructions1.add(InstructionHelper.reassign2Program(instructions2_2.get(i), gp1));
       }
       for(int i=0; i < instructions1_3.size(); ++i)
       {
@@ -353,7 +356,7 @@ public class Crossover {
       }
       for(int i=0; i < ls1; ++i)
       {
-         instructions2.add(instructions1_2.get(i));
+         instructions2.add(InstructionHelper.reassign2Program(instructions1_2.get(i), gp2));
       }
       for(int i=0; i < instructions2_3.size(); ++i)
       {

@@ -27,7 +27,7 @@ public class InstructionHelper {
       mutateRegister(program, instruction, randEngine, 0.5);
    }
 
-   public static void reassign2Program(Instruction instruction, Program program) {
+   public static Instruction reassign2Program(Instruction instruction, Program program) {
       instruction.setOperator(program.getOperatorSet().get(instruction.getOperator().getIndex()));
       if(instruction.getOperand1().isConstant()){
          instruction.setOperand1(program.getConstantSet().get(instruction.getOperand1().getIndex()));
@@ -40,6 +40,7 @@ public class InstructionHelper {
       } else {
          instruction.setOperand2(program.getRegisterSet().get(instruction.getOperand2().getIndex()));
       }
+      return instruction;
    }
 
    public static void initialize(Instruction instruction, Program program, RandEngine randEngine) {
