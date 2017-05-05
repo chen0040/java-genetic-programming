@@ -216,4 +216,9 @@ public class Program implements Serializable, Comparable<Program> {
       return Double.compare(cost, o.cost);
 
    }
+
+
+   public int length() {
+      return instructions.size();
+   }
 }

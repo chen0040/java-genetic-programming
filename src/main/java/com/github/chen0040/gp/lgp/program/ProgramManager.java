@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program;
 
 
+import com.github.chen0040.gp.lgp.enums.LGPCrossoverType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +40,19 @@ public class ProgramManager implements Serializable {
    private int maxGeneration = 1000;
    private int populationSize = 1000;
 
+   private double crossoverRate = 0.1;
+
+   private LGPCrossoverType crossoverType = LGPCrossoverType.Linear;
+
+   // SEC: parameters for linear, one-point, one-segment crossover
+   // BEGIN
+   private int maxProgramLength = 100;
+   private int minProgramLength = 20;
+   private int maxSegmentLength = 10;
+   private int maxDistanceOfCrossoverPoints = 10;
+   private int maxDifferenceOfSegmentLength = 5;
+   private double insertionProbability = 0.5;
+   // END
 
    public double undefined(){
       if(useUndefinedLow){
@@ -58,4 +72,6 @@ public class ProgramManager implements Serializable {
    public double constant(int index) {
       return constants.get(index);
    }
+
+
 }

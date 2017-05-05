@@ -55,13 +55,14 @@ public class Population {
          Program tp1=tournament_winners._1().makeCopy();
          Program tp2=tournament_winners._2().makeCopy();
 
-         /*
-         double r=DistributionModel.GetUniform();
-         if (r < this.mConfig.CrossoverRate)
+
+         double r = randEngine.uniform();
+         if (r < manager.getCrossoverRate())
          {
-            mCrossoverInstructionFactory.Crossover(this, tp1, tp2);
+            Crossover.apply(tp1, tp2, manager, randEngine);
          }
 
+         /*
          r = DistributionModel.GetUniform();
          if (r < this.mConfig.MacroMutationRate)
          {
