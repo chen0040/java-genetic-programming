@@ -42,15 +42,7 @@ public class ProgramHelper {
 
    }
 
-   public static double evaluateCost(Program program, ProgramManager manager, List<FitnessCase> cases, BiFunction<Program, List<FitnessCase>, Double> evaluator) {
-      program.markStructuralIntrons(manager);
 
-      if(evaluator != null){
-         return evaluator.apply(program.makeCopy(), cases);
-      } else {
-         throw new RuntimeException("Cost evaluator for the linear program is not specified!");
-      }
-   }
 
 
 

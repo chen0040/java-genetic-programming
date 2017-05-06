@@ -19,7 +19,7 @@ public class TournamentSelection {
 
       T good1, good2;
       T bad1, bad2;
-      if(CollectionUtils.less(population.get(0), population.get(1))){
+      if(CollectionUtils.isBetterThan(population.get(0), population.get(1))){
          good1 = population.get(0);
          bad1 = population.get(1);
       } else {
@@ -27,7 +27,7 @@ public class TournamentSelection {
          bad1 = population.get(0);
       }
 
-      if(CollectionUtils.less(population.get(2), population.get(3))){
+      if(CollectionUtils.isBetterThan(population.get(2), population.get(3))){
          good2 = population.get(2);
          bad2 = population.get(3);
       } else {

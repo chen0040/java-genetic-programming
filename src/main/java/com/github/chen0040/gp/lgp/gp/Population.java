@@ -5,6 +5,7 @@ import com.github.chen0040.gp.lgp.helpers.ProgramHelper;
 import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.program.ProgramManager;
 import com.github.chen0040.gp.services.RandEngine;
+import com.github.chen0040.gp.utils.CollectionUtils;
 import com.github.chen0040.gp.utils.TournamentSelection;
 import com.github.chen0040.gp.utils.TournamentSelectionResult;
 import com.github.chen0040.gp.utils.TupleTwo;
@@ -33,7 +34,8 @@ public class Population {
 
    protected void evaluate(ProgramManager manager, List<FitnessCase> cases, BiFunction<Program, List<FitnessCase>, Double> evaluator) {
       for(int i=0; i< programs.size(); ++i) {
-         ProgramHelper.evaluateCost(programs.get(i), manager, cases, evaluator);
+         Program p = programs.get(i);
+         double cost = manager.evaluateCost(p);
       }
    }
 
@@ -85,35 +87,41 @@ public class Population {
          {
             MicroMutation.mutate(tp2, manager, randEngine);
          }
-         
+
+         if(! tp1.isCostValid())
+         {
+            tp1.setCost(manager.evaluateCost(tp1));
+            tp1.setCostValid(true);
+         }
+         if(! tp2.isCostValid())
+         {
+            tp2.setCost(manager.evaluateCost(tp2));
+            tp2.setCostValid(true);
+         }
+
+         if(CollectionUtils.isBetterThan(tp1, tp2))
+         {
+            if(!globalBestProgram.isPresent() || CollectionUtils.isBetterThan(tp1, globalBestProgram.get()))
+            {
+               globalBestProgram = Optional.of(tp1.makeCopy());
+            }
+         }
+         else
+         {
+            if(!globalBestProgram.isPresent() || CollectionUtils.isBetterThan(tp2, globalBestProgram.get()))
+            {
+               globalBestProgram= Optional.of(tp2.makeCopy());
+            }
+         }
+
          /*
         
 
          
 
-         if(! tp1.IsFitnessValid)
-         {
-            tp1.EvaluateFitness();
-         }
-         if(! tp2.IsFitnessValid)
-         {
-            tp2.EvaluateFitness();
-         }
 
-         if(tp1.IsBetterThan(tp2))
-         {
-            if(tp1.IsBetterThan(mGlobalBestProgram))
-            {
-               mGlobalBestProgram=tp1.Clone();
-            }
-         }
-         else
-         {
-            if(tp2.IsBetterThan(mGlobalBestProgram))
-            {
-               mGlobalBestProgram=tp2.Clone();
-            }
-         }
+
+
 
          LGPProgram loser1=mSurvivalInstructionFactory.Compete(this, tournament_losers.Key, tp1); // this method returns the pointer to the loser in the competition for survival;
          LGPProgram loser2=mSurvivalInstructionFactory.Compete(this, tournament_losers.Value, tp2);

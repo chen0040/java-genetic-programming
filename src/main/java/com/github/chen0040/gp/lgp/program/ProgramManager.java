@@ -2,12 +2,14 @@ package com.github.chen0040.gp.lgp.program;
 
 
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverType;
+import com.github.chen0040.gp.lgp.gp.FitnessCase;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 
 /**
@@ -69,6 +71,9 @@ public class ProgramManager implements Serializable {
    private double macroMutationRate = 0.75;
    private double microMutationRate = 0.25;
 
+   private List<FitnessCase> fitnessCases = new ArrayList<>();
+   private BiFunction<Program, List<FitnessCase>, Double> costEvaluator;
+
    public double undefined(){
       if(useUndefinedLow){
          return undefinedLow;
@@ -88,5 +93,13 @@ public class ProgramManager implements Serializable {
       return constants.get(index);
    }
 
+   public double evaluateCost(Program program) {
+      program.markStructuralIntrons(this);
 
+      if(costEvaluator != null){
+         return costEvaluator.apply(program.makeCopy(), fitnessCases);
+      } else {
+         throw new RuntimeException("Cost evaluator for the linear program is not specified!");
+      }
+   }
 }
