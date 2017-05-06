@@ -4,6 +4,7 @@ package com.github.chen0040.gp.utils;
 import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.services.RandEngine;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -25,7 +26,7 @@ public class CollectionUtils {
    }
 
 
-   public static boolean isBetterThan(Program a, Program b) {
+   public static <T extends Comparable<T>> boolean isBetterThan(T a, T b) {
       return a.compareTo(b) < 0;
    }
 
