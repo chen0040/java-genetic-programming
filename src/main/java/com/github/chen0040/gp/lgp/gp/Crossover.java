@@ -1,9 +1,8 @@
 package com.github.chen0040.gp.lgp.gp;
 
 
-import com.github.chen0040.gp.lgp.enums.LGPCrossoverType;
+import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
-import com.github.chen0040.gp.lgp.helpers.ProgramHelper;
 import com.github.chen0040.gp.lgp.program.Instruction;
 import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.program.ProgramManager;
@@ -25,7 +24,7 @@ import java.util.List;
 public class Crossover {
 
    public static void apply(Program program1, Program program2, ProgramManager manager, RandEngine randEngine) {
-      LGPCrossoverType crossoverType = manager.getCrossoverType();
+      LGPCrossoverStrategy crossoverType = manager.getCrossoverStrategy();
       switch(crossoverType){
          case Linear:
             linearCrossover(program1, program2, manager,randEngine);

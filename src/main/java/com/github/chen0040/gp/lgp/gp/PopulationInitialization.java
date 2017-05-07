@@ -1,9 +1,8 @@
 package com.github.chen0040.gp.lgp.gp;
 
 
-import com.github.chen0040.gp.lgp.enums.LGPInitializationType;
+import com.github.chen0040.gp.lgp.enums.LGPInitializationStrategy;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
-import com.github.chen0040.gp.lgp.helpers.ProgramHelper;
 import com.github.chen0040.gp.lgp.program.*;
 import com.github.chen0040.gp.services.RandEngine;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -16,9 +15,9 @@ import java.util.List;
  */
 public class PopulationInitialization {
    public void initialize(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
-      if(manager.getProgramInitializationType() == LGPInitializationType.ConstantLength){
+      if(manager.getProgramInitializationStrategy() == LGPInitializationStrategy.ConstantLength){
          initializeWithConstantLength(programs, manager, randEngine);
-      } else if(manager.getProgramInitializationType() == LGPInitializationType.VariableLength) {
+      } else if(manager.getProgramInitializationStrategy() == LGPInitializationStrategy.VariableLength) {
          initializeWithVariableLength(programs, manager, randEngine);
       } else {
          throw new NotImplementedException();

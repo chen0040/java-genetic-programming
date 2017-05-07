@@ -55,9 +55,10 @@ public class Population {
 
          TournamentSelectionResult<Program> tournament = TournamentSelection.select(programs, randEngine);
          TupleTwo<Program> tournament_winners = tournament.getWinners();
+         TupleTwo<Program> tournament_losers = tournament.getLosers();
 
-         Program tp1=tournament_winners._1().makeCopy();
-         Program tp2=tournament_winners._2().makeCopy();
+         Program tp1 = tournament_winners._1().makeCopy();
+         Program tp2 = tournament_winners._2().makeCopy();
 
 
          double r = randEngine.uniform();
@@ -116,26 +117,17 @@ public class Population {
             }
          }
 
-         /*
-        
+         Program loser1 = Replacement.compete(programs, tournament_losers._1(), tp1, manager);
+         Program loser2 = Replacement.compete(programs, tournament_losers._2(), tp2, manager);
 
-         
-
-
-
-
-
-         LGPProgram loser1=mSurvivalInstructionFactory.Compete(this, tournament_losers.Key, tp1); // this method returns the pointer to the loser in the competition for survival;
-         LGPProgram loser2=mSurvivalInstructionFactory.Compete(this, tournament_losers.Value, tp2);
-
-         if(loser1==tournament_losers.Key)
+         if(loser1==tournament_losers._1())
          {
             ++program_count;
          }
-         if(loser2==tournament_losers.Value)
+         if(loser2==tournament_losers._2())
          {
             ++program_count;
-         }*/
+         }
       }
 
 
