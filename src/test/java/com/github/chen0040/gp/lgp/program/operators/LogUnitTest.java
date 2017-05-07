@@ -3,7 +3,7 @@ package com.github.chen0040.gp.lgp.program.operators;
 
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import com.github.chen0040.gp.lgp.program.Operator;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.program.Register;
 import org.testng.annotations.Test;
 
@@ -42,6 +42,6 @@ public class LogUnitTest {
 
       assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
-      assertThat(destination.getValue()).isEqualTo(ProgramManager.DEFAULT_UNDEFINED_LOW);
+      assertThat(destination.getValue()).isEqualTo(LGP.DEFAULT_UNDEFINED_LOW);
    }
 }

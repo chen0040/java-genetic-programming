@@ -5,7 +5,7 @@ import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import com.github.chen0040.gp.lgp.program.Instruction;
 import com.github.chen0040.gp.lgp.program.Program;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.services.RandEngine;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Crossover {
 
-   public static void apply(Program program1, Program program2, ProgramManager manager, RandEngine randEngine) {
+   public static void apply(Program program1, Program program2, LGP manager, RandEngine randEngine) {
       LGPCrossoverStrategy crossoverType = manager.getCrossoverStrategy();
       switch(crossoverType){
          case Linear:
@@ -58,7 +58,7 @@ public class Crossover {
 
       Standard linear crossover may also be refered to as two-segment recombinations, in these terms.
    */
-   private static void oneSegmentCrossover(Program gp1, Program gp2, ProgramManager manager, RandEngine randEngine) {
+   private static void oneSegmentCrossover(Program gp1, Program gp2, LGP manager, RandEngine randEngine) {
       double prob_r = randEngine.uniform();
       if((gp1.length() < manager.getMaxProgramLength()) && ((prob_r <= manager.getInsertionProbability() || gp1.length()==manager.getMinProgramLength())))
       {
@@ -113,7 +113,7 @@ public class Crossover {
    /* Xianshun says:
        This operator is derived from Algorithm 5.2 in Section 5.7.2 of Linear Genetic Programming
    */
-   private static void onePointCrossover(Program gp1, Program gp2, ProgramManager manager, RandEngine randEngine) {
+   private static void onePointCrossover(Program gp1, Program gp2, LGP manager, RandEngine randEngine) {
       // Xianshun says:
       // this implementation is derived from Algorithm 5.1 in Section 5.7.1 of Linear
       // Genetic Programming
@@ -243,7 +243,7 @@ public class Crossover {
    // Xianshun says:
    // this is derived from Algorithm 5.1 of Section 5.7.1 of Linear Genetic Programming
    // this linear crossover can also be considered as two-point crossover
-   private static void linearCrossover(Program gp1, Program gp2, ProgramManager manager, RandEngine randEngine) {
+   private static void linearCrossover(Program gp1, Program gp2, LGP manager, RandEngine randEngine) {
       // length(gp1) <= length(gp2)
       if (gp1.length() > gp2.length())
       {
@@ -292,9 +292,14 @@ public class Crossover {
          }
          if((i1+ls1) > gp1.length())
          {
-            ls1=ls2=gp1.length()-1;
+            ls1 = gp1.length() - i1;
+         }
+         if((i2 + ls2) > gp2.length()) {
+            ls2 = gp2.length() - i2;
          }
       }
+
+
 
       List<Instruction> instructions1=gp1.getInstructions();
       List<Instruction> instructions2=gp2.getInstructions();

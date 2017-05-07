@@ -3,7 +3,7 @@ package com.github.chen0040.gp.lgp.gp;
 
 import com.github.chen0040.gp.lgp.enums.LGPReplacementStrategy;
 import com.github.chen0040.gp.lgp.program.Program;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.utils.CollectionUtils;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class Replacement {
 
    // this method returns the pointer to the loser in the competition for survival;
-   public static Program compete(List<Program> programs, Program current, Program candidate, ProgramManager manager, RandEngine randEngine) {
+   public static Program compete(List<Program> programs, Program current, Program candidate, LGP manager, RandEngine randEngine) {
       if(manager.getReplacementStrategy() == LGPReplacementStrategy.DirectCompetition) {
          if (CollectionUtils.isBetterThan(candidate, current)) {
             int index = programs.indexOf(current);

@@ -4,7 +4,7 @@ package com.github.chen0040.gp.lgp.gp;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import com.github.chen0040.gp.lgp.program.Instruction;
 import com.github.chen0040.gp.lgp.program.Program;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.services.RandEngine;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class MicroMutation {
    /// 2. change constant c through a standard deviation from the current value
    /// c:=c + normal(mean:=0, standard_deviation)
    /// </summary>
-   private static void mutateInstructionConstant(Program program, ProgramManager manager, RandEngine randEngine)
+   private static void mutateInstructionConstant(Program program, LGP manager, RandEngine randEngine)
    {
       Instruction selected_instruction = null;
       for (Instruction instruction : program.getInstructions())
@@ -84,7 +84,7 @@ public class MicroMutation {
    /// 3. if micro-mutate-constant type is selected, then randomly pick an effective instruction with a constant as one
    /// of its register value, mutate the constant to c+$N(0, \omega_{\mu}$
    /// </summary>
-   public static void mutate(Program program, ProgramManager manager, RandEngine randEngine)
+   public static void mutate(Program program, LGP manager, RandEngine randEngine)
    {
       double micro_mutate_operator_rate = manager.getMicroMutateOperatorRate();
       double micro_mutate_register_rate = manager.getMicroMutateRegisterRate();

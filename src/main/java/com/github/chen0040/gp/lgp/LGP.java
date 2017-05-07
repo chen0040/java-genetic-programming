@@ -1,10 +1,16 @@
-package com.github.chen0040.gp.lgp.program;
+package com.github.chen0040.gp.lgp;
 
 
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.enums.LGPInitializationStrategy;
 import com.github.chen0040.gp.lgp.enums.LGPReplacementStrategy;
-import com.github.chen0040.gp.lgp.gp.FitnessCase;
+import com.github.chen0040.gp.lgp.gp.Observation;
+import com.github.chen0040.gp.lgp.gp.Population;
+import com.github.chen0040.gp.lgp.program.OperatorSet;
+import com.github.chen0040.gp.lgp.program.Program;
+import com.github.chen0040.gp.services.RandEngine;
+import com.github.chen0040.gp.services.SimpleRandEngine;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +25,7 @@ import java.util.function.BiFunction;
  */
 @Getter
 @Setter
-public class ProgramManager implements Serializable {
+public class LGP implements Serializable {
 
    private static final long serialVersionUID = 5575895345509778505L;
 
@@ -29,10 +35,13 @@ public class ProgramManager implements Serializable {
    private double regNegInf = -10000000;
    private double undefinedLow = DEFAULT_UNDEFINED_LOW;
    private double undefinedHigh = 1000000;
+   private RandEngine randEngine = new SimpleRandEngine();
 
    // number of registers of a linear program
    private int registerCount;
+   @Setter(AccessLevel.NONE)
    private List<Double> constants = new ArrayList<>();
+   @Setter(AccessLevel.NONE)
    private List<Double> constantWeights = new ArrayList<>();
    private OperatorSet operatorSet = new OperatorSet();
 
@@ -80,8 +89,8 @@ public class ProgramManager implements Serializable {
 
    // SEC: parameters for cost evaluation
    // BEGIN
-   private List<FitnessCase> fitnessCases = new ArrayList<>();
-   private BiFunction<Program, List<FitnessCase>, Double> costEvaluator;
+   private List<Observation> observations = new ArrayList<>();
+   private BiFunction<Program, List<Observation>, Double> costEvaluator;
    // END
 
    // SEC: parameters for replacement
@@ -116,12 +125,25 @@ public class ProgramManager implements Serializable {
       program.markStructuralIntrons(this);
 
       if(costEvaluator != null){
-         return costEvaluator.apply(program.makeCopy(), fitnessCases);
+         return costEvaluator.apply(program.makeCopy(), observations);
       } else {
          throw new RuntimeException("Cost evaluator for the linear program is not specified!");
       }
    }
 
+   public Population newPopulation(){
+      return new Population(this, randEngine);
+   }
+
+   public void addConstant(double constant, double weight) {
+      constants.add(constant);
+      constantWeights.add(weight);
+   }
 
 
+   public void addConstants(double... constants) {
+      for(int i=0; i < constants.length; ++i){
+         addConstant(constants[0], 1.0);
+      }
+   }
 }

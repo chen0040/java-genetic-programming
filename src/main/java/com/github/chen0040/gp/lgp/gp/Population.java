@@ -1,21 +1,17 @@
 package com.github.chen0040.gp.lgp.gp;
 
 
-import com.github.chen0040.gp.lgp.helpers.ProgramHelper;
 import com.github.chen0040.gp.lgp.program.Program;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.services.RandEngine;
-import com.github.chen0040.gp.utils.CollectionUtils;
-import com.github.chen0040.gp.utils.TournamentSelection;
-import com.github.chen0040.gp.utils.TournamentSelectionResult;
-import com.github.chen0040.gp.utils.TupleTwo;
+import com.github.chen0040.gp.utils.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 
 /**
@@ -24,25 +20,38 @@ import java.util.function.BiFunction;
 @Getter
 @Setter
 public class Population {
+   @Setter(AccessLevel.NONE)
+   @Getter(AccessLevel.NONE)
    private Optional<Program> globalBestProgram = Optional.empty();
    private List<Program> programs=new ArrayList<>();
    private int currentGeneration = 0;
+   private final LGP manager;
+   private final RandEngine randEngine;
+   private Program bestProgramInCurrentGeneration = null;
 
-   public Population(){
-
+   public Population(LGP manager, RandEngine randEngine){
+      this.manager = manager;
+      this.randEngine = randEngine;
    }
 
-   protected void evaluate(ProgramManager manager) {
+   protected void evaluate(LGP manager) {
+
+      double bestCost = Double.MAX_VALUE;
       for(int i=0; i< programs.size(); ++i) {
          Program p = programs.get(i);
          double cost = manager.evaluateCost(p);
          p.setCost(cost);
          p.setCostValid(true);
-         updateGlobal(p);
+         if (p.getCost() < bestCost) {
+            bestProgramInCurrentGeneration = p;
+            bestCost = p.getCost();
+         }
       }
+
+      updateGlobal(bestProgramInCurrentGeneration);
    }
 
-   public void initialize(ProgramManager manager, RandEngine randEngine){
+   public void initialize(){
       PopulationInitialization.initialize(programs, manager, randEngine);
       evaluate(manager);
    }
@@ -56,15 +65,16 @@ public class Population {
    }
 
 
-   public boolean isTerminated(ProgramManager manager) {
+   public boolean isTerminated() {
       return currentGeneration >= manager.getMaxGeneration();
    }
 
 
-   public void evolve(ProgramManager manager, RandEngine randEngine)
+   public void evolve()
    {
       int iPopSize = manager.getPopulationSize();
       int program_count=0;
+
       while(program_count < iPopSize)
       {
 
@@ -108,11 +118,9 @@ public class Population {
 
          tp1.setCost(manager.evaluateCost(tp1));
          tp1.setCostValid(true);
-         updateGlobal(tp1);
 
          tp2.setCost(manager.evaluateCost(tp2));
          tp2.setCostValid(true);
-         updateGlobal(tp2);
 
          Program loser1 = Replacement.compete(programs, tournament_losers._1(), tp1, manager, randEngine);
          Program loser2 = Replacement.compete(programs, tournament_losers._2(), tp2, manager, randEngine);
@@ -127,8 +135,27 @@ public class Population {
          }
       }
 
+      double bestCost = Double.MAX_VALUE;
+      for(int i=0; i< programs.size(); ++i) {
+         Program p = programs.get(i);
+         if (p.getCost() < bestCost) {
+            bestProgramInCurrentGeneration = p;
+            bestCost = p.getCost();
+         }
+      }
+      updateGlobal(bestProgramInCurrentGeneration);
 
 
       currentGeneration++;
+   }
+
+
+   public Program getGlobalBestProgram() {
+      return globalBestProgram.get();
+   }
+
+
+   public double getCostInCurrentGeneration() {
+      return bestProgramInCurrentGeneration.getCost();
    }
 }

@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program;
 
 
+import com.github.chen0040.gp.lgp.LGP;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -13,7 +14,7 @@ public class ProgramManagerUnitTest {
 
    @Test
    public void test_undefined(){
-      ProgramManager pm = new ProgramManager();
+      LGP pm = new LGP();
       assertThat(pm.undefined()).isEqualTo(pm.getUndefinedLow());
    }
 }

@@ -4,7 +4,7 @@ package com.github.chen0040.gp.lgp.gp;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import com.github.chen0040.gp.lgp.program.Instruction;
 import com.github.chen0040.gp.lgp.program.Program;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.services.RandEngine;
 
 import java.util.HashSet;
@@ -30,7 +30,7 @@ public class MacroMutation {
    // and an insertion at the same time. A further, but important argument against
    // substitution of single instructions is that these do not vary program length. If
    // single instruction would only be exchanged there would be no code growth.
-   public static void mutate(Program child, ProgramManager manager, RandEngine randEngine) {
+   public static void mutate(Program child, LGP manager, RandEngine randEngine) {
       double r=randEngine.uniform();
       List<Instruction> instructions=child.getInstructions();
       if(child.length() < manager.getMacroMutateMaxProgramLength() && ((r < manager.getMacroMutateInsertionRate())  || child.length() == manager.getMacroMutateMinProgramLength()))

@@ -2,10 +2,12 @@ package com.github.chen0040.gp.lgp.program;
 
 
 import com.github.chen0040.gp.exceptions.InvalidCostException;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
-import com.github.chen0040.gp.lgp.gp.BasicFitnessCase;
-import com.github.chen0040.gp.lgp.gp.FitnessCase;
+import com.github.chen0040.gp.lgp.gp.BasicObservation;
+import com.github.chen0040.gp.lgp.gp.Observation;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
+import com.github.chen0040.gp.utils.NumberUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +49,7 @@ public class Program implements Serializable, Comparable<Program> {
      if not already contained. Go to 2.
    5. Stop. All unmarked instructions are introns.
    */
-   public void markStructuralIntrons(ProgramManager manager) {
+   public void markStructuralIntrons(LGP manager) {
     
       int instruction_count=instructions.size();
       for (int i = instruction_count - 1; i >= 0; i--)
@@ -99,7 +101,7 @@ public class Program implements Serializable, Comparable<Program> {
       }
    }
 
-   public void MarkStructuralIntrons(int stop_point, Set<Integer> Reff, ProgramManager manager)
+   public void MarkStructuralIntrons(int stop_point, Set<Integer> Reff, LGP manager)
    {
          /*
         Source: Brameier, M 2004  On Linear Genetic Programming (thesis)
@@ -170,11 +172,11 @@ public class Program implements Serializable, Comparable<Program> {
       }
    }
 
-   public void execute(FitnessCase fitness_case)
+   public void execute(Observation fitness_case)
    {
       int inputRegisterCount = registerSet.size();
       for(int i=0; i < inputRegisterCount; ++i) {
-         registerSet.get(i).setValue(fitness_case.readInput(i % fitness_case.inputCount()));
+         registerSet.get(i).setValue(fitness_case.getInput(i % fitness_case.inputCount()));
       }
 
       OperatorExecutionStatus command = OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION;
@@ -216,16 +218,16 @@ public class Program implements Serializable, Comparable<Program> {
       int outputRegisterCount = Math.min(registerSet.size(), fitness_case.outputCount());
       for (int i = 0; i < outputRegisterCount; ++i)
       {
-         fitness_case.writeOutput(i, registerSet.get(i).getValue());
+         fitness_case.setExpectedOutput(i, registerSet.get(i).getValue());
       }
    }
 
    public double[] execute(double[] input){
-      BasicFitnessCase fitnessCase = new BasicFitnessCase(input.length, input.length);
+      BasicObservation fitnessCase = new BasicObservation(input.length, input.length);
       execute(fitnessCase);
       double[] output = new double[input.length];
       for(int i=0; i < output.length; ++i) {
-         output[i] = fitnessCase.readOutput(i);
+         output[i] = fitnessCase.getOutput(i);
       }
       return output;
    }
@@ -280,6 +282,8 @@ public class Program implements Serializable, Comparable<Program> {
 
 
    @Override public int compareTo(Program o) {
+
+
       if(!costValid || !o.costValid) {
          throw new InvalidCostException("cost of the programs involved in the comparison is not valid for comparison");
       }

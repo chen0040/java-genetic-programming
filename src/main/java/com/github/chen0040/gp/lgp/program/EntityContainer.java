@@ -1,6 +1,5 @@
 package com.github.chen0040.gp.lgp.program;
 
-
 import com.github.chen0040.gp.services.RandEngine;
 
 import java.util.ArrayList;
@@ -53,10 +52,14 @@ public class EntityContainer<T extends Indexable<T>> {
       return entities.size();
    }
 
-   public void add(T register, double weight) {
-      register.setIndex(entities.size());
-      entities.add(register);
+   public void add(T entity, double weight) {
+      entity.setIndex(entities.size());
+      entities.add(entity);
       weights.add(weight);
+   }
+   
+   public void add(T entity){
+      add(entity, 1.0);
    }
 
 
@@ -68,7 +71,7 @@ public class EntityContainer<T extends Indexable<T>> {
          if(i != 0){
             sb.append("\r\n");
          }
-         sb.append("register[").append(i).append("]: ").append(entities.get(i));
+         sb.append("entity[").append(i).append("]: ").append(entities.get(i));
       }
       return sb.toString();
    }
@@ -117,5 +120,12 @@ public class EntityContainer<T extends Indexable<T>> {
 
    public double getWeight(int index) {
       return weights.get(index);
+   }
+
+
+   public void addAll(T... entities) {
+      for(int i=0; i < entities.length; ++i) {
+         add(entities[i]);
+      }
    }
 }

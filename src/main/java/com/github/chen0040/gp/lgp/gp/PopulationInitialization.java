@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.gp;
 
 
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.enums.LGPInitializationStrategy;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import com.github.chen0040.gp.lgp.program.*;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by xschen on 7/5/2017.
  */
 public class PopulationInitialization {
-   public static void initialize(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
+   public static void initialize(List<Program> programs, LGP manager, RandEngine randEngine) {
       if(manager.getProgramInitializationStrategy() == LGPInitializationStrategy.ConstantLength){
          initializeWithConstantLength(programs, manager, randEngine);
       } else if(manager.getProgramInitializationStrategy() == LGPInitializationStrategy.VariableLength) {
@@ -32,7 +33,7 @@ public class PopulationInitialization {
    // the program generated in this way will have program length as small as
    // iMinProgLength and as large as iMaxProgLength
    // the program length is distributed uniformly between iMinProgLength and iMaxProgLength
-   private static void initializeWithVariableLength(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
+   private static void initializeWithVariableLength(List<Program> programs, LGP manager, RandEngine randEngine) {
       int popSize = manager.getPopulationSize();
 
       for(int i=0; i < popSize; ++i) {
@@ -46,7 +47,7 @@ public class PopulationInitialization {
    // the program generated in this way will have program length as small as
    // iMinProgLength and as large as iMaxProgLength
    // the program length is distributed uniformly between iMinProgLength and iMaxProgLength
-   private static void initializeWithConstantLength(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
+   private static void initializeWithConstantLength(List<Program> programs, LGP manager, RandEngine randEngine) {
       int popSize = manager.getPopulationSize();
 
       for(int i=0; i<popSize; ++i)
@@ -57,7 +58,7 @@ public class PopulationInitialization {
       }
    }
 
-   private static void initialize(Program program, ProgramManager programManager, RandEngine randEngine, int instructionCount) {
+   private static void initialize(Program program, LGP programManager, RandEngine randEngine, int instructionCount) {
 
       final int constantCount = programManager.getConstants().size();
       for(int i=0; i < constantCount; ++i){

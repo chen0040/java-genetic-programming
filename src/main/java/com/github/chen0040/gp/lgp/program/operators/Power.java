@@ -4,7 +4,7 @@ package com.github.chen0040.gp.lgp.program.operators;
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import com.github.chen0040.gp.lgp.program.Register;
 import com.github.chen0040.gp.lgp.program.Operator;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 
 
 /**
@@ -35,7 +35,7 @@ public class Power extends Operator {
       }
       else
       {
-         destination_register.setValue(x1 + x2 + ProgramManager.DEFAULT_UNDEFINED_LOW);
+         destination_register.setValue(x1 + x2 + LGP.DEFAULT_UNDEFINED_LOW);
       }
 
       return OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION;

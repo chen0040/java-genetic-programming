@@ -3,7 +3,7 @@ package com.github.chen0040.gp.lgp.program.operators;
 
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import com.github.chen0040.gp.lgp.program.Operator;
-import com.github.chen0040.gp.lgp.program.ProgramManager;
+import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.program.Register;
 
 
@@ -14,7 +14,7 @@ public class Log extends Operator {
 
    private static final long serialVersionUID = -602302230080927334L;
 
-   private double undefined = ProgramManager.DEFAULT_UNDEFINED_LOW;
+   private double undefined = LGP.DEFAULT_UNDEFINED_LOW;
 
    public Log(){
       super("log");
