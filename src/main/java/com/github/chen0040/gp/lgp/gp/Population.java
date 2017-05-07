@@ -32,10 +32,12 @@ public class Population {
 
    }
 
-   protected void evaluate(ProgramManager manager, List<FitnessCase> cases, BiFunction<Program, List<FitnessCase>, Double> evaluator) {
+   protected void evaluate(ProgramManager manager) {
       for(int i=0; i< programs.size(); ++i) {
          Program p = programs.get(i);
          double cost = manager.evaluateCost(p);
+         p.setCost(cost);
+         p.setCostValid(true);
       }
    }
 

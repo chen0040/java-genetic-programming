@@ -2,6 +2,7 @@ package com.github.chen0040.gp.lgp.program;
 
 
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverType;
+import com.github.chen0040.gp.lgp.enums.LGPInitializationType;
 import com.github.chen0040.gp.lgp.gp.FitnessCase;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,8 +72,19 @@ public class ProgramManager implements Serializable {
    private double macroMutationRate = 0.75;
    private double microMutationRate = 0.25;
 
+   private LGPInitializationType programInitializationType;
+
+   // SEC: parameters for population initialization
+   // BEGIN
+   private int popInitConstantProgramLength = 10;
+   private int popInitMaxProgramLength = 15;
+   private int popInitMinProgramLength = 5;
+   // END
+
    private List<FitnessCase> fitnessCases = new ArrayList<>();
    private BiFunction<Program, List<FitnessCase>, Double> costEvaluator;
+
+
 
    public double undefined(){
       if(useUndefinedLow){
@@ -102,4 +114,7 @@ public class ProgramManager implements Serializable {
          throw new RuntimeException("Cost evaluator for the linear program is not specified!");
       }
    }
+
+
+
 }
