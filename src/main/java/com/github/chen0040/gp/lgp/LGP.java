@@ -125,7 +125,7 @@ public class LGP implements Serializable {
       program.markStructuralIntrons(this);
 
       if(costEvaluator != null){
-         return costEvaluator.apply(program.makeCopy(), observations);
+         return costEvaluator.apply(program.makeEffectiveCopy(), observations);
       } else {
          throw new RuntimeException("Cost evaluator for the linear program is not specified!");
       }

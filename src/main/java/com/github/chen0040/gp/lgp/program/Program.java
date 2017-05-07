@@ -235,17 +235,20 @@ public class Program implements Serializable, Comparable<Program> {
 
    public Program makeCopy() {
       Program clone = new Program();
-      clone.copy(this);
+      clone.copy(this, false);
       return clone;
    }
 
-   public void copy(Program that) {
+   public void copy(Program that, boolean effectiveOnly) {
       registerSet.copy(that.registerSet);
       constantSet.copy(that.constantSet);
       operatorSet.copy(that.operatorSet);
 
       instructions.clear();
       for(int i=0; i < that.instructions.size(); ++i) {
+         if(effectiveOnly && !that.instructions.get(i).isStructuralIntron()){
+            continue;
+         }
          instructions.add(InstructionHelper.makeCopy(that.instructions.get(i), registerSet, constantSet, operatorSet));
       }
 
@@ -295,5 +298,12 @@ public class Program implements Serializable, Comparable<Program> {
 
    public int length() {
       return instructions.size();
+   }
+
+
+   public Program makeEffectiveCopy() {
+      Program clone = new Program();
+      clone.copy(this, true);
+      return clone;
    }
 }

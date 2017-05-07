@@ -60,7 +60,7 @@ public class Population {
    private void updateGlobal(Program lgp) {
       if(!globalBestProgram.isPresent() || CollectionUtils.isBetterThan(lgp, globalBestProgram.get()))
       {
-         globalBestProgram = Optional.of(lgp.makeCopy());
+         globalBestProgram = Optional.of(lgp.makeEffectiveCopy());
       }
    }
 

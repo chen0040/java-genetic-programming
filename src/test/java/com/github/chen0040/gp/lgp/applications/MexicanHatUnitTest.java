@@ -5,7 +5,6 @@ import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
 import com.github.chen0040.gp.lgp.gp.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
-import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.program.operators.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,20 +63,11 @@ public class MexicanHatUnitTest {
       lgp.getObservations().addAll(mexican_hat());
       lgp.setCostEvaluator((program, observations)->{
          double error = 0;
-
-         /*
-         error = observations.parallelStream().map(o -> {
-            Program p = program.makeCopy();
-            p.execute(o);
-            return o.getOutput(0) - o.getExpectedOutput(0);
-         }).map(a -> a * a).reduce((a, b) -> a + b).get();*/
-
-
          for(Observation observation : observations){
             program.execute(observation);
             error += Math.pow(observation.getOutput(0) - observation.getExpectedOutput(0), 2.0);
          }
-         
+
          return error;
       });
 
