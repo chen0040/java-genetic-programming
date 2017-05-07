@@ -117,8 +117,8 @@ public class Population {
             }
          }
 
-         Program loser1 = Replacement.compete(programs, tournament_losers._1(), tp1, manager);
-         Program loser2 = Replacement.compete(programs, tournament_losers._2(), tp2, manager);
+         Program loser1 = Replacement.compete(programs, tournament_losers._1(), tp1, manager, randEngine);
+         Program loser2 = Replacement.compete(programs, tournament_losers._2(), tp2, manager, randEngine);
 
          if(loser1==tournament_losers._1())
          {
