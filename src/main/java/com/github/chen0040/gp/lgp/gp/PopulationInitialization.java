@@ -14,7 +14,7 @@ import java.util.List;
  * Created by xschen on 7/5/2017.
  */
 public class PopulationInitialization {
-   public void initialize(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
+   public static void initialize(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
       if(manager.getProgramInitializationStrategy() == LGPInitializationStrategy.ConstantLength){
          initializeWithConstantLength(programs, manager, randEngine);
       } else if(manager.getProgramInitializationStrategy() == LGPInitializationStrategy.VariableLength) {
@@ -32,7 +32,7 @@ public class PopulationInitialization {
    // the program generated in this way will have program length as small as
    // iMinProgLength and as large as iMaxProgLength
    // the program length is distributed uniformly between iMinProgLength and iMaxProgLength
-   private void initializeWithVariableLength(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
+   private static void initializeWithVariableLength(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
       int popSize = manager.getPopulationSize();
 
       for(int i=0; i < popSize; ++i) {
@@ -46,7 +46,7 @@ public class PopulationInitialization {
    // the program generated in this way will have program length as small as
    // iMinProgLength and as large as iMaxProgLength
    // the program length is distributed uniformly between iMinProgLength and iMaxProgLength
-   private void initializeWithConstantLength(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
+   private static void initializeWithConstantLength(List<Program> programs, ProgramManager manager, RandEngine randEngine) {
       int popSize = manager.getPopulationSize();
 
       for(int i=0; i<popSize; ++i)

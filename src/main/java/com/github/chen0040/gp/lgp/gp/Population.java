@@ -38,8 +38,23 @@ public class Population {
          double cost = manager.evaluateCost(p);
          p.setCost(cost);
          p.setCostValid(true);
+         updateGlobal(p);
       }
    }
+
+   public void initialize(ProgramManager manager, RandEngine randEngine){
+      PopulationInitialization.initialize(programs, manager, randEngine);
+      evaluate(manager);
+   }
+
+
+   private void updateGlobal(Program lgp) {
+      if(!globalBestProgram.isPresent() || CollectionUtils.isBetterThan(lgp, globalBestProgram.get()))
+      {
+         globalBestProgram = Optional.of(lgp.makeCopy());
+      }
+   }
+
 
    public boolean isTerminated(ProgramManager manager) {
       return currentGeneration >= manager.getMaxGeneration();
@@ -91,31 +106,13 @@ public class Population {
             MicroMutation.mutate(tp2, manager, randEngine);
          }
 
-         if(! tp1.isCostValid())
-         {
-            tp1.setCost(manager.evaluateCost(tp1));
-            tp1.setCostValid(true);
-         }
-         if(! tp2.isCostValid())
-         {
-            tp2.setCost(manager.evaluateCost(tp2));
-            tp2.setCostValid(true);
-         }
+         tp1.setCost(manager.evaluateCost(tp1));
+         tp1.setCostValid(true);
+         updateGlobal(tp1);
 
-         if(CollectionUtils.isBetterThan(tp1, tp2))
-         {
-            if(!globalBestProgram.isPresent() || CollectionUtils.isBetterThan(tp1, globalBestProgram.get()))
-            {
-               globalBestProgram = Optional.of(tp1.makeCopy());
-            }
-         }
-         else
-         {
-            if(!globalBestProgram.isPresent() || CollectionUtils.isBetterThan(tp2, globalBestProgram.get()))
-            {
-               globalBestProgram= Optional.of(tp2.makeCopy());
-            }
-         }
+         tp2.setCost(manager.evaluateCost(tp2));
+         tp2.setCostValid(true);
+         updateGlobal(tp2);
 
          Program loser1 = Replacement.compete(programs, tournament_losers._1(), tp1, manager, randEngine);
          Program loser2 = Replacement.compete(programs, tournament_losers._2(), tp2, manager, randEngine);
