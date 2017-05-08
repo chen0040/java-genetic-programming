@@ -14,6 +14,18 @@ Future Works
 * Grammar-based Genetic Programming
 * Gene Expression Programming
 
+# Install
+
+Add the following dependency to your POM file:
+
+```
+<dependency>
+  <groupId>com.github.chen0040</groupId>
+  <artifactId>java-genetic-programming</artifactId>
+  <version>1.0.1</version>
+</dependency>
+```
+
 # Usage of Linear Genetic Programming
 
 ### Create training data
