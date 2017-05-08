@@ -264,6 +264,12 @@ public class Program implements Serializable, Comparable<Program> {
    public String toString()
    {
       StringBuilder sb = new StringBuilder();
+      sb.append("constants:");
+      sb.append("\n").append(constantSet);
+      sb.append("\nregisters:");
+      sb.append("\n").append(registerSet);
+      sb.append("\noperators:");
+      sb.append("\n").append(operatorSet);
       for (int i = 0; i < instructions.size(); ++i)
       {
          sb.append("instruction[").append(i).append("]: ").append(instructions.get(i)).append("\n");

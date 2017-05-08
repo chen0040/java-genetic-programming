@@ -2,6 +2,7 @@ package com.github.chen0040.gp.utils;
 
 
 import com.github.chen0040.gp.services.SimpleRandEngine;
+import org.apache.commons.math3.exception.OutOfRangeException;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -26,5 +27,11 @@ public class TournamentSelectionUnitTest {
       assertThat(winners._1()).isNotEqualTo(winners._2());
       assertThat(losers._1()).isGreaterThan(winners._1());
       assertThat(losers._2()).isGreaterThan(winners._2());
+   }
+
+   @Test(expectedExceptions = OutOfRangeException.class)
+   public void test_select_exception() {
+      List<Double> a = Arrays.asList(0.1, 0.2, 0.3);
+      TournamentSelection.select(a, new SimpleRandEngine());
    }
 }

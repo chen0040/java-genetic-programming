@@ -44,7 +44,12 @@ public class RegisterSet extends EntityContainer<Register> implements Serializab
          if(i != 0){
             sb.append("\r\n");
          }
-         sb.append("register[").append(i).append("]: ").append(entities.get(i));
+         if(isReadOnly()){
+            sb.append("constant");
+         } else {
+            sb.append("register");
+         }
+         sb.append("[").append(i).append("]: ").append(entities.get(i));
       }
       return sb.toString();
    }

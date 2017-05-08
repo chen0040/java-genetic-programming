@@ -3,6 +3,7 @@ package com.github.chen0040.gp.lgp.applications;
 
 import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
+import com.github.chen0040.gp.lgp.enums.LGPInitializationStrategy;
 import com.github.chen0040.gp.lgp.enums.LGPReplacementStrategy;
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
 import com.github.chen0040.gp.lgp.gp.Observation;
@@ -75,12 +76,11 @@ public class MexicanHatUnitTest {
       Program program = pop.getGlobalBestProgram();
       logger.info("global: {}", program);
 
-      testLGP(program, testingData);
+      testRunLGP(program, testingData);
 
    }
-
-
-   private void testLGP(Program program, List<Observation> testingData) {
+   
+   private void testRunLGP(Program program, List<Observation> testingData) {
       for(Observation observation : testingData) {
          program.execute(observation);
          double predicted = observation.getExpectedOutput(0);
@@ -89,8 +89,7 @@ public class MexicanHatUnitTest {
          logger.info("predicted: {}\tactual: {}", predicted, actual);
       }
    }
-
-
+   
    private LGP createLGP(){
       LGP lgp = new LGP();
       lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
@@ -140,9 +139,9 @@ public class MexicanHatUnitTest {
       Population pop = runGP(lgp);
 
       Program program = pop.getGlobalBestProgram();
-      logger.info("global: {}", program);
+      logger.info("global:\n{}", program);
 
-      testLGP(program, testingData);
+      testRunLGP(program, testingData);
 
    }
 
@@ -164,7 +163,7 @@ public class MexicanHatUnitTest {
       Program program = pop.getGlobalBestProgram();
       logger.info("global: {}", program);
 
-      testLGP(program, testingData);
+      testRunLGP(program, testingData);
 
    }
 
@@ -186,7 +185,52 @@ public class MexicanHatUnitTest {
       Program program = pop.getGlobalBestProgram();
       logger.info("global: {}", program);
 
-      testLGP(program, testingData);
+      testRunLGP(program, testingData);
+
+   }
+
+
+   @Test
+   public void test_symbolic_regression_effective_mutation() {
+
+      List<Observation> data = mexican_hat();
+      CollectionUtils.shuffle(data);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+      List<Observation> trainingData = split_data._1();
+      List<Observation> testingData = split_data._2();
+
+      LGP lgp = createLGP();
+      lgp.getObservations().addAll(trainingData);
+      lgp.setEffectiveMutation(true);
+
+      Population pop = runGP(lgp);
+
+      Program program = pop.getGlobalBestProgram();
+      logger.info("global: {}", program);
+
+      testRunLGP(program, testingData);
+
+   }
+
+   @Test
+   public void test_symbolic_regression_pop_init_const_length() {
+
+      List<Observation> data = mexican_hat();
+      CollectionUtils.shuffle(data);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+      List<Observation> trainingData = split_data._1();
+      List<Observation> testingData = split_data._2();
+
+      LGP lgp = createLGP();
+      lgp.getObservations().addAll(trainingData);
+      lgp.setProgramInitializationStrategy(LGPInitializationStrategy.ConstantLength);
+
+      Population pop = runGP(lgp);
+
+      Program program = pop.getGlobalBestProgram();
+      logger.info("global: {}", program);
+
+      testRunLGP(program, testingData);
 
    }
 }

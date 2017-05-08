@@ -49,7 +49,7 @@ public class MacroMutation {
 
          if(manager.isEffectiveMutation())
          {
-            while(instructions.get(loc).getOperator().isConditionalConstruct() && loc < instructions.size())
+            while(loc < instructions.size() && instructions.get(loc).getOperator().isConditionalConstruct())
             {
                loc++;
             }
