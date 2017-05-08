@@ -12,6 +12,6 @@ import lombok.Setter;
 @Setter
 public class TournamentSelectionResult<T> {
 
-   private TupleTwo<T> winners;
-   private TupleTwo<T> losers;
+   private TupleTwo<T, T> winners;
+   private TupleTwo<T, T> losers;
 }

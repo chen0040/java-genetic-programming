@@ -5,7 +5,10 @@ import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
 import com.github.chen0040.gp.lgp.gp.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
+import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.program.operators.*;
+import com.github.chen0040.gp.utils.CollectionUtils;
+import com.github.chen0040.gp.utils.TupleTwo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -55,12 +58,19 @@ public class MexicanHatUnitTest {
 
    @Test
    public void test_symbolic_regression() {
+
+      List<Observation> data = mexican_hat();
+      CollectionUtils.shuffle(data);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+      List<Observation> trainingData = split_data._1();
+      List<Observation> testingData = split_data._2();
+
       LGP lgp = new LGP();
       lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
       lgp.getOperatorSet().addIfLessThanOperator();
       lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
       lgp.setRegisterCount(6);
-      lgp.getObservations().addAll(mexican_hat());
+      lgp.getObservations().addAll(trainingData);
       lgp.setCostEvaluator((program, observations)->{
          double error = 0;
          for(Observation observation : observations){
@@ -81,6 +91,16 @@ public class MexicanHatUnitTest {
          logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
       }
 
-      logger.info("global: {}", pop.getGlobalBestProgram());
+      Program program = pop.getGlobalBestProgram();
+      logger.info("global: {}", program);
+
+      for(Observation observation : testingData) {
+         program.execute(observation);
+         double predicted = observation.getExpectedOutput(0);
+         double actual = observation.getOutput(0);
+
+         logger.info("predicted: {}\tactual: {}", predicted, actual);
+      }
+
    }
 }

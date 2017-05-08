@@ -79,8 +79,8 @@ public class Population {
       {
 
          TournamentSelectionResult<Program> tournament = TournamentSelection.select(programs, randEngine);
-         TupleTwo<Program> tournament_winners = tournament.getWinners();
-         TupleTwo<Program> tournament_losers = tournament.getLosers();
+         TupleTwo<Program, Program> tournament_winners = tournament.getWinners();
+         TupleTwo<Program, Program> tournament_losers = tournament.getLosers();
 
          Program tp1 = tournament_winners._1().makeCopy();
          Program tp2 = tournament_winners._2().makeCopy();
