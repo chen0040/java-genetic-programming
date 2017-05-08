@@ -7,7 +7,30 @@ This package provides java implementation of various genetic programming paradig
 # Features
 
 * Linear Genetic Programming
-
+   
+    - Crossover
+     
+        + Linear
+        + One-Point
+        + One-Segment
+    
+    - Mutation
+   
+        + Micro-Mutation
+        + Effective-Macro-Mutation
+        + Macro-Mutation
+    
+    - Replacement
+   
+        + Tournament
+        + Direct-Compete
+    
+    - Default-Operators
+   
+        + Most of the math operators
+        + if-less, if-greater
+        + Support operator extension
+    
 Future Works
 
 * Tree Genetic Programming
@@ -22,7 +45,7 @@ Add the following dependency to your POM file:
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-genetic-programming</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 
