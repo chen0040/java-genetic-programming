@@ -8,6 +8,51 @@
     <artifactId>java-genetic-programming</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://github.com/chen0040/java-genetic-programming/LICENSE.md</url>
+            <comments>MIT License</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <email>xs0040@gmail.com</email>
+            <id>chen0040</id>
+            <name>Xianshun Chen</name>
+            <url>https://github.com/chen0040</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/chen0040/java-genetic-programming</url>
+        <connection>scm:git:git://github.com/chen0040/java-genetic-programming.git</connection>
+        <developerConnection>scm:git:git@github.com:chen0040/java-genetic-programming.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/chen0040/java-genetic-programming/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+
+    <name>Genetic Programming in Java</name>
+    <description>Genetic Programming in Java, including packages on Linear Genetic Programming</description>
+    <url>https://github.com/chen0040/java-genetic-programming</url>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>central</id>
@@ -42,8 +87,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
-
-        <build.version>1.0-SNAPSHOT</build.version>
 
         <surefire.version>2.19</surefire.version>
         <failsafe.version>2.19.1</failsafe.version>
@@ -90,7 +133,7 @@
         </profile>
 
         <profile>
-            <id>deployment</id>
+            <id>release</id>
             <properties>
                 <current.scope>compile</current.scope>
             </properties>
@@ -102,12 +145,70 @@
                         <version>${surefire.version}</version>
                         <configuration>
                             <skipTests>true</skipTests>
-                            <argLine>-Dfile.encoding=UTF-8</argLine>
+                        </configuration>
+                    </plugin>
+
+                    <!-- for generating the source jar -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- for generating the javadocs -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- GPG signed component -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
 
         <profile>
             <id>unit-test</id>
@@ -394,11 +495,6 @@
             <version>${lombok.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>

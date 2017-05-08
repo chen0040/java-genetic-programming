@@ -18,7 +18,7 @@ Future Works
 
 ### Create training data
 
-The sample code below shows how to generate training data from the "Mexican Hat" regression problem:
+The sample code below shows how to generate data from the "Mexican Hat" regression problem:
 
 ```java
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
@@ -27,35 +27,51 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
-List<Observation> trainingData = new ArrayList<>();
+private List<Observation> mexican_hat(){
+  List<Observation> result = new ArrayList<>();
 
-BiFunction<Double, Double, Double> mexican_hat_func = (x1, x2) -> (1 - x1 * x1 / 4 - x2 * x2 / 4) * Math.exp(- x1 * x2 / 8 - x2 * x2 / 8);
+  BiFunction<Double, Double, Double> mexican_hat_func = (x1, x2) -> (1 - x1 * x1 / 4 - x2 * x2 / 4) * Math.exp(- x1 * x2 / 8 - x2 * x2 / 8);
 
-double lower_bound=-4;
-double upper_bound=4;
-int period=16;
+  double lower_bound=-4;
+  double upper_bound=4;
+  int period=16;
 
-double interval=(upper_bound - lower_bound) / period;
+  double interval=(upper_bound - lower_bound) / period;
 
-for(int i=0; i<period; i++)
-{
- double x1=lower_bound + interval * i;
- for(int j=0; j<period; j++)
- {
-    double x2=lower_bound + interval * j;
+  for(int i=0; i<period; i++)
+  {
+     double x1=lower_bound + interval * i;
+     for(int j=0; j<period; j++)
+     {
+        double x2=lower_bound + interval * j;
 
-    Observation observation = new BasicObservation(2, 1);
+        Observation observation = new BasicObservation(2, 1);
 
-    observation.setInput(0, x1);
-    observation.setInput(1, x2);
-    observation.setOutput(0, mexican_hat_func.apply(x1, x2));
+        observation.setInput(0, x1);
+        observation.setInput(1, x2);
+        observation.setOutput(0, mexican_hat_func.apply(x1, x2));
 
-    trainingData.add(observation);
- }
+        result.add(observation);
+     }
+  }
+
+  return result;
 }
 ```
 
+We can split the data generated into training and testing data:
+
+```java
+import com.github.chen0040.gp.utils.CollectionUtils;
+
+List<Observation> data = mexican_hat();
+CollectionUtils.shuffle(data);
+TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+List<Observation> trainingData = split_data._1();
+List<Observation> testingData = split_data._2();
+```
 ### Create and train the LGP
+
  
 The sample code below shows how the LGP can be created and trained:
 
@@ -71,7 +87,7 @@ lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(
 lgp.getOperatorSet().addIfLessThanOperator();
 lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
 lgp.setRegisterCount(6);
-lgp.getObservations().addAll(mexican_hat());
+lgp.getObservations().addAll(trainingData);
 lgp.setCostEvaluator((program, observations)->{
  double error = 0;
  for(Observation observation : observations){
@@ -137,4 +153,21 @@ instruction[36]: <If<	r[2]	c[5]	r[2]>
 instruction[37]: <-	r[5]	c[7]	r[3]>
 instruction[38]: <-	c[8]	r[3]	r[3]>
 instruction[39]: <^	c[3]	r[0]	r[5]>
+```
+
+### Test the program obtained from the LGP evolution
+
+The best program in the LGP population obtained from the training in the above step can then be used for prediction, as shown by the sample code below:
+
+```java
+Program program = pop.getGlobalBestProgram();
+logger.info("global: {}", program);
+
+for(Observation observation : testingData) {
+ program.execute(observation);
+ double predicted = observation.getExpectedOutput(0);
+ double actual = observation.getOutput(0);
+
+ logger.info("predicted: {}\tactual: {}", predicted, actual);
+}
 ```
