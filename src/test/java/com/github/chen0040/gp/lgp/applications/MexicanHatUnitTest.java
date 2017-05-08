@@ -2,6 +2,7 @@ package com.github.chen0040.gp.lgp.applications;
 
 
 import com.github.chen0040.gp.lgp.LGP;
+import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
 import com.github.chen0040.gp.lgp.gp.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
@@ -65,12 +66,36 @@ public class MexicanHatUnitTest {
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
+      LGP lgp = createLGP();
+      lgp.getObservations().addAll(trainingData);
+
+      Population pop = runGP(lgp);
+
+      Program program = pop.getGlobalBestProgram();
+      logger.info("global: {}", program);
+
+      testLGP(program, testingData);
+
+   }
+
+
+   private void testLGP(Program program, List<Observation> testingData) {
+      for(Observation observation : testingData) {
+         program.execute(observation);
+         double predicted = observation.getExpectedOutput(0);
+         double actual = observation.getOutput(0);
+
+         logger.info("predicted: {}\tactual: {}", predicted, actual);
+      }
+   }
+
+
+   private LGP createLGP(){
       LGP lgp = new LGP();
       lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
       lgp.getOperatorSet().addIfLessThanOperator();
       lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
       lgp.setRegisterCount(6);
-      lgp.getObservations().addAll(trainingData);
       lgp.setCostEvaluator((program, observations)->{
          double error = 0;
          for(Observation observation : observations){
@@ -81,7 +106,10 @@ public class MexicanHatUnitTest {
          return error;
       });
       lgp.setMaxGeneration(100); // should be 1000 for full evolution
+      return lgp;
+   }
 
+   private Population runGP(LGP lgp) {
       long startTime = System.currentTimeMillis();
       Population pop = lgp.newPopulation();
       pop.initialize();
@@ -92,16 +120,50 @@ public class MexicanHatUnitTest {
          logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
       }
 
+      return pop;
+   }
+
+   @Test
+   public void test_symbolic_regression_with_crossover_onePoint() {
+
+      List<Observation> data = mexican_hat();
+      CollectionUtils.shuffle(data);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+      List<Observation> trainingData = split_data._1();
+      List<Observation> testingData = split_data._2();
+
+      LGP lgp = createLGP();
+      lgp.getObservations().addAll(trainingData);
+      lgp.setCrossoverStrategy(LGPCrossoverStrategy.OnePoint);
+
+      Population pop = runGP(lgp);
+
       Program program = pop.getGlobalBestProgram();
       logger.info("global: {}", program);
 
-      for(Observation observation : testingData) {
-         program.execute(observation);
-         double predicted = observation.getExpectedOutput(0);
-         double actual = observation.getOutput(0);
+      testLGP(program, testingData);
 
-         logger.info("predicted: {}\tactual: {}", predicted, actual);
-      }
+   }
+
+   @Test
+   public void test_symbolic_regression_with_crossover_oneSegment() {
+
+      List<Observation> data = mexican_hat();
+      CollectionUtils.shuffle(data);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+      List<Observation> trainingData = split_data._1();
+      List<Observation> testingData = split_data._2();
+
+      LGP lgp = createLGP();
+      lgp.getObservations().addAll(trainingData);
+      lgp.setCrossoverStrategy(LGPCrossoverStrategy.OneSegment);
+
+      Population pop = runGP(lgp);
+
+      Program program = pop.getGlobalBestProgram();
+      logger.info("global: {}", program);
+
+      testLGP(program, testingData);
 
    }
 }

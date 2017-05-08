@@ -67,7 +67,10 @@ public class Crossover {
          int ls2=1+randEngine.nextInt(max_segment_length);
          if(gp1.length()+ls2 > manager.getMaxProgramLength())
          {
-            ls2=manager.getMaxProgramLength()-gp1.length();
+            ls2=manager.getMaxProgramLength()-gp2.length()+1;
+         }
+         if(ls2 == gp2.length()){
+            ls2 = gp2.length()-1;
          }
          int i2=randEngine.nextInt(gp2.length()-ls2);
 
@@ -138,105 +141,98 @@ public class Crossover {
       // 1. assure abs(i1-i2) <= max_distance_of_crossover_points
       // 2. assure l(s1) <= l(s2)
       boolean not_feasible=true;
-      while (not_feasible)
-      {
+      int count = 0;
+      while (not_feasible && count < 10) {
          not_feasible = false;
          // ensure that the maximum distance between two crossover points is not exceeded
-         if (crossover_point_distance > max_distance_of_crossover_points)
-         {
+         if (crossover_point_distance > max_distance_of_crossover_points) {
             not_feasible = true;
             i1 = randEngine.nextInt(gp1.length());
             i2 = randEngine.nextInt(gp2.length());
             crossover_point_distance = (i1 > i2) ? (i1 - i2) : (i2 - i1);
          }
-         else
-         {
+         else {
             ls1 = gp1.length() - i1;
             ls2 = gp2.length() - i2;
             // assure than l(s1) <= l(s2)
-            if (ls1 > ls2)
-            {
+            if (ls1 > ls2) {
                not_feasible = true;
                i1 = randEngine.nextInt(gp1.length());
                i2 = randEngine.nextInt(gp2.length());
                crossover_point_distance = (i1 > i2) ? (i1 - i2) : (i2 - i1);
             }
-            else
-            {
+            else {
                // assure the length of the program after crossover do not exceed the maximum program length or below minimum program length
-               if ((gp2.length() - (ls2 - ls1)) < manager.getMinProgramLength() || (gp1.length() + (ls2 - ls1)) > manager.getMaxProgramLength())
-               {
+               if ((gp2.length() - (ls2 - ls1)) < manager.getMinProgramLength() || (gp1.length() + (ls2 - ls1)) > manager.getMaxProgramLength()) {
                   not_feasible = true;
                   // when the length constraint is not satisfied, make the segments to be exchanged the same length
-                  if (gp1.length() >= gp2.length())
-                  {
+                  if (gp1.length() >= gp2.length()) {
                      i1 = i2;
                   }
-                  else
-                  {
+                  else {
                      i2 = i1;
                   }
                   crossover_point_distance = 0;
                }
-               else
-               {
+               else {
                   not_feasible = false;
                }
             }
          }
-
-         List<Instruction> instructions1 = gp1.getInstructions();
-         List<Instruction> instructions2 = gp2.getInstructions();
-
-         List<Instruction> instructions1_1 = new ArrayList<>();
-         List<Instruction> instructions1_2 = new ArrayList<>();
-
-         List<Instruction> instructions2_1 = new ArrayList<>();
-         List<Instruction> instructions2_2 = new ArrayList<>();
-
-         for (int i = 0; i < i1; ++i)
-         {
-            instructions1_1.add(instructions1.get(i));
-         }
-         for (int i = i1; i < instructions1.size(); ++i)
-         {
-            instructions1_2.add(instructions1.get(i));
-         }
-
-         for (int i = 0; i < i2; ++i)
-         {
-            instructions2_1.add(instructions2.get(i));
-         }
-         for (int i = i2; i < instructions2.size(); ++i)
-         {
-            instructions2_2.add(instructions2.get(i));
-         }
-
-         instructions1.clear();
-         instructions2.clear();
-
-         for (int i = 0; i < i1; ++i)
-         {
-            instructions1.add(instructions1_1.get(i));
-         }
-         for (int i = 0; i < instructions2_2.size(); ++i)
-         {
-            instructions1.add(InstructionHelper.reassign2Program(instructions2_2.get(i), gp1));
-         }
-
-         for (int i = 0; i < i2; ++i)
-         {
-            instructions2.add(instructions2_1.get(i));
-         }
-
-         for (int i = 0; i < instructions1_2.size(); ++i)
-         {
-            instructions2.add(InstructionHelper.reassign2Program(instructions1_2.get(i), gp2));
-         }
-
-         gp1.invalidateCost();
-         gp2.invalidateCost();
+         count++;
       }
+
+      List<Instruction> instructions1 = gp1.getInstructions();
+      List<Instruction> instructions2 = gp2.getInstructions();
+
+      List<Instruction> instructions1_1 = new ArrayList<>();
+      List<Instruction> instructions1_2 = new ArrayList<>();
+
+      List<Instruction> instructions2_1 = new ArrayList<>();
+      List<Instruction> instructions2_2 = new ArrayList<>();
+
+      for (int i = 0; i < i1; ++i)
+      {
+         instructions1_1.add(instructions1.get(i));
+      }
+      for (int i = i1; i < instructions1.size(); ++i)
+      {
+         instructions1_2.add(instructions1.get(i));
+      }
+
+      for (int i = 0; i < i2; ++i)
+      {
+         instructions2_1.add(instructions2.get(i));
+      }
+      for (int i = i2; i < instructions2.size(); ++i)
+      {
+         instructions2_2.add(instructions2.get(i));
+      }
+
+      instructions1.clear();
+      instructions2.clear();
+
+      for (int i = 0; i < i1; ++i)
+      {
+         instructions1.add(instructions1_1.get(i));
+      }
+      for (int i = 0; i < instructions2_2.size(); ++i)
+      {
+         instructions1.add(InstructionHelper.reassign2Program(instructions2_2.get(i), gp1));
+      }
+
+      for (int i = 0; i < i2; ++i)
+      {
+         instructions2.add(instructions2_1.get(i));
+      }
+
+      for (int i = 0; i < instructions1_2.size(); ++i)
+      {
+         instructions2.add(InstructionHelper.reassign2Program(instructions1_2.get(i), gp2));
+      }
+
+      gp1.invalidateCost();
+      gp2.invalidateCost();
    }
 
 
