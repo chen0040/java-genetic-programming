@@ -75,7 +75,9 @@ public class Population {
       int iPopSize = manager.getPopulationSize();
       int program_count=0;
 
-      while(program_count < iPopSize)
+      int computationBudget = iPopSize * 8;
+      int counter = 0;
+      while(program_count < iPopSize && counter < computationBudget)
       {
 
          TournamentSelectionResult<Program> tournament = TournamentSelection.select(programs, randEngine);
@@ -133,6 +135,8 @@ public class Population {
          {
             ++program_count;
          }
+
+         counter++;
       }
 
       double bestCost = Double.MAX_VALUE;

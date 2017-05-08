@@ -8,6 +8,7 @@ import com.github.chen0040.gp.lgp.program.Register;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.testng.Assert.assertEquals;
 
 
 /**
@@ -43,5 +44,11 @@ public class LogUnitTest {
       assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(LGP.DEFAULT_UNDEFINED_LOW);
+   }
+
+   @Test
+   public void test_makeCopy(){
+      Operator op = new Log();
+      assertEquals(op, op.makeCopy());
    }
 }

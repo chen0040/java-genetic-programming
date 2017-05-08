@@ -3,6 +3,7 @@ package com.github.chen0040.gp.lgp.applications;
 
 import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
+import com.github.chen0040.gp.lgp.enums.LGPReplacementStrategy;
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
 import com.github.chen0040.gp.lgp.gp.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
@@ -157,6 +158,28 @@ public class MexicanHatUnitTest {
       LGP lgp = createLGP();
       lgp.getObservations().addAll(trainingData);
       lgp.setCrossoverStrategy(LGPCrossoverStrategy.OneSegment);
+
+      Population pop = runGP(lgp);
+
+      Program program = pop.getGlobalBestProgram();
+      logger.info("global: {}", program);
+
+      testLGP(program, testingData);
+
+   }
+
+   @Test
+   public void test_symbolic_regression_replacement_direct_compete() {
+
+      List<Observation> data = mexican_hat();
+      CollectionUtils.shuffle(data);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+      List<Observation> trainingData = split_data._1();
+      List<Observation> testingData = split_data._2();
+
+      LGP lgp = createLGP();
+      lgp.getObservations().addAll(trainingData);
+      lgp.setReplacementStrategy(LGPReplacementStrategy.DirectCompetition);
 
       Population pop = runGP(lgp);
 

@@ -7,6 +7,7 @@ import com.github.chen0040.gp.lgp.program.Register;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.testng.Assert.assertEquals;
 
 
 /**
@@ -42,6 +43,12 @@ public class IfGreaterThanTest {
       Register destination = new Register();
 
       assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_SKIP_NEXT_INSTRUCTION);
+   }
+
+   @Test
+   public void test_makeCopy(){
+      Operator op = new IfGreaterThan();
+      assertEquals(op, op.makeCopy());
    }
 
 }
