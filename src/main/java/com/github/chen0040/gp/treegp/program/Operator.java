@@ -11,6 +11,10 @@ import java.io.Serializable;
 public abstract class Operator extends Primitive implements Serializable {
    private static final long serialVersionUID = -8950539267456770919L;
 
+   public Operator(){
+      super();
+   }
+
    public Operator(int parameterCount, String symbol){
       super(parameterCount, symbol, 0, true);
    }

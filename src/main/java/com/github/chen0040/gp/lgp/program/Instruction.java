@@ -52,4 +52,35 @@ public class Instruction implements Serializable {
               .concat(">")
               .concat(structuralIntron ? "(intron)" : "");
    }
+
+
+   @Override public boolean equals(Object o) {
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
+
+      Instruction that = (Instruction) o;
+
+      if (structuralIntron != that.structuralIntron)
+         return false;
+      if (operator != null ? !operator.equals(that.operator) : that.operator != null)
+         return false;
+      if (operand1 != null ? !operand1.equals(that.operand1) : that.operand1 != null)
+         return false;
+      if (operand2 != null ? !operand2.equals(that.operand2) : that.operand2 != null)
+         return false;
+      return targetOperand != null ? targetOperand.equals(that.targetOperand) : that.targetOperand == null;
+
+   }
+
+
+   @Override public int hashCode() {
+      int result = operator != null ? operator.hashCode() : 0;
+      result = 31 * result + (operand1 != null ? operand1.hashCode() : 0);
+      result = 31 * result + (operand2 != null ? operand2.hashCode() : 0);
+      result = 31 * result + (targetOperand != null ? targetOperand.hashCode() : 0);
+      result = 31 * result + (structuralIntron ? 1 : 0);
+      return result;
+   }
 }

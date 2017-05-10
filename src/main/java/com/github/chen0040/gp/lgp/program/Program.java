@@ -101,7 +101,7 @@ public class Program implements Serializable, Comparable<Program> {
       }
    }
 
-   public void MarkStructuralIntrons(int stop_point, Set<Integer> Reff, LGP manager)
+   public void markStructuralIntrons(int stop_point, Set<Integer> Reff, LGP manager)
    {
          /*
         Source: Brameier, M 2004  On Linear Genetic Programming (thesis)
@@ -299,6 +299,24 @@ public class Program implements Serializable, Comparable<Program> {
 
       return Double.compare(cost, o.cost);
 
+   }
+
+   @Override
+   public boolean equals(Object obj){
+      if(obj == null || !(obj instanceof Program)){
+         return false;
+      }
+
+      return compareTo((Program)obj) == 0;
+   }
+
+   @Override
+   public int hashCode(){
+      int h = 0;
+      for(int i=0; i < instructions.size(); ++i) {
+         h = h * 31 + instructions.get(i).hashCode();
+      }
+      return h;
    }
 
 

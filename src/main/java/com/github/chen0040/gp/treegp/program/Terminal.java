@@ -10,6 +10,9 @@ import java.io.Serializable;
 public class Terminal extends Primitive implements Serializable {
    private static final long serialVersionUID = 8438360593097636018L;
 
+   public Terminal(){
+      super();
+   }
 
    public Terminal(String symbol, double value, boolean readonly) {
       super(0, symbol, value, readonly);

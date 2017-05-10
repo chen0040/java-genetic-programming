@@ -25,9 +25,7 @@ import java.util.function.BiFunction;
  */
 @Getter
 @Setter
-public class LGP implements Serializable {
-
-   private static final long serialVersionUID = 5575895345509778505L;
+public class LGP {
 
    public static final double DEFAULT_UNDEFINED_LOW = 1;
    private boolean useUndefinedLow = true;

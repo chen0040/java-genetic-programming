@@ -56,7 +56,7 @@ public class MacroMutation {
             if(loc < instructions.size())
             {
                Set<Integer> Reff= new HashSet<>();
-               child.MarkStructuralIntrons(loc, Reff, manager);
+               child.markStructuralIntrons(loc, Reff, manager);
                if(Reff.size() > 0)
                {
                   int iRegisterIndex=-1;

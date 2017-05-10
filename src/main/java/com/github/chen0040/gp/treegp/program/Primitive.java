@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,8 @@ import java.util.List;
 /**
  * Created by xschen on 8/5/2017.
  */
-public class Primitive {
+public class Primitive implements Serializable {
+   private static final long serialVersionUID = -249257238928605728L;
    private final List<Double> inputs = new ArrayList<>();
    private double value;
    private final String symbol;
@@ -16,6 +18,11 @@ public class Primitive {
 
    public boolean isTerminal(){
       return inputs.isEmpty();
+   }
+
+   public Primitive(){
+      symbol = "";
+      readOnly = false;
    }
 
    public Primitive(int inputCount, String symbol, double value, boolean readOnly) {
