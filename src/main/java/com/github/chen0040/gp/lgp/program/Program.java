@@ -218,7 +218,7 @@ public class Program implements Serializable, Comparable<Program> {
       int outputRegisterCount = Math.min(registerSet.size(), fitness_case.outputCount());
       for (int i = 0; i < outputRegisterCount; ++i)
       {
-         fitness_case.setExpectedOutput(i, registerSet.get(i).getValue());
+         fitness_case.setPredictedOutput(i, registerSet.get(i).getValue());
       }
    }
 

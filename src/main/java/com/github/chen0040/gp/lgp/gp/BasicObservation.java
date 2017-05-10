@@ -21,7 +21,7 @@ public class BasicObservation implements Observation {
    }
 
 
-   @Override public void setExpectedOutput(int index, double value) {
+   @Override public void setPredictedOutput(int index, double value) {
       expectedOutputs[index] = value;
    }
 
@@ -40,7 +40,7 @@ public class BasicObservation implements Observation {
    }
 
 
-   @Override public double getExpectedOutput(int index) {
+   @Override public double getPredictedOutput(int index) {
       return expectedOutputs[index];
    }
 

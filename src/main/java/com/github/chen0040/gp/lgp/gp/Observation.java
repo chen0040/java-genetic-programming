@@ -8,11 +8,11 @@ public interface Observation {
 
    double getInput(int index);
    double getOutput(int index);
-   double getExpectedOutput(int index);
+   double getPredictedOutput(int index);
 
    void setOutput(int index, double value);
    void setInput(int index, double value);
-   void setExpectedOutput(int index, double value);
+   void setPredictedOutput(int index, double value);
 
 
    int inputCount();

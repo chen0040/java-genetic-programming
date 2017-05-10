@@ -45,7 +45,7 @@ Add the following dependency to your POM file:
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-genetic-programming</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 </dependency>
 ```
 
@@ -127,7 +127,7 @@ lgp.setCostEvaluator((program, observations)->{
  double error = 0;
  for(Observation observation : observations){
     program.execute(observation);
-    error += Math.pow(observation.getOutput(0) - observation.getExpectedOutput(0), 2.0);
+    error += Math.pow(observation.getOutput(0) - observation.getPredictedOutput(0), 2.0);
  }
 
  return error;
@@ -200,7 +200,7 @@ logger.info("global: {}", program);
 
 for(Observation observation : testingData) {
  program.execute(observation);
- double predicted = observation.getExpectedOutput(0);
+ double predicted = observation.getPredictedOutput(0);
  double actual = observation.getOutput(0);
 
  logger.info("predicted: {}\tactual: {}", predicted, actual);
