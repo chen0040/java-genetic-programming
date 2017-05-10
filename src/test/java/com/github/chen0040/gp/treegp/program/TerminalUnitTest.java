@@ -53,4 +53,11 @@ public class TerminalUnitTest {
       t.setValue(0.3);
       t.read(Arrays.asList(0.1, 0.2));
    }
+
+   @Test
+   public void testTerminalWithDefaultConstructor(){
+      Terminal t = new Terminal();
+      assertThat(t.getSymbol()).isEqualTo("");
+      assertThat(t.isReadOnly()).isFalse();
+   }
 }
