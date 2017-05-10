@@ -11,26 +11,27 @@ import java.util.List;
 public class Primitive {
    private final List<Double> inputs = new ArrayList<>();
    private double value;
+   private final String symbol;
+   private final boolean readOnly;
 
    public boolean isTerminal(){
       return inputs.isEmpty();
    }
 
-   public Primitive(){
-
-   }
-
-   public Primitive(int inputCount) {
+   public Primitive(int inputCount, String symbol, double value, boolean readOnly) {
       for(int i=0; i < inputCount; ++i){
          inputs.add(0.0);
       }
+      this.symbol = symbol;
+      this.value = value;
+      this.readOnly = readOnly;
    }
 
    public int arity(){
       return inputs.size();
    }
 
-   public void fire(List<Double> values){
+   public void read(List<Double> values){
       if(inputs.size() != values.size()) {
          throw new RuntimeException("Value size not matched");
       }
@@ -40,14 +41,38 @@ public class Primitive {
    }
 
    public void setInput(int index, double value){
+      if(index >= arity()){
+         throw new IndexOutOfBoundsException(index + " is greater or equal to input size" + arity());
+      }
       inputs.set(index, value);
    }
 
    public double getInput(int index) {
+      if(index >= arity()){
+         throw new IndexOutOfBoundsException(index + " is greater or equal to input size" + arity());
+      }
       return inputs.get(index);
    }
 
+   public void setValue(double val){
+      if(readOnly){
+         throw new RuntimeException("The primitive is readonly");
+      }
+      value = val;
+   }
 
+   public double getValue(){
+      return value;
+   }
+
+
+   public String getSymbol(){
+      return symbol;
+   }
+
+   public boolean isReadOnly(){
+      return readOnly;
+   }
 
 
 }

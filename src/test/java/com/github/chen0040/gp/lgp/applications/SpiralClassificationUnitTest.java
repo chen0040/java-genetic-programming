@@ -34,7 +34,7 @@ public class SpiralClassificationUnitTest {
    public void test_symbolic_classification() throws IOException {
       List<Observation> data = spiral();
       CollectionUtils.shuffle(data);
-      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.6);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
@@ -89,9 +89,9 @@ public class SpiralClassificationUnitTest {
             error += actual != predicted ? 1 : 0;
          }
 
-         return error;
+         return error / observations.size();
       });
-      lgp.setMaxGeneration(100); // should be 1000 for full evolution
+      lgp.setMaxGeneration(300); // should be 1000 for full evolution
       lgp.setCrossoverStrategy(LGPCrossoverStrategy.OneSegment);
       lgp.setMaxProgramLength(200);
       lgp.setMinProgramLength(1);
