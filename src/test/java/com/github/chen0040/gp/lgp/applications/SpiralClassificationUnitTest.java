@@ -34,7 +34,7 @@ public class SpiralClassificationUnitTest {
    public void test_symbolic_classification() throws IOException {
       List<Observation> data = spiral();
       CollectionUtils.shuffle(data);
-      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.6);
+      TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.8);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
@@ -75,7 +75,7 @@ public class SpiralClassificationUnitTest {
 
    private LGP createLGP(){
       LGP lgp = new LGP();
-      lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
+      lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Sine(), new Cosine());
       lgp.getOperatorSet().addIfLessThanOperator();
       lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
       lgp.setRegisterCount(6);
