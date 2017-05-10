@@ -9,7 +9,4 @@ public class InvalidCostException extends RuntimeException {
       super(message);
    }
 
-   public InvalidCostException(){
-      super();
-   }
 }

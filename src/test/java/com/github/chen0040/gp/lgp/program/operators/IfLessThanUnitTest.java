@@ -13,7 +13,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by xschen on 1/5/2017.
  */
-public class IfLessThanTest {
+public class IfLessThanUnitTest {
 
    @Test
    public void test_not_less() {

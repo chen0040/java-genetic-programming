@@ -13,7 +13,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by xschen on 1/5/2017.
  */
-public class IfGreaterThanTest {
+public class IfGreaterThanUnitTest {
 
    @Test
    public void test_greater() {

@@ -51,6 +51,8 @@ public class RegisterUnitTest {
       assertThat(clone.getIndex()).isEqualTo(0);
       assertTrue(clone.isConstant());
       assertThat(clone.getValue()).isEqualTo(0.1);
+      assertThat(register).isEqualTo(clone);
+      assertThat(register.hashCode()).isEqualTo(clone.hashCode());
    }
 
 }
