@@ -22,6 +22,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
 
 /**
  * Created by xschen on 10/5/2017.
@@ -47,6 +49,14 @@ public class SpiralClassificationUnitTest {
       logger.info("global: {}", program);
 
       test(program, testingData);
+
+      testMakeCopy(program);
+   }
+
+   private void testMakeCopy(Program program) {
+      Program copy = program.makeCopy();
+      assertThat(copy).isEqualTo(program);
+      assertThat(copy.hashCode()).isEqualTo(program.hashCode());
    }
 
    private Population train(LGP lgp) {

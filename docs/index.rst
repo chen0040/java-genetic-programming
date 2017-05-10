@@ -1,12 +1,9 @@
 java-genetic-programming
 ========================
 
-java-genetic-programming is a library of java implementation for algorithms in the fields of Genetic Programming. Currently it supports the following algorithms:
+java-genetic-programming is a library of java implementation for algorithms in the fields of Genetic Programming.
 
-* Linear Genetic Programming
-* Tree Genetic Programming (Coming Soon)
-
-The main purpose of this library is to provide java developers a tool set of genetic programming techniques
+The main purpose of this library is to provide java developers with a tool set of genetic programming techniques
 
 Installation:
 -------------
