@@ -71,7 +71,7 @@ public class MexicanHatUnitTest {
       LGP lgp = createLGP();
       lgp.getObservations().addAll(trainingData);
 
-      Population pop = train(lgp);
+      Population pop = train(lgp, false);
 
       Program program = pop.getGlobalBestProgram();
       logger.info("global: {}", program);
@@ -109,15 +109,18 @@ public class MexicanHatUnitTest {
       return lgp;
    }
 
-   private Population train(LGP lgp) {
+   private Population train(LGP lgp, boolean slient) {
       long startTime = System.currentTimeMillis();
       Population pop = lgp.newPopulation();
       pop.initialize();
       while (!pop.isTerminated())
       {
          pop.evolve();
-         logger.info("Mexican Hat Symbolic Regression Generation: {}, elapsed: {} seconds", pop.getCurrentGeneration(), (System.currentTimeMillis() - startTime) / 1000);
-         logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
+         if(!slient) {
+            logger.info("Mexican Hat Symbolic Regression Generation: {}, elapsed: {} seconds", pop.getCurrentGeneration(),
+                    (System.currentTimeMillis() - startTime) / 1000);
+            logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
+         }
       }
 
       return pop;
@@ -136,10 +139,9 @@ public class MexicanHatUnitTest {
       lgp.getObservations().addAll(trainingData);
       lgp.setCrossoverStrategy(LGPCrossoverStrategy.OnePoint);
 
-      Population pop = train(lgp);
+      Population pop = train(lgp, true);
 
       Program program = pop.getGlobalBestProgram();
-      logger.info("global:\n{}", program);
 
       test(program, testingData);
 
@@ -158,10 +160,9 @@ public class MexicanHatUnitTest {
       lgp.getObservations().addAll(trainingData);
       lgp.setCrossoverStrategy(LGPCrossoverStrategy.OneSegment);
 
-      Population pop = train(lgp);
+      Population pop = train(lgp, true);
 
       Program program = pop.getGlobalBestProgram();
-      logger.info("global: {}", program);
 
       test(program, testingData);
 
@@ -180,10 +181,9 @@ public class MexicanHatUnitTest {
       lgp.getObservations().addAll(trainingData);
       lgp.setReplacementStrategy(LGPReplacementStrategy.DirectCompetition);
 
-      Population pop = train(lgp);
+      Population pop = train(lgp, true);
 
       Program program = pop.getGlobalBestProgram();
-      logger.info("global: {}", program);
 
       test(program, testingData);
 
@@ -203,10 +203,9 @@ public class MexicanHatUnitTest {
       lgp.getObservations().addAll(trainingData);
       lgp.setEffectiveMutation(true);
 
-      Population pop = train(lgp);
+      Population pop = train(lgp, true);
 
       Program program = pop.getGlobalBestProgram();
-      logger.info("global: {}", program);
 
       test(program, testingData);
 
@@ -225,10 +224,9 @@ public class MexicanHatUnitTest {
       lgp.getObservations().addAll(trainingData);
       lgp.setProgramInitializationStrategy(LGPInitializationStrategy.ConstantLength);
 
-      Population pop = train(lgp);
+      Population pop = train(lgp, true);
 
       Program program = pop.getGlobalBestProgram();
-      logger.info("global: {}", program);
 
       test(program, testingData);
 
