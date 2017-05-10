@@ -19,9 +19,13 @@ public class EntityContainer<T extends Indexable<T>> {
 
    public double weightSum() {
       if(weights.isEmpty()){
-         return 0;
+         return 0.0;
       }
-      return weights.stream().reduce((a, b ) -> a + b).get();
+      double sum = 0;
+      for(Double weight : weights){
+         sum += weight;
+      }
+      return sum;
    }
 
    public T anyOther(T excluded, RandEngine rand){
