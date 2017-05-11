@@ -18,6 +18,7 @@ public class TanUnitTest {
    @Test
    public void test_makeCopy(){
       Tan op = new Tan();
+      assertThat(op.arity()).isEqualTo(1);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

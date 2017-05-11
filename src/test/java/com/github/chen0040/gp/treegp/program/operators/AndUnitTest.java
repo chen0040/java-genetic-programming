@@ -17,6 +17,7 @@ public class AndUnitTest {
    @Test
    public void test_makeCopy(){
       And op = new And();
+      assertThat(op.arity()).isEqualTo(2);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

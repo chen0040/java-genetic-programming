@@ -18,6 +18,7 @@ public class ExpUnitTest {
    @Test
    public void test_makeCopy(){
       Exp op = new Exp();
+      assertThat(op.arity()).isEqualTo(1);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

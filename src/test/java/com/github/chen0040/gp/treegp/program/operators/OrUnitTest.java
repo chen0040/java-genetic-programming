@@ -1,6 +1,8 @@
 package com.github.chen0040.gp.treegp.program.operators;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -13,10 +15,14 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  */
 public class OrUnitTest {
 
+   private static final Logger logger = LoggerFactory.getLogger(OrUnitTest.class);
+
    @Test
    public void test_makeCopy(){
       Or op = new Or();
+      assertThat(op.arity()).isEqualTo(2);
       assertThat(op.makeCopy()).isEqualTo(op);
+      logger.info("{}", op);
    }
 
    @Test

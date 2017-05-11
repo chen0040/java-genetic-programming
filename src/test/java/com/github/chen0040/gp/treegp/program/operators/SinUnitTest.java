@@ -18,6 +18,7 @@ public class SinUnitTest {
    @Test
    public void test_makeCopy(){
       Sin op = new Sin();
+      assertThat(op.arity()).isEqualTo(1);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

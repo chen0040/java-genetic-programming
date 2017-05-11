@@ -19,6 +19,7 @@ public class CosUnitTest {
    @Test
    public void test_makeCopy(){
       Cos op = new Cos();
+      assertThat(op.arity()).isEqualTo(1);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

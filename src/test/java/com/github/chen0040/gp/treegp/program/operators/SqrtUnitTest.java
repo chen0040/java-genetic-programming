@@ -18,6 +18,7 @@ public class SqrtUnitTest {
    @Test
    public void test_makeCopy(){
       Sqrt op = new Sqrt();
+      assertThat(op.arity()).isEqualTo(1);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

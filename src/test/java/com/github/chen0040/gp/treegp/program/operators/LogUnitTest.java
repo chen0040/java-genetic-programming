@@ -18,6 +18,7 @@ public class LogUnitTest {
    @Test
    public void test_makeCopy(){
       Log op = new Log();
+      assertThat(op.arity()).isEqualTo(1);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

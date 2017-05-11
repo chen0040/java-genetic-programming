@@ -20,6 +20,7 @@ public class NotUnitTest {
    @Test
    public void test_makeCopy(){
       Not op = new Not();
+      assertThat(op.arity()).isEqualTo(1);
       assertThat(op.makeCopy()).isEqualTo(op);
    }
 

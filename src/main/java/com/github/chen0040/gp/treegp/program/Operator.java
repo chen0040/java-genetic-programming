@@ -26,9 +26,13 @@ public abstract class Operator extends Primitive<Operator> implements Serializab
    {
       StringBuilder sb=new StringBuilder();
       sb.append(getSymbol());
+      sb.append("(");
       for (int i = 0; i < arity(); ++i)
       {
-         sb.append(" ").append(getInput(i));
+         if(i != 0) {
+            sb.append(", ");
+         }
+         sb.append(getInput(i));
       }
       sb.append(")");
       return sb.toString();
