@@ -7,7 +7,6 @@ import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
 import com.github.chen0040.gp.lgp.gp.Observation;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
-import com.github.chen0040.gp.utils.NumberUtils;
 import lombok.Getter;
 import lombok.Setter;
 

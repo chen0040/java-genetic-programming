@@ -1,4 +1,4 @@
-package com.github.chen0040.gp.utils;
+package com.github.chen0040.gp.commons;
 
 
 import lombok.Getter;

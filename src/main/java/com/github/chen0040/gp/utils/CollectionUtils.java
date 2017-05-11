@@ -1,13 +1,11 @@
 package com.github.chen0040.gp.utils;
 
 
-import com.github.chen0040.gp.lgp.gp.Observation;
-import com.github.chen0040.gp.lgp.program.Program;
+import com.github.chen0040.gp.commons.TupleTwo;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.services.SimpleRandEngine;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 

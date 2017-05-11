@@ -3,6 +3,7 @@ package com.github.chen0040.gp.utils;
 
 import com.github.chen0040.gp.exceptions.InvalidCostException;
 import com.github.chen0040.gp.lgp.program.Program;
+import com.github.chen0040.gp.utils.CollectionUtils;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;

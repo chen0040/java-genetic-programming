@@ -1,6 +1,9 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.gp.lgp.program.Indexable;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,16 +12,15 @@ import java.util.List;
 /**
  * Created by xschen on 8/5/2017.
  */
-public class Primitive implements Serializable {
+public abstract class Primitive<T> implements Serializable, Indexable<T> {
    private static final long serialVersionUID = -249257238928605728L;
    private final List<Double> inputs = new ArrayList<>();
    private double value;
    private final String symbol;
    private final boolean readOnly;
+   private int index;
 
-   public boolean isTerminal(){
-      return inputs.isEmpty();
-   }
+
 
    public Primitive(){
       symbol = "";
@@ -32,6 +34,21 @@ public class Primitive implements Serializable {
       this.symbol = symbol;
       this.value = value;
       this.readOnly = readOnly;
+   }
+
+   public boolean isTerminal(){
+      return inputs.isEmpty();
+   }
+
+   public void copy(Primitive<T> that) {
+      if(!symbol.equals(that.getSymbol())){
+         throw new RuntimeException("Symbol not matched for copy to proceed");
+      }
+      for(int i=0; i < that.inputs.size(); ++i) {
+         inputs.add(that.inputs.get(i));
+      }
+      value = that.value;
+      index = that.index;
    }
 
    public int arity(){
@@ -82,4 +99,58 @@ public class Primitive implements Serializable {
    }
 
 
+   @Override public int getIndex() {
+      return index;
+   }
+
+
+   @Override public void setIndex(int index) {
+      this.index = index;
+   }
+
+
+   @Override public abstract T makeCopy();
+
+
+   @Override public boolean equals(Object o) {
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
+
+      Primitive<?> primitive = (Primitive<?>) o;
+
+      /*
+      if (Double.compare(primitive.value, value) != 0)
+         return false;
+      */
+
+      if (readOnly != primitive.readOnly)
+         return false;
+      if (index != primitive.index)
+         return false;
+
+      /*
+      if (inputs != null ? !inputs.equals(primitive.inputs) : primitive.inputs != null)
+         return false;
+      */
+
+      return symbol != null ? symbol.equals(primitive.symbol) : primitive.symbol == null;
+
+   }
+
+
+   @Override public int hashCode() {
+      int result;
+      long temp;
+      result = 0;
+
+      // result = inputs != null ? inputs.hashCode() : 0;
+      //temp = Double.doubleToLongBits(value);
+      // result = 31 * result + (int) (temp ^ (temp >>> 32));
+      result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
+      result = 31 * result + (readOnly ? 1 : 0);
+      result = 31 * result + index;
+      return result;
+   }
 }

@@ -1,8 +1,8 @@
-package com.github.chen0040.gp.utils;
+package com.github.chen0040.gp.commons;
 
 
-import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.services.RandEngine;
+import com.github.chen0040.gp.utils.CollectionUtils;
 import org.apache.commons.math3.exception.OutOfRangeException;
 
 import java.util.List;

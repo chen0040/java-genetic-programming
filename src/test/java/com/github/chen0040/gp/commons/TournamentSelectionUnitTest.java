@@ -1,4 +1,4 @@
-package com.github.chen0040.gp.utils;
+package com.github.chen0040.gp.commons;
 
 
 import com.github.chen0040.gp.services.SimpleRandEngine;
@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.testng.Assert.*;
 
 
 /**

@@ -1,5 +1,6 @@
-package com.github.chen0040.gp.lgp.program;
+package com.github.chen0040.gp.commons;
 
+import com.github.chen0040.gp.lgp.program.Indexable;
 import com.github.chen0040.gp.services.RandEngine;
 
 import java.util.ArrayList;
@@ -67,18 +68,7 @@ public class EntityContainer<T extends Indexable<T>> {
    }
 
 
-   @Override
-   public String toString() {
-      StringBuilder sb = new StringBuilder();
 
-      for(int i = 0; i < entities.size(); ++i){
-         if(i != 0){
-            sb.append("\r\n");
-         }
-         sb.append("entity[").append(i).append("]: ").append(entities.get(i));
-      }
-      return sb.toString();
-   }
 
    public void copy(EntityContainer<T> that){
       for(int i = 0; i < that.entities.size(); ++i){

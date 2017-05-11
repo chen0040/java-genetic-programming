@@ -7,11 +7,18 @@ import java.io.Serializable;
 /**
  * Created by xschen on 10/5/2017.
  */
-public class Terminal extends Primitive implements Serializable {
+public class Terminal extends Primitive<Terminal> implements Serializable {
    private static final long serialVersionUID = 8438360593097636018L;
 
    public Terminal(){
       super();
+   }
+
+
+   @Override public Terminal makeCopy() {
+      Terminal clone = new Terminal(getSymbol(), getValue(), isReadOnly());
+      clone.copy(this);
+      return clone;
    }
 
    public Terminal(String symbol, double value, boolean readonly) {

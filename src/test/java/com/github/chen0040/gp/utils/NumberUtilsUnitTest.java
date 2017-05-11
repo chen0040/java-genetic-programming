@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.utils;
 
 
+import com.github.chen0040.gp.utils.NumberUtils;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
