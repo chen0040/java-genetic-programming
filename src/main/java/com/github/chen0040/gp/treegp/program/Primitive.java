@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.gp.exceptions.SizeMismatchedException;
 import com.github.chen0040.gp.lgp.program.Indexable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -57,7 +58,7 @@ public abstract class Primitive<T> implements Serializable, Indexable<T> {
 
    public void read(List<Double> values){
       if(inputs.size() != values.size()) {
-         throw new RuntimeException("Value size not matched");
+         throw new SizeMismatchedException(inputs.size(), values.size());
       }
       for(int i=0; i < values.size(); ++i) {
          inputs.set(i, values.get(i));

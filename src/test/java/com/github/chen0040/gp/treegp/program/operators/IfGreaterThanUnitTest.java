@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program.operators;
 
 
+import com.github.chen0040.gp.exceptions.SizeMismatchedException;
 import com.github.chen0040.gp.treegp.program.Operator;
 import org.testng.annotations.Test;
 
@@ -38,7 +39,7 @@ public class IfGreaterThanUnitTest {
       assertThat(op1.getValue()).isEqualTo(2.0);
    }
 
-   @Test(expectedExceptions = RuntimeException.class)
+   @Test(expectedExceptions = SizeMismatchedException.class)
    public void test_readException(){
 
       IfGreaterThan op1 = new IfGreaterThan();
