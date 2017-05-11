@@ -26,10 +26,11 @@ public class NotUnitTest {
    @Test
    public void test_execute(){
       Not op = new Not();
-      double input = 0.2;
-      op.read(Collections.singletonList(input));
-      op.execute();
-      assertThat(op.getValue()).isEqualTo(isTrue(input) ? 1.0 : 0.0);
+      for(Double input : Arrays.asList(0.2, 0.0)){
+         op.read(Collections.singletonList(input));
+         op.execute();
+         assertThat(op.getValue()).isEqualTo(isTrue(input) ? 1.0 : 0.0);
+      }
    }
 
    @Test(expectedExceptions = SizeMismatchedException.class)
