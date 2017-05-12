@@ -165,4 +165,6 @@ public abstract class Primitive<T extends Primitive<T>> implements Serializable,
       result = 31 * result + index;
       return result;
    }
+
+   public abstract void execute(Object... tags);
 }

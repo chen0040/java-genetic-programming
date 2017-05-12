@@ -46,6 +46,11 @@ public class OperatorSetUnitTest {
          Operator operator = operatorSet.anyOther(operatorSet.get(i), randEngine);
          assertThat(operator).isNotEqualTo(operatorSet.get(i));
       }
+
+      for(int i=0; i < 4; ++i) {
+         Operator operator = operatorSet.anyOther(4, operatorSet.get(i), randEngine);
+         assertThat(operator).isNotEqualTo(operatorSet.get(i));
+      }
    }
 
 }

@@ -3,6 +3,8 @@ package com.github.chen0040.gp.treegp.program;
 
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.services.SimpleRandEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -17,6 +19,7 @@ public class VariableSetUnitTest {
 
    private VariableSet registerSet;
    private RandEngine randEngine;
+   private static final Logger logger = LoggerFactory.getLogger(VariableSetUnitTest.class);
 
    @BeforeMethod
    public void setUp(){
@@ -33,6 +36,7 @@ public class VariableSetUnitTest {
       for(int i=0; i < registerSet.size(); ++i){
          assertThat(registerSet.get(i).isReadOnly()).isFalse();
       }
+      logger.info("{}", registerSet);
    }
 
    @Test

@@ -39,5 +39,5 @@ public abstract class Operator extends Primitive<Operator> implements Serializab
    }
 
 
-   public abstract void execute(Object... tags);
+
 }

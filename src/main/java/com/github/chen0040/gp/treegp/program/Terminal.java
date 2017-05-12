@@ -21,6 +21,12 @@ public class Terminal extends Primitive<Terminal> implements Serializable {
       return clone;
    }
 
+
+   @Override public void execute(Object... tags) {
+
+   }
+
+
    public Terminal(String symbol, double value, boolean readonly) {
       super(0, symbol, value, readonly);
    }

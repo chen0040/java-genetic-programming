@@ -24,6 +24,11 @@ public class VariableSet extends EntityContainer<Terminal> {
       add(register, weight);
    }
 
+   public void set(String symbol, double value) {
+      get(symbol).setValue(value);
+   }
+
+
 
    @Override
    public String toString() {
