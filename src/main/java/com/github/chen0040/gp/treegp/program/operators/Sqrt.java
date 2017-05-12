@@ -22,6 +22,6 @@ public class Sqrt extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Sqrt();
+      return new Sqrt().copy(this);
    }
 }

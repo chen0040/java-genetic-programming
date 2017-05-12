@@ -33,6 +33,6 @@ public class Modulo extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Modulo();
+      return new Modulo().copy(this);
    }
 }

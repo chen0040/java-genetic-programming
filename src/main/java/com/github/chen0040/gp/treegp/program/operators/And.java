@@ -39,6 +39,6 @@ public class And extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new And();
+      return new And().copy(this);
    }
 }

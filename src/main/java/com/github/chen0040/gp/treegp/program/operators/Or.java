@@ -40,6 +40,6 @@ public class Or extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Or();
+      return new Or().copy(this);
    }
 }

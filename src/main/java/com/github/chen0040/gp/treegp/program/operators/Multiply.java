@@ -24,6 +24,6 @@ public class Multiply extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Multiply();
+      return new Multiply().copy(this);
    }
 }

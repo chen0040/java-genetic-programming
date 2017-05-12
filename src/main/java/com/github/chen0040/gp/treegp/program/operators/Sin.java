@@ -22,6 +22,6 @@ public class Sin extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Sin();
+      return new Sin().copy(this);
    }
 }

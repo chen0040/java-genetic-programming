@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program;
 
 
+import com.github.chen0040.gp.commons.Indexable;
 import com.github.chen0040.gp.services.RandEngine;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,13 +41,19 @@ public class Register implements Serializable, Indexable<Register> {
       return clone;
    }
 
+
+   @Override public String getName() {
+      return (constant ? "c" : "r") + "[" + index + "]";
+   }
+
+
    public void mutate(RandEngine randomEngine, double sd){
       value += randomEngine.normal(0, 1.0) * sd;
    }
 
    @Override
    public  String toString(){
-      return (constant ? "c" : "r") + "[" + index + "]";
+      return getName();
    }
 
 

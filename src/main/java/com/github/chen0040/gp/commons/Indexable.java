@@ -1,4 +1,4 @@
-package com.github.chen0040.gp.lgp.program;
+package com.github.chen0040.gp.commons;
 
 
 /**
@@ -8,4 +8,5 @@ public interface Indexable<T> {
    int getIndex();
    void setIndex(int index);
    T makeCopy();
+   String getName();
 }

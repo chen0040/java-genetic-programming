@@ -1,10 +1,11 @@
 package com.github.chen0040.gp.commons;
 
-import com.github.chen0040.gp.lgp.program.Indexable;
 import com.github.chen0040.gp.services.RandEngine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -13,6 +14,7 @@ import java.util.List;
 public class EntityContainer<T extends Indexable<T>> {
    protected final List<T> entities = new ArrayList<>();
    protected final List<Double> weights = new ArrayList<>();
+   protected final Map<String, Integer> names = new HashMap<>();
 
    public EntityContainer(){
 
@@ -53,6 +55,13 @@ public class EntityContainer<T extends Indexable<T>> {
       return entities.get(index);
    }
 
+   public T get(String name) {
+      if(!names.containsKey(name)){
+         return null;
+      }
+      return entities.get(names.get(name));
+   }
+
    public int size() {
       return entities.size();
    }
@@ -61,6 +70,7 @@ public class EntityContainer<T extends Indexable<T>> {
       entity.setIndex(entities.size());
       entities.add(entity);
       weights.add(weight);
+      names.put(entity.getName(), entity.getIndex());
    }
    
    public void add(T entity){
@@ -71,10 +81,15 @@ public class EntityContainer<T extends Indexable<T>> {
 
 
    public void copy(EntityContainer<T> that){
+      this.entities.clear();
+      this.weights.clear();
+      this.names.clear();
+
       for(int i = 0; i < that.entities.size(); ++i){
          this.entities.add(that.entities.get(i).makeCopy());
          this.weights.add(that.weights.get(i));
       }
+      this.names.putAll(that.names);
    }
 
 
@@ -95,6 +110,9 @@ public class EntityContainer<T extends Indexable<T>> {
             return false;
          }
       }
+
+
+
       return weights.equals(that.weights);
 
    }

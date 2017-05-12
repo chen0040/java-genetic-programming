@@ -22,6 +22,6 @@ public class Exp extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Exp();
+      return new Exp().copy(this);
    }
 }

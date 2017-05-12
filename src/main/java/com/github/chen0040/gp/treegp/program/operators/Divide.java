@@ -30,6 +30,6 @@ public class Divide extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Divide();
+      return new Divide().copy(this);
    }
 }

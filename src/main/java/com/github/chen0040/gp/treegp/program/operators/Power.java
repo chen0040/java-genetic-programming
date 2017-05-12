@@ -30,6 +30,6 @@ public class Power extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Power();
+      return new Power().copy(this);
    }
 }

@@ -31,6 +31,6 @@ public class Not extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Not();
+      return new Not().copy(this);
    }
 }

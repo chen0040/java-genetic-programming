@@ -22,6 +22,6 @@ public class Log extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Log();
+      return new Log().copy(this);
    }
 }

@@ -33,6 +33,6 @@ public class IfGreaterThan extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new IfGreaterThan();
+      return new IfGreaterThan().copy(this);
    }
 }

@@ -24,6 +24,6 @@ public class Plus extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Plus();
+      return new Plus().copy(this);
    }
 }

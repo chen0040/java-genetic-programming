@@ -22,6 +22,6 @@ public class Tan extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Tan();
+      return new Tan().copy(this);
    }
 }

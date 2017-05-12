@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program;
 
 
+import com.github.chen0040.gp.commons.Indexable;
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 
 import java.io.Serializable;
@@ -46,12 +47,16 @@ public abstract class Operator implements Serializable, Indexable<Operator> {
       return this;
    }
 
+   public String getName(){
+      return symbol;
+   }
+
    public abstract OperatorExecutionStatus execute(Register operand1, Register operand2, Register destination_register);
 
    @Override
    public String toString()
    {
-      return symbol;
+      return getName();
    }
 
 

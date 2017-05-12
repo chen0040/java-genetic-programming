@@ -20,6 +20,6 @@ public class Cos extends Operator {
 
 
    @Override public Operator makeCopy() {
-      return new Cos();
+      return new Cos().copy(this);
    }
 }

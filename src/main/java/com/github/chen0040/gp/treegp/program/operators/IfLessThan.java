@@ -35,6 +35,6 @@ public class IfLessThan extends Operator {
    @Override
    public Operator makeCopy()
    {
-      return new IfLessThan();
+      return new IfLessThan().copy(this);
    }
 }

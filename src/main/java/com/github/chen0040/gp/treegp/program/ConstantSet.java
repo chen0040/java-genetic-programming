@@ -1,11 +1,11 @@
-package com.github.chen0040.gp.lgp.program;
+package com.github.chen0040.gp.treegp.program;
 
 
 /**
  * Created by xschen on 28/4/2017.
  * Containers for the read-only registers
  */
-public class ConstantSet extends RegisterSet {
+public class ConstantSet extends VariableSet {
    public ConstantSet(){
       super();
    }
@@ -16,10 +16,9 @@ public class ConstantSet extends RegisterSet {
    }
 
    @Override
-   public RegisterSet makeCopy(){
-      RegisterSet clone = new ConstantSet();
+   public VariableSet makeCopy(){
+      VariableSet clone = new ConstantSet();
       clone.copy(this);
       return clone;
    }
-
 }

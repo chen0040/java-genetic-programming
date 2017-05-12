@@ -1,8 +1,9 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.data.utils.StringUtils;
 import com.github.chen0040.gp.exceptions.SizeMismatchedException;
-import com.github.chen0040.gp.lgp.program.Indexable;
+import com.github.chen0040.gp.commons.Indexable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,15 +13,13 @@ import java.util.List;
 /**
  * Created by xschen on 8/5/2017.
  */
-public abstract class Primitive<T> implements Serializable, Indexable<T> {
+public abstract class Primitive<T extends Primitive<T>> implements Serializable, Indexable<T> {
    private static final long serialVersionUID = -249257238928605728L;
    private final List<Double> inputs = new ArrayList<>();
    private double value;
    private final String symbol;
    private final boolean readOnly;
    private int index;
-
-
 
    public Primitive(){
       symbol = "";
@@ -40,15 +39,25 @@ public abstract class Primitive<T> implements Serializable, Indexable<T> {
       return inputs.isEmpty();
    }
 
-   public void copy(Primitive<T> that) {
+   public String getName(){
+      if(StringUtils.isEmpty(symbol)){
+         return (isReadOnly() ? "c" : "v") + index;
+      } else {
+         return symbol;
+      }
+   }
+
+   public T copy(Primitive<T> that) {
       if(!symbol.equals(that.getSymbol())){
          throw new RuntimeException("Symbol not matched for copy to proceed");
       }
+      inputs.clear();
       for(int i=0; i < that.inputs.size(); ++i) {
          inputs.add(that.inputs.get(i));
       }
       value = that.value;
       index = that.index;
+      return (T)this;
    }
 
    public int arity(){
@@ -125,8 +134,11 @@ public abstract class Primitive<T> implements Serializable, Indexable<T> {
          return false;
       */
 
+
+
       if (readOnly != primitive.readOnly)
          return false;
+
       if (index != primitive.index)
          return false;
 
