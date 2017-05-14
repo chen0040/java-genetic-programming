@@ -4,8 +4,7 @@ package com.github.chen0040.gp.treegp.program;
 import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.treegp.TreeGP;
-import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
-import com.github.chen0040.gp.treegp.gp.ProgramInitialization;
+import com.github.chen0040.gp.treegp.gp.TreeHelper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -51,6 +50,16 @@ public class Program implements Serializable, Comparable<Program> {
       if(root == null) return "";
       return root.mathExpression();
    }
+
+   public TreeNode getRoot(){
+      return root;
+   }
+
+   public void setRoot(TreeNode node){
+      root = node;
+
+   }
+
 
    /// <summary>
    /// Method that performs deep copy of another GP
@@ -137,7 +146,7 @@ public class Program implements Serializable, Comparable<Program> {
    /// </summary>
    /// <param name="manager">TreeGP config</param
    public void createWithDepth(int allowableDepth, TreeGP manager){
-      root = ProgramInitialization.createWithDepth(this, allowableDepth, manager);
+      root = TreeHelper.createWithDepth(this, allowableDepth, manager);
       calcLength();
       calcDepth();
    }
@@ -175,7 +184,7 @@ public class Program implements Serializable, Comparable<Program> {
    /// The method is similar to roulette wheel
    /// </summary>
    /// <returns>The randomly selected primitive</returns>
-   public Primitive FindRandomPrimitive(RandEngine randEngine)
+   public Primitive anyPrimitive(RandEngine randEngine)
    {
       double r = randEngine.uniform();
 

@@ -13,7 +13,7 @@ import com.github.chen0040.gp.treegp.program.TreeNode;
 /**
  * Created by xschen on 14/5/2017.
  */
-public class ProgramInitialization {
+public class TreeHelper {
 
    /// <summary>
    /// Method that creates a subtree of maximum depth
@@ -21,7 +21,7 @@ public class ProgramInitialization {
    /// <param name="pRoot">The root node of the subtree</param>
    /// <param name="allowableDepth">The maximum depth</param>
    /// <param name="method">The method used to build the subtree</param>
-   private static void createWithDepth(Program program, TreeNode x, int allowableDepth, TGPInitializationStrategy method, RandEngine randEngine) {
+   public static void createWithDepth(Program program, TreeNode x, int allowableDepth, TGPInitializationStrategy method, RandEngine randEngine) {
 
       int child_count = x.arity();
 
