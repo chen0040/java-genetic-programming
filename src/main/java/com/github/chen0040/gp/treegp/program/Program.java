@@ -267,4 +267,19 @@ public class Program implements Serializable, Comparable<Program> {
          collectNodes(child, node, list);
       }
    }
+
+
+   public Primitive matchPrimitive(Primitive that) {
+      int index = that.getIndex();
+
+      if(that.isTerminal()){
+         if(that.isReadOnly()){
+            return constantSet.get(index);
+         } else {
+            return variableSet.get(index);
+         }
+      } else {
+         return operatorSet.get(index);
+      }
+   }
 }
