@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.commons;
 
 
+import com.github.chen0040.data.utils.TupleTwo;
 import lombok.Getter;
 import lombok.Setter;
 

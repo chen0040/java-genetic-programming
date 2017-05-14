@@ -218,18 +218,7 @@ public class TreeNode implements Serializable {
       }
    }
 
-   public List<TreeNode> flattenNodes(){
-      List<TreeNode> result = new ArrayList<>();
-      collectNodes(this, result);
-      return result;
-   }
 
-   private void collectNodes(TreeNode node, List<TreeNode> list) {
-      list.add(node);
-      for(TreeNode child : node.children){
-         collectNodes(child, list);
-      }
-   }
 
    public int depth2Node(TreeNode node){
       return depth2Node(this, node, 0);

@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.commons;
 
 
+import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.services.SimpleRandEngine;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import org.testng.annotations.Test;

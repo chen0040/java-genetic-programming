@@ -1,12 +1,15 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import com.github.chen0040.gp.treegp.gp.ProgramInitialization;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -182,6 +185,86 @@ public class Program implements Serializable, Comparable<Program> {
          return variableSet.any(randEngine);
       } else {
          return anyOperator(randEngine);
+      }
+   }
+   
+   public TupleTwo<TreeNode, TreeNode> anyNode(RandEngine randEngine){ return anyNode(false, randEngine); }
+   
+
+   /// <summary>
+   /// Method that returns a randomly selected node from the current tree
+   /// The tree is first flatten into a list from which a node is randomly selected
+   /// </summary>
+   /// <returns></returns>
+   public TupleTwo<TreeNode, TreeNode> anyNode(boolean bias, RandEngine randEngine)
+   {
+      List<TupleTwo<TreeNode, TreeNode>> nodes = flattenNodes();
+      if (bias)
+      {
+         if (randEngine.uniform() <= 0.1) // As specified by Koza, 90% select function node, 10% select terminal node
+         {
+            List<TupleTwo<TreeNode, TreeNode>> terminal_nodes = new ArrayList<>();
+            for (TupleTwo<TreeNode, TreeNode> tuple : nodes)
+            {
+               TreeNode node = tuple._1();
+               if (node.isTerminal())
+               {
+                  terminal_nodes.add(tuple);
+               }
+            }
+            if (terminal_nodes.size() > 0)
+            {
+               return terminal_nodes.get(randEngine.nextInt(terminal_nodes.size()));
+            }
+            else
+            {
+               return nodes.get(randEngine.nextInt(nodes.size()));
+            }
+         }
+         else
+         {
+            List<TupleTwo<TreeNode, TreeNode>> function_nodes = new ArrayList<>();
+            for (TupleTwo<TreeNode, TreeNode> tuple : nodes)
+            {
+               TreeNode node = tuple._1();
+               if (!node.isTerminal())
+               {
+                  function_nodes.add(tuple);
+               }
+            }
+            if (function_nodes.size() > 0)
+            {
+               return function_nodes.get(randEngine.nextInt(function_nodes.size()));
+            }
+            else
+            {
+               return nodes.get(randEngine.nextInt(nodes.size()));
+            }
+         }
+      }
+      else
+      {
+         return nodes.get(randEngine.nextInt(nodes.size()));
+      }
+
+   }
+
+   /// <summary>
+   /// Method that flattens the tree and then stores all the nodes of the tree in a list
+   /// </summary>
+   /// <returns>The list of nodes in the tree</returns>
+   public List<TupleTwo<TreeNode, TreeNode>> flattenNodes()
+   {
+      List<TupleTwo<TreeNode, TreeNode>> list = new ArrayList<>();
+      collectNodes(root, null, list);
+      return list;
+   }
+
+   private void collectNodes(TreeNode node, TreeNode parent_node, List<TupleTwo<TreeNode, TreeNode>> list) {
+      if(node == null) return;
+      list.add(new TupleTwo<>(node, parent_node));
+      for(TreeNode child : node.getChildren()){
+         collectNodes(child, node, list);
       }
    }
 }

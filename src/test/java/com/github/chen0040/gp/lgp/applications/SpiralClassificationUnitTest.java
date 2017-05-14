@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.applications;
 
 
+import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.gp.BasicObservation;
@@ -10,7 +11,6 @@ import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.program.operators.*;
 import com.github.chen0040.gp.utils.CollectionUtils;
 import com.github.chen0040.gp.utils.FileUtil;
-import com.github.chen0040.gp.commons.TupleTwo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;

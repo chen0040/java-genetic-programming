@@ -3,6 +3,7 @@ package com.github.chen0040.gp.treegp;
 
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.services.SimpleRandEngine;
+import com.github.chen0040.gp.treegp.enums.TGPCrossoverStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +16,8 @@ import lombok.Setter;
 @Setter
 public class TreeGP {
    private TGPInitializationStrategy initializationStrategy;
+   private TGPCrossoverStrategy crossoverStrategy;
+
    private RandEngine randEngine = new SimpleRandEngine();
+   private int maxDepthForCrossover;
 }

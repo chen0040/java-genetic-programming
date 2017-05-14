@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.gp;
 
 
+import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.services.RandEngine;

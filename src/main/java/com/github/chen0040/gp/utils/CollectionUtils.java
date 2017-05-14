@@ -1,7 +1,7 @@
 package com.github.chen0040.gp.utils;
 
 
-import com.github.chen0040.gp.commons.TupleTwo;
+import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.services.SimpleRandEngine;
 
