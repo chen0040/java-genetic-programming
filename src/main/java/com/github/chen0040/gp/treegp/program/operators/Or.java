@@ -2,6 +2,7 @@ package com.github.chen0040.gp.treegp.program.operators;
 
 
 import com.github.chen0040.gp.treegp.program.Operator;
+import com.github.chen0040.gp.treegp.program.Primitive;
 
 
 /**
@@ -39,7 +40,7 @@ public class Or extends Operator {
    }
 
 
-   @Override public Operator makeCopy() {
+   @Override public Primitive makeCopy() {
       return new Or().copy(this);
    }
 }

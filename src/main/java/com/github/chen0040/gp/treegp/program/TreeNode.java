@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +15,20 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class TreeNode {
+public class TreeNode implements Serializable {
+   private static final long serialVersionUID = 350057284330815219L;
    private Primitive primitive;
 
    @Setter(AccessLevel.NONE)
    private final List<TreeNode> children = new ArrayList<>();
+
+   public TreeNode(Primitive primitive){
+      this.primitive = primitive;
+   }
+
+   public TreeNode(){
+
+   }
 
    public int arity(){
       return primitive.arity();
@@ -56,13 +66,28 @@ public class TreeNode {
       return primitive.getValue();
    }
 
-   public TreeNode makeCopy(){
+   public TreeNode makeCopy(OperatorSet operatorSet, VariableSet variableSet, ConstantSet constantSet){
       TreeNode clone = new TreeNode();
-      clone.setPrimitive(this.primitive);
-      for(TreeNode child : children){
-         clone.children.add(child.makeCopy());
-      }
+      clone.copy(this, operatorSet, variableSet, constantSet);
       return clone;
+   }
+
+   public void copy(TreeNode that, OperatorSet operatorSet, VariableSet variableSet, ConstantSet constantSet) {
+
+      if(primitive.isTerminal()){
+         if(primitive.isReadOnly()){
+            primitive = constantSet.get(that.primitive.getIndex());
+         } else {
+            primitive = variableSet.get(that.primitive.getIndex());
+         }
+      } else {
+         primitive = operatorSet.get(that.primitive.getIndex());
+      }
+
+      children.clear();
+      for(TreeNode child : that.children){
+         children.add(child.makeCopy(operatorSet, variableSet, constantSet));
+      }
    }
 
    public boolean isTerminal(){

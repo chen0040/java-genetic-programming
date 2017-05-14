@@ -15,7 +15,10 @@ import java.util.stream.Collectors;
 /**
  * Created by xschen on 29/4/2017.
  */
-public class OperatorSet extends EntityContainer<Operator> implements Serializable {
+public class OperatorSet extends EntityContainer<Primitive> implements Serializable {
+
+   private static final long serialVersionUID = -6660969377144991417L;
+
 
    public OperatorSet(){
 
@@ -62,12 +65,12 @@ public class OperatorSet extends EntityContainer<Operator> implements Serializab
       return sb.toString();
    }
 
-   public Operator anyOther(int arity, Operator excluded, RandEngine rand){
+   public Primitive anyOther(int arity, Primitive excluded, RandEngine rand){
 
-      List<Operator> candidates = new ArrayList<>();
+      List<Primitive> candidates = new ArrayList<>();
       double weightSum = 0;
       for(int i=0; i < entities.size(); ++i){
-         Operator op = entities.get(i);
+         Primitive op = entities.get(i);
          if(op.arity()==arity){
             weightSum += weights.get(op.getIndex());
             candidates.add(op);
@@ -79,7 +82,7 @@ public class OperatorSet extends EntityContainer<Operator> implements Serializab
          double accSum = 0;
 
          for(int i = 0; i < candidates.size(); ++i){
-            Operator op = candidates.get(i);
+            Primitive op = candidates.get(i);
             accSum += weights.get(op.getIndex());
             if(r <= accSum){
                if(op == excluded){
@@ -92,5 +95,25 @@ public class OperatorSet extends EntityContainer<Operator> implements Serializab
       }
 
       return excluded;
+   }
+
+   /// <summary>
+   /// Method that is used by the "RandomBranch" initialization algorithm to obtain a random function node with arity less than s
+   /// </summary>
+   /// <param name="maxArity">The tree size</param>
+   /// <returns></returns>
+   public Primitive anyWithArityLessThan(int maxArity, RandEngine randEngine)
+   {
+      List<Primitive> ops = new ArrayList<>();
+      for (int i = 0; i < entities.size(); ++i)
+      {
+         Primitive op1 = entities.get(i);
+         if (op1.arity() < maxArity)
+         {
+            ops.add(op1);
+         }
+      }
+      if (ops.isEmpty()) return null;
+      return ops.get(randEngine.nextInt(ops.size()));
    }
 }

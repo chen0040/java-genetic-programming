@@ -48,7 +48,7 @@ public class ConstantSetUnitTest {
    @Test
    public void test_anyOther(){
       for(int i=0; i < 4; ++i) {
-         Terminal register = constantSet.anyOther(constantSet.get(i), randEngine);
+         Primitive register = constantSet.anyOther(constantSet.get(i), randEngine);
          assertThat(register).isNotEqualTo(constantSet.get(i));
       }
    }

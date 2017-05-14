@@ -2,6 +2,7 @@ package com.github.chen0040.gp.treegp.program.operators;
 
 
 import com.github.chen0040.gp.treegp.program.Operator;
+import com.github.chen0040.gp.treegp.program.Primitive;
 
 
 /**
@@ -33,7 +34,7 @@ public class IfLessThan extends Operator {
 
 
    @Override
-   public Operator makeCopy()
+   public Primitive makeCopy()
    {
       return new IfLessThan().copy(this);
    }

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by xschen on 10/5/2017.
  * abstract class for Operator
  */
-public abstract class Operator extends Primitive<Operator> implements Serializable {
+public abstract class Operator extends Primitive implements Serializable {
    private static final long serialVersionUID = -8950539267456770919L;
 
    public Operator(){

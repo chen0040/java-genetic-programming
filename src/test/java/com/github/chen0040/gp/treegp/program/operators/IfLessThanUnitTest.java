@@ -3,6 +3,7 @@ package com.github.chen0040.gp.treegp.program.operators;
 
 import com.github.chen0040.gp.exceptions.SizeMismatchedException;
 import com.github.chen0040.gp.treegp.program.Operator;
+import com.github.chen0040.gp.treegp.program.Primitive;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,7 @@ public class IfLessThanUnitTest {
    public void test_makeCopy(){
       IfLessThan op1 = new IfLessThan();
       AssertionsForClassTypes.assertThat(op1.arity()).isEqualTo(4);
-      Operator op2 = op1.makeCopy();
+      Primitive op2 = op1.makeCopy();
       assertThat(op1).isEqualTo(op2);
    }
 

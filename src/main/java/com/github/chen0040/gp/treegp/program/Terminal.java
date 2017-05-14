@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by xschen on 10/5/2017.
  */
-public class Terminal extends Primitive<Terminal> implements Serializable {
+public class Terminal extends Primitive implements Serializable {
    private static final long serialVersionUID = 8438360593097636018L;
 
    public Terminal(){

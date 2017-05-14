@@ -43,12 +43,12 @@ public class OperatorSetUnitTest {
    @Test
    public void test_anyOther(){
       for(int i=0; i < 4; ++i) {
-         Operator operator = operatorSet.anyOther(operatorSet.get(i), randEngine);
+         Primitive operator = operatorSet.anyOther(operatorSet.get(i), randEngine);
          assertThat(operator).isNotEqualTo(operatorSet.get(i));
       }
 
       for(int i=0; i < 4; ++i) {
-         Operator operator = operatorSet.anyOther(4, operatorSet.get(i), randEngine);
+         Primitive operator = operatorSet.anyOther(4, operatorSet.get(i), randEngine);
          assertThat(operator).isNotEqualTo(operatorSet.get(i));
       }
    }

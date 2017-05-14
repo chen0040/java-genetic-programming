@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by xschen on 8/5/2017.
  */
-public abstract class Primitive<T extends Primitive<T>> implements Serializable, Indexable<T> {
+public abstract class Primitive implements Serializable, Indexable<Primitive> {
    private static final long serialVersionUID = -249257238928605728L;
    private final List<Double> inputs = new ArrayList<>();
    private double value;
@@ -47,7 +47,7 @@ public abstract class Primitive<T extends Primitive<T>> implements Serializable,
       }
    }
 
-   public T copy(Primitive<T> that) {
+   public Primitive copy(Primitive that) {
       if(!symbol.equals(that.getSymbol())){
          throw new RuntimeException("Symbol not matched for copy to proceed");
       }
@@ -57,7 +57,7 @@ public abstract class Primitive<T extends Primitive<T>> implements Serializable,
       }
       value = that.value;
       index = that.index;
-      return (T)this;
+      return this;
    }
 
    public int arity(){
@@ -118,7 +118,7 @@ public abstract class Primitive<T extends Primitive<T>> implements Serializable,
    }
 
 
-   @Override public abstract T makeCopy();
+   @Override public abstract Primitive makeCopy();
 
 
    @Override public boolean equals(Object o) {
@@ -127,7 +127,7 @@ public abstract class Primitive<T extends Primitive<T>> implements Serializable,
       if (o == null || getClass() != o.getClass())
          return false;
 
-      Primitive<?> primitive = (Primitive<?>) o;
+      Primitive primitive = (Primitive) o;
 
       /*
       if (Double.compare(primitive.value, value) != 0)

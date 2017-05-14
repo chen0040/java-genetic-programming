@@ -3,11 +3,16 @@ package com.github.chen0040.gp.treegp.program;
 
 import com.github.chen0040.gp.commons.EntityContainer;
 
+import java.io.Serializable;
+
 
 /**
  * Created by xschen on 12/5/2017.
  */
-public class VariableSet extends EntityContainer<Terminal> {
+public class VariableSet extends EntityContainer<Primitive> implements Serializable {
+
+   private static final long serialVersionUID = 8059994703104333304L;
+
 
    public boolean isReadOnly(){
       return false;

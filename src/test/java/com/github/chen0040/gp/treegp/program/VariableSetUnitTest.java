@@ -52,7 +52,7 @@ public class VariableSetUnitTest {
    @Test
    public void test_anyOther(){
       for(int i=0; i < 4; ++i) {
-         Terminal register = registerSet.anyOther(registerSet.get(i), randEngine);
+         Primitive register = registerSet.anyOther(registerSet.get(i), randEngine);
          assertThat(register).isNotEqualTo(registerSet.get(i));
       }
    }
