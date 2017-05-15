@@ -4,7 +4,7 @@ package com.github.chen0040.gp.lgp;
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.enums.LGPInitializationStrategy;
 import com.github.chen0040.gp.lgp.enums.LGPReplacementStrategy;
-import com.github.chen0040.gp.lgp.gp.Observation;
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
 import com.github.chen0040.gp.lgp.program.OperatorSet;
 import com.github.chen0040.gp.lgp.program.Program;
@@ -14,7 +14,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;

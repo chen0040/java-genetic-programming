@@ -33,7 +33,9 @@ public class VariableSet extends EntityContainer<Primitive> implements Serializa
       get(symbol).setValue(value);
    }
 
-
+   public void set(int index, double value) {
+      get(index).setValue(value);
+   }
 
    @Override
    public String toString() {

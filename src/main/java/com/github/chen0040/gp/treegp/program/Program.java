@@ -2,6 +2,7 @@ package com.github.chen0040.gp.treegp.program;
 
 
 import com.github.chen0040.data.utils.TupleTwo;
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.gp.TreeHelper;
@@ -84,6 +85,18 @@ public class Program implements Serializable, Comparable<Program> {
       Program clone = new Program();
       clone.copy(this);
       return clone;
+   }
+
+   public double execute(Object... tags){
+      return root.execute(tags);
+   }
+
+   public void read(Observation observation){
+      int inputCount = observation.inputCount();
+      for(int i=0; i < variableSet.size(); ++i){
+         int j = i % inputCount;
+         variableSet.set(j, observation.getInput(j));
+      }
    }
 
    /// <summary>
@@ -290,5 +303,15 @@ public class Program implements Serializable, Comparable<Program> {
       } else {
          return operatorSet.get(index);
       }
+   }
+
+
+   public int getDepth() {
+      return depth;
+   }
+
+
+   public int getLength() {
+      return length;
    }
 }

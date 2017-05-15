@@ -27,8 +27,8 @@ To use the algorithms or data structures in your python code:
 .. code-block:: java
 
     import com.github.chen0040.gp.lgp.LGP;
-    import com.github.chen0040.gp.lgp.gp.BasicObservation;
-    import com.github.chen0040.gp.lgp.gp.Observation;
+    import com.github.chen0040.gp.commons.BasicObservation;
+    import com.github.chen0040.gp.commons.Observation;
     import com.github.chen0040.gp.lgp.gp.Population;
     import com.github.chen0040.gp.lgp.program.operators.*;
 

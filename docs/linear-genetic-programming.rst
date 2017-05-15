@@ -36,8 +36,8 @@ The sample code below shows how to generate data from the "Mexican Hat" regressi
 
 .. code-block:: java
 
-    import com.github.chen0040.gp.lgp.gp.BasicObservation;
-    import com.github.chen0040.gp.lgp.gp.Observation;
+    import com.github.chen0040.gp.commons.BasicObservation;
+    import com.github.chen0040.gp.commons.Observation;
     import java.util.ArrayList;
     import java.util.List;
     import java.util.function.BiFunction;
@@ -95,8 +95,8 @@ The sample code below shows how the LGP can be created and trained:
 
 .. code-block:: java
     import com.github.chen0040.gp.lgp.LGP;
-    import com.github.chen0040.gp.lgp.gp.BasicObservation;
-    import com.github.chen0040.gp.lgp.gp.Observation;
+    import com.github.chen0040.gp.commons.BasicObservation;
+    import com.github.chen0040.gp.commons.Observation;
     import com.github.chen0040.gp.lgp.gp.Population;
     import com.github.chen0040.gp.lgp.program.operators.*;
 

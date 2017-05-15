@@ -1,6 +1,11 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.gp.commons.Observation;
+import com.github.chen0040.gp.exceptions.InvalidCostException;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -9,7 +14,9 @@ import java.util.function.Supplier;
 /**
  * Created by xschen on 14/5/2017.
  */
-public class Solution {
+@Getter
+@Setter
+public class Solution implements Comparable<Solution> {
    private double cost;
    private boolean costValid;
    private final List<Program> trees = new ArrayList<>();
@@ -72,5 +79,67 @@ public class Solution {
 
    public void invalidateCost(){
       costValid = false;
+   }
+
+   public void execute(Observation observation){
+
+      for(int i=0; i < trees.size(); ++i){
+         Program tree = trees.get(i);
+         tree.read(observation);
+         double output = tree.execute();
+         observation.setOutput(i % observation.outputCount(), output);
+      }
+   }
+
+   public int averageTreeDepth()
+   {
+      if (trees.isEmpty()) return 0;
+      int sum=0;
+      for (int i = 0; i < trees.size(); ++i)
+      {
+         sum += (trees.get(i)).getDepth();
+      }
+      return sum / trees.size();
+
+   }
+
+   public int averageTreeLength()
+   {
+      if (trees.isEmpty()) return 0;
+      int sum=0;
+      for (int i = 0; i < trees.size(); ++i)
+      {
+         sum += (trees.get(i)).getLength();
+      }
+      return sum / trees.size();
+
+   }
+
+
+   @Override public int compareTo(Solution o) {
+      if(!costValid || !o.costValid) {
+         throw new InvalidCostException("cost of the solutions involved in the comparison is not valid for comparison");
+      }
+
+      int cmp = Double.compare(cost, o.cost);
+      if(cmp == 0) {
+         int this_better_count = 0;
+         for (int i = 0; i < trees.size(); ++i)
+         {
+            if (trees.get(i).compareTo(o.trees.get(i)) < 0)
+            {
+               this_better_count++;
+            }
+         }
+
+         if (this_better_count * 2 > trees.size())
+         {
+            return -1;
+         }
+
+         return +1;
+      } else {
+         return cmp;
+      }
    }
 }
