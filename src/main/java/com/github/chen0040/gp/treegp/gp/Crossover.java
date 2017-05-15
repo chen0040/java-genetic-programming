@@ -131,7 +131,7 @@ public class Crossover {
       }
    }
 
-   public void apply(Solution solution1, Solution solution2, TreeGP manager)
+   public static void apply(Solution solution1, Solution solution2, TreeGP manager)
    {
       RandEngine randEngine = manager.getRandEngine();
 

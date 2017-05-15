@@ -7,7 +7,10 @@ import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPMutationStrategy;
 import com.github.chen0040.gp.treegp.program.Program;
+import com.github.chen0040.gp.treegp.program.Solution;
 import com.github.chen0040.gp.treegp.program.TreeNode;
+
+import java.util.List;
 
 
 /**
@@ -18,7 +21,7 @@ public class Mutation {
    /// Method that implements the subtree mutation or "headless chicken" crossover described in Section 2.4 of "A Field Guide to Genetic Programming"
    /// </summary>
    /// <param name="iMaxProgramDepth">The max depth of the tree after the mutation</param>
-   public static void mutate(Program program, TreeGP manager)
+   public static void apply(Program program, TreeGP manager)
    {
       int iMaxProgramDepth = manager.getMaxProgramDepth();
       TGPMutationStrategy method = manager.getMutationStrategy();
@@ -77,6 +80,18 @@ public class Mutation {
 
       program.calcDepth();
       program.calcLength();
+   }
+
+   public static void apply(Solution solution, TreeGP manager)
+   {
+      List<Program> trees = solution.getTrees();
+      int count = trees.size();
+      for (int i = 0; i < count; ++i)
+      {
+         apply(trees.get(i), manager);
+      }
+
+      solution.invalidateCost();
    }
 
 
