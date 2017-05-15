@@ -7,6 +7,7 @@ import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPCrossoverStrategy;
 import com.github.chen0040.gp.treegp.program.Primitive;
 import com.github.chen0040.gp.treegp.program.Program;
+import com.github.chen0040.gp.treegp.program.Solution;
 import com.github.chen0040.gp.treegp.program.TreeNode;
 
 import java.util.List;
@@ -128,6 +129,30 @@ public class Crossover {
          parent1.getChildren().set(child_index1, point2.makeCopy(program1.getOperatorSet(), program1.getVariableSet(), program1.getConstantSet()));
          parent2.getChildren().set(child_index2, point1.makeCopy(program2.getOperatorSet(), program2.getVariableSet(), program2.getConstantSet()));
       }
+   }
+
+   public void apply(Solution solution1, Solution solution2, TreeGP manager)
+   {
+      RandEngine randEngine = manager.getRandEngine();
+
+      int tree_count = solution1.getTrees().size();
+      for (int i = 0; i < tree_count; ++i)
+      {
+         if (tree_count > 1 && randEngine.uniform() < 0.5)
+         {
+            Program temp = solution2.getTrees().get(i);
+            solution2.getTrees().set(i, solution1.getTrees().get(i));
+            solution1.getTrees().set(i, temp);
+         }
+         else
+         {
+            apply(solution1.getTrees().get(i), solution2.getTrees().get(i), manager);
+         }
+
+      }
+
+      solution1.invalidateCost();
+      solution2.invalidateCost();
    }
 
 }
