@@ -8,10 +8,7 @@ import com.github.chen0040.gp.treegp.enums.TGPCrossoverStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPMutationStrategy;
 import com.github.chen0040.gp.treegp.gp.Population;
-import com.github.chen0040.gp.treegp.program.ConstantSet;
-import com.github.chen0040.gp.treegp.program.OperatorSet;
-import com.github.chen0040.gp.treegp.program.Program;
-import com.github.chen0040.gp.treegp.program.VariableSet;
+import com.github.chen0040.gp.treegp.program.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,7 +49,7 @@ public class TreeGP {
    // SEC: parameters for cost evaluation
    // BEGIN
    private List<Observation> observations = new ArrayList<>();
-   private BiFunction<Program, List<Observation>, Double> costEvaluator;
+   private BiFunction<Solution, List<Observation>, Double> costEvaluator;
    // END
 
    public int getTreeCountPerSolution(){
@@ -70,9 +67,9 @@ public class TreeGP {
       return constants.get(index);
    }
 
-   public double evaluateCost(Program program) {
+   public double evaluateCost(Solution solution) {
       if(costEvaluator != null){
-         return costEvaluator.apply(program.makeCopy(), observations);
+         return costEvaluator.apply(solution.makeCopy(), observations);
       } else {
          throw new RuntimeException("Cost evaluator for the linear program is not specified!");
       }

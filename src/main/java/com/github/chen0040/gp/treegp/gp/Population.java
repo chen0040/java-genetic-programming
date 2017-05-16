@@ -3,6 +3,7 @@ package com.github.chen0040.gp.treegp.gp;
 
 import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.program.Solution;
+import com.github.chen0040.gp.utils.CollectionUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +34,33 @@ public class Population {
       this.manager = manager;
    }
 
-   public void initialize(){
+   protected void evaluate(TreeGP manager) {
 
+      double bestCost = Double.MAX_VALUE;
+      for(int i=0; i< solutions.size(); ++i) {
+         Solution p = solutions.get(i);
+         double cost = manager.evaluateCost(p);
+         p.setCost(cost);
+         p.setCostValid(true);
+         if (p.getCost() < bestCost) {
+            bestSolutionInCurrentGeneration = p;
+            bestCost = p.getCost();
+         }
+      }
+
+      updateGlobal(bestSolutionInCurrentGeneration);
    }
+
+   private void updateGlobal(Solution solution) {
+      if(!globalBestSolution.isPresent() || CollectionUtils.isBetterThan(solution, globalBestSolution.get()))
+      {
+         globalBestSolution = Optional.of(solution.makeCopy());
+      }
+   }
+
+   public void initialize(){
+      PopulationInitialization.initialize(solutions, manager);
+      evaluate(manager);
+   }
+
 }
