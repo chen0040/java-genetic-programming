@@ -9,7 +9,7 @@ import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 /**
  * Created by xschen on 14/5/2017.
  */
-public class TreeHelper {
+public class TreeGenerator {
 
    /// <summary>
    /// Method that creates a subtree of maximum depth
@@ -17,7 +17,7 @@ public class TreeHelper {
    /// <param name="pRoot">The root node of the subtree</param>
    /// <param name="allowableDepth">The maximum depth</param>
    /// <param name="method">The method used to build the subtree</param>
-   public static void createWithDepth(Program program, TreeNode x, int allowableDepth, TGPInitializationStrategy method, RandEngine randEngine, TGPInitializationStrategy initializationStrategy) {
+   public static void createWithDepth(Program program, TreeNode x, int allowableDepth, TGPInitializationStrategy method, RandEngine randEngine) {
 
       int child_count = x.arity();
 
@@ -29,7 +29,7 @@ public class TreeHelper {
 
          if (!primitive.isTerminal())
          {
-            createWithDepth(program, child, allowableDepth - 1, method, randEngine, initializationStrategy);
+            createWithDepth(program, child, allowableDepth - 1, method, randEngine);
          }
       }
    }
@@ -94,7 +94,7 @@ public class TreeHelper {
       {
          root = new TreeNode(anyPrimitive(program, allowableDepth, method, randEngine));
 
-         createWithDepth(program, root, allowableDepth - 1, method, randEngine, method);
+         createWithDepth(program, root, allowableDepth - 1, method, randEngine);
       }
 
       return root;

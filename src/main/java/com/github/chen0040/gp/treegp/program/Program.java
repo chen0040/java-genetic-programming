@@ -176,7 +176,7 @@ public class Program implements Serializable, Comparable<Program> {
          operatorSet.add(operator, manager.getOperatorSet().getWeight(i));
       }
 
-      root = TreeHelper.createWithDepth(this, allowableDepth, manager, initializationStrategy);
+      root = TreeGenerator.createWithDepth(this, allowableDepth, manager, initializationStrategy);
       calcLength();
       calcDepth();
    }

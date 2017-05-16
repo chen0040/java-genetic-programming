@@ -7,7 +7,7 @@ import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPMutationStrategy;
 import com.github.chen0040.gp.treegp.program.Program;
 import com.github.chen0040.gp.treegp.program.Solution;
-import com.github.chen0040.gp.treegp.program.TreeHelper;
+import com.github.chen0040.gp.treegp.program.TreeGenerator;
 import com.github.chen0040.gp.treegp.program.TreeNode;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class Mutation {
             if (!node.getPrimitive().isTerminal())
             {
                int max_depth = iMaxProgramDepth - node_depth;
-               TreeHelper.createWithDepth(program, node, max_depth, TGPInitializationStrategy.INITIALIZATION_METHOD_GROW, randEngine);
+               TreeGenerator.createWithDepth(program, node, max_depth, TGPInitializationStrategy.INITIALIZATION_METHOD_GROW, randEngine);
             }
          }
          else
@@ -58,7 +58,7 @@ public class Mutation {
 
             if (!node.getPrimitive().isTerminal())
             {
-               TreeHelper.createWithDepth(program, node, max_depth, TGPInitializationStrategy.INITIALIZATION_METHOD_GROW, randEngine);
+               TreeGenerator.createWithDepth(program, node, max_depth, TGPInitializationStrategy.INITIALIZATION_METHOD_GROW, randEngine);
             }
          }
       }
