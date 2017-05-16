@@ -6,7 +6,7 @@ import com.github.chen0040.gp.lgp.enums.LGPInitializationStrategy;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import com.github.chen0040.gp.lgp.program.*;
 import com.github.chen0040.gp.services.RandEngine;
-import com.github.chen0040.gp.exceptions.NotImplementedException;
+import com.github.chen0040.data.exceptions.NotImplementedException;
 
 import java.util.List;
 

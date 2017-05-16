@@ -1,13 +1,13 @@
 package com.github.chen0040.gp.lgp.gp;
 
 
+import com.github.chen0040.data.exceptions.NotImplementedException;
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.helpers.InstructionHelper;
 import com.github.chen0040.gp.lgp.program.Instruction;
 import com.github.chen0040.gp.lgp.program.Program;
 import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.services.RandEngine;
-import com.github.chen0040.gp.exceptions.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
