@@ -129,7 +129,7 @@ public class LGP {
    }
 
    public Population newPopulation(){
-      return new Population(this, randEngine);
+      return new Population(this);
    }
 
    public void addConstant(double constant, double weight) {

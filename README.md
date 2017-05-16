@@ -43,7 +43,7 @@ Future Works
 
 Add the following dependency to your POM file:
 
-```
+```xml
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-genetic-programming</artifactId>

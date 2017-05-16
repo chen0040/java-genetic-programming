@@ -28,12 +28,10 @@ public class Population {
    private List<Program> programs=new ArrayList<>();
    private int currentGeneration = 0;
    private final LGP manager;
-   private final RandEngine randEngine;
    private Program bestProgramInCurrentGeneration = null;
 
-   public Population(LGP manager, RandEngine randEngine){
+   public Population(LGP manager){
       this.manager = manager;
-      this.randEngine = randEngine;
    }
 
    protected void evaluate(LGP manager) {
@@ -54,7 +52,7 @@ public class Population {
    }
 
    public void initialize(){
-      PopulationInitialization.initialize(programs, manager, randEngine);
+      PopulationInitialization.initialize(programs, manager);
       evaluate(manager);
    }
 
@@ -74,6 +72,7 @@ public class Population {
 
    public void evolve()
    {
+      RandEngine randEngine = manager.getRandEngine();
       int iPopSize = manager.getPopulationSize();
       int program_count=0;
 

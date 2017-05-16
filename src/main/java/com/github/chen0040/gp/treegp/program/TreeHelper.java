@@ -1,13 +1,9 @@
-package com.github.chen0040.gp.treegp.gp;
+package com.github.chen0040.gp.treegp.program;
 
 
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
-import com.github.chen0040.gp.treegp.program.OperatorSet;
-import com.github.chen0040.gp.treegp.program.Primitive;
-import com.github.chen0040.gp.treegp.program.Program;
-import com.github.chen0040.gp.treegp.program.TreeNode;
 
 
 /**
@@ -21,7 +17,7 @@ public class TreeHelper {
    /// <param name="pRoot">The root node of the subtree</param>
    /// <param name="allowableDepth">The maximum depth</param>
    /// <param name="method">The method used to build the subtree</param>
-   public static void createWithDepth(Program program, TreeNode x, int allowableDepth, TGPInitializationStrategy method, RandEngine randEngine) {
+   public static void createWithDepth(Program program, TreeNode x, int allowableDepth, TGPInitializationStrategy method, RandEngine randEngine, TGPInitializationStrategy initializationStrategy) {
 
       int child_count = x.arity();
 
@@ -33,7 +29,7 @@ public class TreeHelper {
 
          if (!primitive.isTerminal())
          {
-            createWithDepth(program, child, allowableDepth - 1, method, randEngine);
+            createWithDepth(program, child, allowableDepth - 1, method, randEngine, initializationStrategy);
          }
       }
    }
@@ -42,16 +38,15 @@ public class TreeHelper {
    /// Method that creates a GP tree with a maximum tree depth
    /// </summary>
    /// <param name="manager">TreeGP config</param>
-   public static TreeNode createWithDepth(Program program, int allowableDepth, TreeGP manager)
+   public static TreeNode createWithDepth(Program program, int allowableDepth, TreeGP manager, TGPInitializationStrategy method)
    {
-      TGPInitializationStrategy method = manager.getInitializationStrategy();
       OperatorSet operatorSet = program.getOperatorSet();
       RandEngine randEngine = manager.getRandEngine();
 
       TreeNode root;
 
       //  Population Initialization method following the "RandomBranch" method described in "Kumar Chellapilla. Evolving computer programs without subtree crossover. IEEE Transactions on Evolutionary Computation, 1(3):209–216, September 1997."
-      if (method == TGPInitializationStrategy.INITIALIZATION_METHOD_RANDOMBRANCH)
+      if (method == TGPInitializationStrategy.INITIALIZATION_METHOD_RANDOM_BRANCH)
       {
          int s = allowableDepth; //tree size
          Primitive non_terminal = program.anyOperatorWithArityLessThan(s, randEngine);
@@ -99,7 +94,7 @@ public class TreeHelper {
       {
          root = new TreeNode(anyPrimitive(program, allowableDepth, method, randEngine));
 
-         createWithDepth(program, root, allowableDepth - 1, method, randEngine);
+         createWithDepth(program, root, allowableDepth - 1, method, randEngine, method);
       }
 
       return root;

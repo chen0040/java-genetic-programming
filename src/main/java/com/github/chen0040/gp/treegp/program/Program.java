@@ -5,7 +5,7 @@ import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.treegp.TreeGP;
-import com.github.chen0040.gp.treegp.gp.TreeHelper;
+import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -158,8 +158,25 @@ public class Program implements Serializable, Comparable<Program> {
    /// Method that creates a GP tree with a maximum tree depth
    /// </summary>
    /// <param name="manager">TreeGP config</param
-   public void createWithDepth(int allowableDepth, TreeGP manager){
-      root = TreeHelper.createWithDepth(this, allowableDepth, manager);
+   public void createWithDepth(int allowableDepth, TreeGP manager, TGPInitializationStrategy initializationStrategy){
+
+      final int constantCount = manager.getConstants().size();
+      for(int i=0; i < constantCount; ++i){
+         constantSet.add(new Terminal("c" + i, manager.constant(i), true), manager.constantWeight(i));
+      }
+
+      final int registerCount = manager.getVariableCount();
+      for(int i=0; i < registerCount; ++i) {
+         variableSet.add(new Terminal("v" + i, 0.0, false), 1.0);
+      }
+
+      final int operatorCount = manager.getOperatorSet().size();
+      for(int i=0; i < operatorCount; ++i) {
+         Primitive operator = manager.getOperatorSet().get(i);
+         operatorSet.add(operator, manager.getOperatorSet().getWeight(i));
+      }
+
+      root = TreeHelper.createWithDepth(this, allowableDepth, manager, initializationStrategy);
       calcLength();
       calcDepth();
    }

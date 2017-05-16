@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -25,10 +26,10 @@ public class Solution implements Comparable<Solution> {
 
    }
 
-   public Solution(int treeCount, Supplier<Program> generator){
+   public Solution(int treeCount, Function<Integer, Program> generator){
       for (int i = 0; i < treeCount; ++i)
       {
-         trees.add(generator.get());
+         trees.add(generator.apply(i));
       }
    }
 

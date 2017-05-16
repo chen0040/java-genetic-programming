@@ -1,13 +1,13 @@
 package com.github.chen0040.gp.treegp.gp;
 
 
-import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPMutationStrategy;
 import com.github.chen0040.gp.treegp.program.Program;
 import com.github.chen0040.gp.treegp.program.Solution;
+import com.github.chen0040.gp.treegp.program.TreeHelper;
 import com.github.chen0040.gp.treegp.program.TreeNode;
 
 import java.util.List;
