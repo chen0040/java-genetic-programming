@@ -47,7 +47,7 @@ public class MexicanHatUnitTest {
       Population pop = train(tgp, false);
 
       Solution program = pop.getGlobalBestSolution();
-      logger.info("global: {}", program);
+      logger.info("global: {}", program.mathExpression());
 
       test(program, testingData);
 

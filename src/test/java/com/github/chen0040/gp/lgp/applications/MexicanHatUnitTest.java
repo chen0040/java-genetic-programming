@@ -76,7 +76,7 @@ public class MexicanHatUnitTest {
 
          return error;
       });
-      lgp.setMaxGeneration(100); // should be 1000 for full evolution
+      lgp.setMaxGeneration(30); // should be 1000 for full evolution
       return lgp;
    }
 

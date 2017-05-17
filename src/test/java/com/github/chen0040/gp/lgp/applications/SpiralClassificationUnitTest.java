@@ -101,7 +101,7 @@ public class SpiralClassificationUnitTest {
 
          return error / observations.size();
       });
-      lgp.setMaxGeneration(100); // should be 1000 for full evolution
+      lgp.setMaxGeneration(30); // should be 1000 for full evolution
       lgp.setCrossoverStrategy(LGPCrossoverStrategy.OneSegment);
       lgp.setMaxProgramLength(200);
       lgp.setMinProgramLength(1);

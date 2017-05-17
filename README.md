@@ -9,6 +9,11 @@ More details are provided in the [docs](http://java-genetic-programming.readthed
 # Features
 
 * Linear Genetic Programming
+
+    - Initialization
+    
+       + Full Register Array 
+       + Fixed-length Register Array
    
     - Crossover
      
@@ -32,10 +37,40 @@ More details are provided in the [docs](http://java-genetic-programming.readthed
         + Most of the math operators
         + if-less, if-greater
         + Support operator extension
+        
+* Tree Genetic Programming
+
+    - Initialization 
+    
+        + Full
+        + Grow
+        + PTC 1
+        + Random Branch
+        + Ramped Full
+        + Ramped Grow
+        + Ramped Half-Half
+        
+    - Crossover
+    
+        + Subtree Bias
+        + Subtree No Bias
+        
+    - Mutation
+    
+        + Subtree
+        + Subtree Kinnear
+        + Hoist
+        + Shrink
+        
+    - Evolution Strategy
+    
+        + (mu + lambda)
+        + TinyGP
+
+
     
 Future Works
 
-* Tree Genetic Programming
 * Grammar-based Genetic Programming
 * Gene Expression Programming
 
@@ -199,6 +234,74 @@ The best program in the LGP population obtained from the training in the above s
 ```java
 Program program = pop.getGlobalBestProgram();
 logger.info("global: {}", program);
+
+for(Observation observation : testingData) {
+ program.execute(observation);
+ double predicted = observation.getPredictedOutput(0);
+ double actual = observation.getOutput(0);
+
+ logger.info("predicted: {}\tactual: {}", predicted, actual);
+}
+```
+
+# Usage of Tree Genetic Programming
+
+Here we will use the "Mexican Hat" symbolic regression introduced earlier to 
+
+### Create and train the TreeGP
+
+ 
+The sample code below shows how the TreeGP can be created and trained:
+
+```java
+import com.github.chen0040.gp.treegp.TreeGP;
+import com.github.chen0040.gp.treegp.gp.BasicObservation;
+import com.github.chen0040.gp.treegp.gp.Observation;
+import com.github.chen0040.gp.treegp.gp.Population;
+import com.github.chen0040.gp.treegp.program.operators.*;
+
+TreeGP tgp = new TreeGP();
+tgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
+tgp.getOperatorSet().addIfLessThanOperator();
+tgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
+tgp.setVariableCount(2); // equal to the number of input parameter in an observation
+tgp.getObservations().addAll(trainingData);
+tgp.setCostEvaluator((program, observations)->{
+ double error = 0;
+ for(Observation observation : observations){
+    program.execute(observation);
+    error += Math.pow(observation.getOutput(0) - observation.getPredictedOutput(0), 2.0);
+ }
+
+ return error;
+});
+
+long startTime = System.currentTimeMillis();
+Population pop = tgp.newPopulation();
+pop.initialize();
+while (!pop.isTerminated())
+{
+ pop.evolve();
+ logger.info("Mexican Hat Symbolic Regression Generation: {}, elapsed: {} seconds", pop.getCurrentGeneration(), (System.currentTimeMillis() - startTime) / 1000);
+ logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
+}
+
+logger.info("best solution found: {}", pop.getGlobalBestSolution().mathExpression());
+```
+
+The last line prints the TreeGP program found by the TreeGP evolution, a sample of which is shown below:
+
+```
+Trees[0]: 1.0 - (if(1.0 < if(1.0 < 1.0, if(1.0 < v0, 1.0, 1.0), if(1.0 < (v1 * v0) + (1.0 / 1.0), 1.0 + 1.0, 1.0)), 1.0, v0 ^ 1.0))
+```
+
+### Test the program obtained from the TreeGP evolution
+
+The best program in the TreeGP population obtained from the training in the above step can then be used for prediction, as shown by the sample code below:
+
+```java
+Solution program = pop.getGlobalBestSolution();
+logger.info("global: {}", program.mathExpression());
 
 for(Observation observation : testingData) {
  program.execute(observation);
