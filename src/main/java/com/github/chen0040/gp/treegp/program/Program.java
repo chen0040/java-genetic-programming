@@ -130,27 +130,13 @@ public class Program implements Serializable, Comparable<Program> {
     * @return
     */
    @Override public int compareTo(Program that) {
-      if (depth < that.depth)
+
+      int cmp = Integer.compare(depth, that.depth);
+      if (cmp == 0)
       {
-         return -1;
-      }
-      else if (depth == that.depth)
-      {
-         if (length < that.length)
-         {
-            return -1;
-         }
-         else if(length == that.length){
-            return 0;
-         }
-         else
-         {
-            return 1;
-         }
-      }
-      else
-      {
-         return 1;
+         return Integer.compare(length, that.length);
+      } else {
+         return cmp;
       }
    }
 
@@ -301,6 +287,9 @@ public class Program implements Serializable, Comparable<Program> {
 
    private void collectNodes(TreeNode node, TreeNode parent_node, List<TupleTwo<TreeNode, TreeNode>> list) {
       if(node == null) return;
+      if(parent_node != null){
+         assert parent_node.getChildren().contains(node);
+      }
       list.add(new TupleTwo<>(node, parent_node));
       for(TreeNode child : node.getChildren()){
          collectNodes(child, node, list);
@@ -330,5 +319,10 @@ public class Program implements Serializable, Comparable<Program> {
 
    public int getLength() {
       return length;
+   }
+
+   @Override
+   public String toString(){
+      return root.toString();
    }
 }

@@ -163,4 +163,9 @@ public class Population {
    public double getCostInCurrentGeneration() {
       return bestProgramInCurrentGeneration.getCost();
    }
+
+
+   public int size() {
+      return programs.size();
+   }
 }

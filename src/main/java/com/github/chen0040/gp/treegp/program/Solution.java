@@ -88,7 +88,7 @@ public class Solution implements Comparable<Solution> {
          Program tree = trees.get(i);
          tree.read(observation);
          double output = tree.execute();
-         observation.setOutput(i % observation.outputCount(), output);
+         observation.setPredictedOutput(i % observation.outputCount(), output);
       }
    }
 
@@ -117,28 +117,24 @@ public class Solution implements Comparable<Solution> {
    }
 
 
-   @Override public int compareTo(Solution o) {
-      if(!costValid || !o.costValid) {
+   @Override public int compareTo(Solution that) {
+      if(!costValid || !that.costValid) {
          throw new InvalidCostException("cost of the solutions involved in the comparison is not valid for comparison");
       }
 
-      int cmp = Double.compare(cost, o.cost);
+      int cmp = Double.compare(cost, that.cost);
+
       if(cmp == 0) {
          int this_better_count = 0;
          for (int i = 0; i < trees.size(); ++i)
          {
-            if (trees.get(i).compareTo(o.trees.get(i)) < 0)
+            if (trees.get(i).compareTo(that.trees.get(i)) < 0)
             {
                this_better_count++;
             }
          }
 
-         if (this_better_count * 2 > trees.size())
-         {
-            return -1;
-         }
-
-         return +1;
+         return Integer.compare(trees.size(), this_better_count * 2);
       } else {
          return cmp;
       }

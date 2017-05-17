@@ -9,15 +9,16 @@ import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPPopulationReplacementStrategy;
 import com.github.chen0040.gp.treegp.program.Solution;
 import com.github.chen0040.gp.utils.CollectionUtils;
+import com.github.chen0040.gp.utils.QuickSort;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.encoding.CharacterType.S;
 
 
 /**
@@ -26,6 +27,8 @@ import static jdk.nashorn.internal.runtime.regexp.joni.encoding.CharacterType.S;
 @Getter
 @Setter
 public class Population {
+
+   private static final Logger logger = LoggerFactory.getLogger(Population.class);
 
    private final List<Solution> solutions = new ArrayList<>();
    private final TreeGP manager;
@@ -76,9 +79,13 @@ public class Population {
       evaluate();
    }
 
+   public boolean isTerminated() {
+      return currentGeneration >= manager.getMaxGeneration();
+   }
+
    public void evolve(){
 
-      TGPPopulationReplacementStrategy populationReplacement = manager.getPopulationReplacementStrategy();
+      TGPPopulationReplacementStrategy populationReplacement = manager.getReplacementStrategy();
       if (populationReplacement == TGPPopulationReplacementStrategy.MuPlusLambda)
       {
          muPlusLambdaEvolve();
@@ -180,8 +187,8 @@ public class Population {
 
       updateGlobal(bestSolutionInCurrentGeneration);
 
-      solutions.sort(Solution::compareTo);
-      offspring.sort(Solution::compareTo);
+      QuickSort.sort(solutions, Solution::compareTo);
+      QuickSort.sort(offspring, Solution::compareTo);
 
       for (int offspring_index = elite_count; offspring_index < iPopSize; ++offspring_index)
       {
@@ -248,37 +255,51 @@ public class Population {
          }
 
 
-            boolean successfully_replaced = false;
-            for(int i=0; i < children.size(); ++i)
+         boolean successfully_replaced = false;
+         for(int i=0; i < children.size(); ++i)
+         {
+            Solution child = children.get(i);
+
+            evaluate(child);
+
+            if (bestSolutionInCurrentGeneration == null || child.isBetterThan(bestSolutionInCurrentGeneration))
             {
-               Solution child = children.get(i);
+               bestSolutionInCurrentGeneration = child;
+            }
 
-               evaluate(child);
-
-               if (bestSolutionInCurrentGeneration == null || child.isBetterThan(bestSolutionInCurrentGeneration))
+            for (Solution bad_parent : bad_parents)
+            {
+               if (child.isBetterThan(bad_parent))
                {
-                  bestSolutionInCurrentGeneration = child;
-               }
-
-               for (Solution bad_parent : bad_parents)
-               {
-                  if (child.isBetterThan(bad_parent))
-                  {
-                     successfully_replaced = true;
-                     solutions.set(solutions.indexOf(bad_parent), child);
-                     break;
-                  }
-               }
-
-               if (successfully_replaced)
-               {
+                  successfully_replaced = true;
+                  solutions.set(solutions.indexOf(bad_parent), child);
                   break;
                }
             }
+
+            if (successfully_replaced)
+            {
+               break;
+            }
+         }
 
       }
 
       updateGlobal(bestSolutionInCurrentGeneration);
    }
 
+
+   public Solution getGlobalBestSolution() {
+      return globalBestSolution.get();
+   }
+
+
+   public double getCostInCurrentGeneration() {
+      return bestSolutionInCurrentGeneration.getCost();
+   }
+
+
+   public int size() {
+      return solutions.size();
+   }
 }

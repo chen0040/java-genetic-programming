@@ -42,7 +42,7 @@ The sample code below shows how to generate data from the "Mexican Hat" regressi
     import java.util.List;
     import java.util.function.BiFunction;
 
-    private List<Observation> mexican_hat(){
+    private List<Observation> ProblemCatalogue.mexican_hat(){
       List<Observation> result = new ArrayList<>();
 
       BiFunction<Double, Double, Double> mexican_hat_func = (x1, x2) -> (1 - x1 * x1 / 4 - x2 * x2 / 4) * Math.exp(- x1 * x2 / 8 - x2 * x2 / 8);
@@ -80,7 +80,7 @@ We can split the data generated into training and testing data:
 
     import com.github.chen0040.gp.utils.CollectionUtils;
 
-    List<Observation> data = mexican_hat();
+    List<Observation> data = ProblemCatalogue.mexican_hat();
     CollectionUtils.shuffle(data);
     TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
     List<Observation> trainingData = split_data._1();

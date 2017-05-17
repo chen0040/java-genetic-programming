@@ -25,25 +25,27 @@ import java.util.function.BiFunction;
 @Getter
 @Setter
 public class TreeGP {
-   private TGPInitializationStrategy initializationStrategy;
-   private TGPCrossoverStrategy crossoverStrategy;
-   private TGPMutationStrategy mutationStrategy;
-   private TGPPopulationReplacementStrategy populationReplacementStrategy = TGPPopulationReplacementStrategy.MuPlusLambda;
+   private TGPInitializationStrategy populationInitializationStrategy = TGPInitializationStrategy.INITIALIZATION_METHOD_RAMPED_GROW;
+   private TGPCrossoverStrategy crossoverStrategy = TGPCrossoverStrategy.CROSSOVER_SUBTREE_BIAS;
+   private TGPMutationStrategy mutationStrategy = TGPMutationStrategy.MUTATION_SUBTREE;
+   private TGPPopulationReplacementStrategy replacementStrategy = TGPPopulationReplacementStrategy.MuPlusLambda;
 
    private RandEngine randEngine = new SimpleRandEngine();
-   private int maxDepthForCrossover;
-   private int maxProgramDepth;
-   private int maxDepthForCreation;
-   private double macroMutationRate;
-   private double microMutationRate;
-   private double crossoverRate;
-   private double reproductionRate;
+   private int maxDepthForCrossover = 7;
+   private int maxProgramDepth = 7;
+   private int maxDepthForCreation =7;
+   private double macroMutationRate = 0.25;
+   private double microMutationRate = 0.25;
+   private double crossoverRate = 0.5;
+   private double reproductionRate = 0.0;
    private double elitismRatio;
+   private double epsilon = 0.000000001;
 
    private int populationSize = 1000;
+   private int maxGeneration = 1000;
 
    private int variableCount;
-   private OperatorSet operatorSet;
+   private OperatorSet operatorSet = new OperatorSet();
    @Setter(AccessLevel.NONE)
    private List<Double> constants = new ArrayList<>();
    @Setter(AccessLevel.NONE)

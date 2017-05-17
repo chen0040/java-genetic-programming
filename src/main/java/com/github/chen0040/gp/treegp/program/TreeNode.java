@@ -23,6 +23,7 @@ public class TreeNode implements Serializable {
    private final List<TreeNode> children = new ArrayList<>();
 
    public TreeNode(Primitive primitive){
+      assert primitive != null;
       this.primitive = primitive;
    }
 
@@ -74,8 +75,8 @@ public class TreeNode implements Serializable {
 
    public void copy(TreeNode that, OperatorSet operatorSet, VariableSet variableSet, ConstantSet constantSet) {
 
-      if(primitive.isTerminal()){
-         if(primitive.isReadOnly()){
+      if(that.primitive.isTerminal()){
+         if(that.primitive.isReadOnly()){
             primitive = constantSet.get(that.primitive.getIndex());
          } else {
             primitive = variableSet.get(that.primitive.getIndex());

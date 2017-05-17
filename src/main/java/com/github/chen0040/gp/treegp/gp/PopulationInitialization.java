@@ -14,7 +14,7 @@ import java.util.List;
 public class PopulationInitialization {
 
    public static void apply(List<Solution> solutions, TreeGP programManager){
-      TGPInitializationStrategy initializationStrategy = programManager.getInitializationStrategy();
+      TGPInitializationStrategy initializationStrategy = programManager.getPopulationInitializationStrategy();
       if(initializationStrategy == TGPInitializationStrategy.INITIALIZATION_METHOD_FULL
               || initializationStrategy == TGPInitializationStrategy.INITIALIZATION_METHOD_GROW
               || initializationStrategy == TGPInitializationStrategy.INITIALIZATION_METHOD_PTC1
@@ -67,7 +67,7 @@ public class PopulationInitialization {
 
       int interval = populationSize / part_count;
 
-      TGPInitializationStrategy method = programManager.getInitializationStrategy();
+      TGPInitializationStrategy method = programManager.getPopulationInitializationStrategy();
       if(method == TGPInitializationStrategy.INITIALIZATION_METHOD_RAMPED_FULL){
          method = TGPInitializationStrategy.INITIALIZATION_METHOD_FULL;
       } else if(method == TGPInitializationStrategy.INITIALIZATION_METHOD_RAMPED_GROW){
@@ -97,7 +97,7 @@ public class PopulationInitialization {
       int iPopulationSize = programManager.getPopulationSize();
       for (int i = 0; i < iPopulationSize; i++)
       {
-         Solution solution = createSolution(programManager, programManager.getMaxDepthForCreation(), programManager.getInitializationStrategy());
+         Solution solution = createSolution(programManager, programManager.getMaxDepthForCreation(), programManager.getPopulationInitializationStrategy());
          solutions.add(solution);
       }
    }

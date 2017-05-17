@@ -34,4 +34,13 @@ public class Terminal extends Primitive implements Serializable {
    public Terminal(String symbol) {
       super(0, symbol, 0, false);
    }
+
+   @Override
+   public String toString(){
+      if(isReadOnly()){
+         return "" + getValue();
+      } else {
+         return getName();
+      }
+   }
 }

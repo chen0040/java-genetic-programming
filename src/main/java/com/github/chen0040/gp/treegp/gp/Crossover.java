@@ -54,9 +54,10 @@ public class Crossover {
                pCutPoint1 = program1.anyNode(bias, randEngine);
                pCutPoint2 = program2.anyNode(bias, randEngine);
 
+
                if (pCutPoint1 != null && pCutPoint2 != null)
                {
-                  swap(program1, program2, pCutPoint1, pCutPoint2);
+                  TupleTwo<TupleTwo<TreeNode, TreeNode>, TupleTwo<TreeNode, TreeNode>> result = swap(program1, program2, pCutPoint1, pCutPoint2);
 
                   iMaxDepth1 = program1.calcDepth();
                   iMaxDepth2 = program2.calcDepth();
@@ -68,7 +69,10 @@ public class Crossover {
                   }
                   else
                   {
-                     swap(program1, program2, pCutPoint1, pCutPoint2); // swap back so as to restore to the original GP trees if the crossover is not valid due to max depth violation
+                     TupleTwo<TreeNode, TreeNode> newCutPoint1 = result._1();
+                     TupleTwo<TreeNode, TreeNode> newCutPoint2 = result._2();
+
+                     swap(program1, program2, newCutPoint1, newCutPoint2); // swap back so as to restore to the original GP trees if the crossover is not valid due to max depth violation
                   }
                }
 
@@ -96,7 +100,7 @@ public class Crossover {
    }
 
 
-   private static void swap(Program program1, Program program2, TupleTwo<TreeNode, TreeNode> cutPoint1, TupleTwo<TreeNode, TreeNode> cutPoint2) {
+   private static TupleTwo<TupleTwo<TreeNode, TreeNode>, TupleTwo<TreeNode, TreeNode>> swap(Program program1, Program program2, TupleTwo<TreeNode, TreeNode> cutPoint1, TupleTwo<TreeNode, TreeNode> cutPoint2) {
       TreeNode parent1 = cutPoint1._2();
       TreeNode parent2 = cutPoint2._2();
       
@@ -121,14 +125,20 @@ public class Crossover {
          {
             point1.getChildren().add(children2.get(i).makeCopy(program1.getOperatorSet(), program1.getVariableSet(), program1.getConstantSet()));
          }
+         return new TupleTwo<>(cutPoint1, cutPoint2);
       }
       else
       {
          int child_index1 = parent1.getChildren().indexOf(point1);
          int child_index2 = parent2.getChildren().indexOf(point2);
 
-         parent1.getChildren().set(child_index1, point2.makeCopy(program1.getOperatorSet(), program1.getVariableSet(), program1.getConstantSet()));
-         parent2.getChildren().set(child_index2, point1.makeCopy(program2.getOperatorSet(), program2.getVariableSet(), program2.getConstantSet()));
+         TreeNode newChild1 = point2.makeCopy(program1.getOperatorSet(), program1.getVariableSet(), program1.getConstantSet());
+         TreeNode newChild2 = point1.makeCopy(program2.getOperatorSet(), program2.getVariableSet(), program2.getConstantSet());
+
+         parent1.getChildren().set(child_index1, newChild1);
+         parent2.getChildren().set(child_index2, newChild2);
+
+         return new TupleTwo<>(new TupleTwo<>(newChild1, parent1), new TupleTwo<>(newChild2, parent2));
       }
    }
 
