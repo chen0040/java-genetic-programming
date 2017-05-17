@@ -5,6 +5,17 @@ This package provides java implementation of various genetic programming paradig
                                                                                                                                                                                                                                                                                                                   
 More details are provided in the [docs](http://java-genetic-programming.readthedocs.io/en/latest/?badge=latest) for implementation, complexities and further info.
 
+# Install
+
+Add the following dependency to your POM file:
+
+```xml
+<dependency>
+  <groupId>com.github.chen0040</groupId>
+  <artifactId>java-genetic-programming</artifactId>
+  <version>1.0.4</version>
+</dependency>
+```
 
 # Features
 
@@ -74,17 +85,7 @@ Future Works
 * Grammar-based Genetic Programming
 * Gene Expression Programming
 
-# Install
 
-Add the following dependency to your POM file:
-
-```xml
-<dependency>
-  <groupId>com.github.chen0040</groupId>
-  <artifactId>java-genetic-programming</artifactId>
-  <version>1.0.3</version>
-</dependency>
-```
 
 # Usage of Linear Genetic Programming
 
@@ -149,8 +150,8 @@ The sample code below shows how the LGP can be created and trained:
 
 ```java
 import com.github.chen0040.gp.lgp.LGP;
-import com.github.chen0040.gp.lgp.gp.BasicObservation;
-import com.github.chen0040.gp.lgp.gp.Observation;
+import com.github.chen0040.gp.commons.BasicObservation;
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
 import com.github.chen0040.gp.lgp.program.operators.*;
 
@@ -255,8 +256,8 @@ The sample code below shows how the TreeGP can be created and trained:
 
 ```java
 import com.github.chen0040.gp.treegp.TreeGP;
-import com.github.chen0040.gp.treegp.gp.BasicObservation;
-import com.github.chen0040.gp.treegp.gp.Observation;
+import com.github.chen0040.gp.commons.BasicObservation;
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.treegp.gp.Population;
 import com.github.chen0040.gp.treegp.program.operators.*;
 
