@@ -2,9 +2,9 @@ package com.github.chen0040.gp.treegp.applications;
 
 
 import com.github.chen0040.data.utils.TupleTwo;
-import com.github.chen0040.gp.commons.BasicObservation;
 import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.services.ProblemCatalogue;
+import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPCrossoverStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPMutationStrategy;
@@ -12,15 +12,12 @@ import com.github.chen0040.gp.treegp.enums.TGPPopulationReplacementStrategy;
 import com.github.chen0040.gp.treegp.gp.Population;
 import com.github.chen0040.gp.treegp.program.Solution;
 import com.github.chen0040.gp.treegp.program.operators.*;
-import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 
 /**
@@ -49,17 +46,19 @@ public class MexicanHatUnitTest {
       Solution program = pop.getGlobalBestSolution();
       logger.info("global: {}", program.mathExpression());
 
-      test(program, testingData);
+      test(program, testingData, false);
 
    }
    
-   private void test(Solution program, List<Observation> testingData) {
+   private void test(Solution program, List<Observation> testingData, boolean silent) {
       for(Observation observation : testingData) {
          program.execute(observation);
          double predicted = observation.getPredictedOutput(0);
          double actual = observation.getOutput(0);
 
-         logger.info("predicted: {}\tactual: {}", predicted, actual);
+         if(!silent) {
+            logger.info("predicted: {}\tactual: {}", predicted, actual);
+         }
       }
    }
    
@@ -80,18 +79,18 @@ public class MexicanHatUnitTest {
          return error;
       });
       tgp.setPopulationSize(1000);
-      tgp.setMaxGeneration(30); // should be 1000 for full evolution
+      tgp.setMaxGeneration(10); // should be 1000 for full evolution
       return tgp;
    }
 
-   private Population train(TreeGP tgp, boolean slient) {
+   private Population train(TreeGP tgp, boolean silent) {
       long startTime = System.currentTimeMillis();
       Population pop = tgp.newPopulation();
       pop.initialize();
       while (!pop.isTerminated())
       {
          pop.evolve();
-         if(!slient) {
+         if(!silent) {
             logger.info("Mexican Hat Symbolic Regression Generation: {} (Pop: {}), elapsed: {} seconds", pop.getCurrentGeneration(),
                     pop.size(),
                     (System.currentTimeMillis() - startTime) / 1000);
@@ -105,6 +104,8 @@ public class MexicanHatUnitTest {
    @Test
    public void test_symbolic_regression_with_crossover_subtree_no_bias() {
 
+      boolean silent = true;
+
       List<Observation> data = ProblemCatalogue.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
@@ -115,16 +116,18 @@ public class MexicanHatUnitTest {
       tgp.getObservations().addAll(trainingData);
       tgp.setCrossoverStrategy(TGPCrossoverStrategy.CROSSVOER_SUBTREE_NO_BIAS);
 
-      Population pop = train(tgp, true);
+      Population pop = train(tgp, silent);
 
       Solution program = pop.getGlobalBestSolution();
 
-      test(program, testingData);
+      test(program, testingData, silent);
 
    }
 
    @Test
    public void test_symbolic_regression_with_mutation_hoist() {
+
+      boolean silent = true;
 
       List<Observation> data = ProblemCatalogue.mexican_hat();
       CollectionUtils.shuffle(data);
@@ -136,15 +139,17 @@ public class MexicanHatUnitTest {
       tgp.getObservations().addAll(trainingData);
       tgp.setMutationStrategy(TGPMutationStrategy.MUTATION_HOIST);
 
-      Population pop = train(tgp, true);
+      Population pop = train(tgp, silent);
 
       Solution program = pop.getGlobalBestSolution();
 
-      test(program, testingData);
+      test(program, testingData, true);
    }
 
    @Test
    public void test_symbolic_regression_with_mutation_subtree_kinnear() {
+
+      boolean silent = true;
 
       List<Observation> data = ProblemCatalogue.mexican_hat();
       CollectionUtils.shuffle(data);
@@ -156,16 +161,18 @@ public class MexicanHatUnitTest {
       tgp.getObservations().addAll(trainingData);
       tgp.setMutationStrategy(TGPMutationStrategy.MUTATION_SUBTREE_KINNEAR);
 
-      Population pop = train(tgp, true);
+      Population pop = train(tgp, silent);
 
       Solution program = pop.getGlobalBestSolution();
 
-      test(program, testingData);
+      test(program, testingData, silent);
 
    }
 
    @Test
    public void test_symbolic_regression_replacement_mu_plus_lambda() {
+
+      boolean silent = true;
 
       List<Observation> data = ProblemCatalogue.mexican_hat();
       CollectionUtils.shuffle(data);
@@ -177,11 +184,11 @@ public class MexicanHatUnitTest {
       tgp.getObservations().addAll(trainingData);
       tgp.setReplacementStrategy(TGPPopulationReplacementStrategy.MuPlusLambda);
 
-      Population pop = train(tgp, true);
+      Population pop = train(tgp, silent);
 
       Solution program = pop.getGlobalBestSolution();
 
-      test(program, testingData);
+      test(program, testingData, silent);
 
    }
 
@@ -190,6 +197,8 @@ public class MexicanHatUnitTest {
 
    @Test
    public void test_symbolic_regression_pop_init_ptc_1() {
+
+      boolean silent = true;
 
       List<Observation> data = ProblemCatalogue.mexican_hat();
       CollectionUtils.shuffle(data);
@@ -201,11 +210,11 @@ public class MexicanHatUnitTest {
       tgp.getObservations().addAll(trainingData);
       tgp.setPopulationInitializationStrategy(TGPInitializationStrategy.INITIALIZATION_METHOD_PTC1);
 
-      Population pop = train(tgp, true);
+      Population pop = train(tgp, silent);
 
       Solution program = pop.getGlobalBestSolution();
 
-      test(program, testingData);
+      test(program, testingData, silent);
 
    }
 }
