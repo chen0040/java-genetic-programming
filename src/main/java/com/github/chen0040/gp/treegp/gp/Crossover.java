@@ -10,6 +10,7 @@ import com.github.chen0040.gp.treegp.program.Program;
 import com.github.chen0040.gp.treegp.program.Solution;
 import com.github.chen0040.gp.treegp.program.TreeNode;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,8 +109,8 @@ public class Crossover {
          Primitive content2 = point2.getPrimitive();
          point1.setPrimitive(program1.matchPrimitive(content2));
          point2.setPrimitive(program2.matchPrimitive(content1));
-         List<TreeNode> children1 = point1.getChildren().stream().collect(Collectors.toList());
-         List<TreeNode> children2 = point2.getChildren().stream().collect(Collectors.toList());
+         List<TreeNode> children1 = new ArrayList<>(point1.getChildren());
+         List<TreeNode> children2 = new ArrayList<>(point2.getChildren());
          point1.getChildren().clear();
          point2.getChildren().clear();
          for (int i = 0; i < children1.size(); ++i)

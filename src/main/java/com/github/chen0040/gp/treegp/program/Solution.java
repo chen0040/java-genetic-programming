@@ -143,4 +143,9 @@ public class Solution implements Comparable<Solution> {
          return cmp;
       }
    }
+
+
+   public boolean isBetterThan(Solution that) {
+      return compareTo(that) < 0;
+   }
 }

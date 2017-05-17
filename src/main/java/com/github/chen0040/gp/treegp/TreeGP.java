@@ -7,6 +7,7 @@ import com.github.chen0040.gp.services.SimpleRandEngine;
 import com.github.chen0040.gp.treegp.enums.TGPCrossoverStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPMutationStrategy;
+import com.github.chen0040.gp.treegp.enums.TGPPopulationReplacementStrategy;
 import com.github.chen0040.gp.treegp.gp.Population;
 import com.github.chen0040.gp.treegp.program.*;
 import lombok.AccessLevel;
@@ -27,6 +28,7 @@ public class TreeGP {
    private TGPInitializationStrategy initializationStrategy;
    private TGPCrossoverStrategy crossoverStrategy;
    private TGPMutationStrategy mutationStrategy;
+   private TGPPopulationReplacementStrategy populationReplacementStrategy = TGPPopulationReplacementStrategy.MuPlusLambda;
 
    private RandEngine randEngine = new SimpleRandEngine();
    private int maxDepthForCrossover;
@@ -36,6 +38,7 @@ public class TreeGP {
    private double microMutationRate;
    private double crossoverRate;
    private double reproductionRate;
+   private double elitismRatio;
 
    private int populationSize = 1000;
 
