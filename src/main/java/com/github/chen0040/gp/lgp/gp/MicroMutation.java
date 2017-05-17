@@ -84,7 +84,7 @@ public class MicroMutation {
    /// 3. if micro-mutate-constant type is selected, then randomly pick an effective instruction with a constant as one
    /// of its register value, mutate the constant to c+$N(0, \omega_{\mu}$
    /// </summary>
-   public static void mutate(Program program, LGP manager, RandEngine randEngine)
+   public static void apply(Program program, LGP manager, RandEngine randEngine)
    {
       double micro_mutate_operator_rate = manager.getMicroMutateOperatorRate();
       double micro_mutate_register_rate = manager.getMicroMutateRegisterRate();

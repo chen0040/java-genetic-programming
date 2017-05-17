@@ -15,7 +15,7 @@ import java.util.List;
  * Created by xschen on 7/5/2017.
  */
 public class PopulationInitialization {
-   public static void initialize(List<Program> programs, LGP manager) {
+   public static void apply(List<Program> programs, LGP manager) {
       RandEngine randEngine = manager.getRandEngine();
       if(manager.getProgramInitializationStrategy() == LGPInitializationStrategy.ConstantLength){
          initializeWithConstantLength(programs, manager, randEngine);

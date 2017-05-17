@@ -30,7 +30,7 @@ public class MacroMutation {
    // and an insertion at the same time. A further, but important argument against
    // substitution of single instructions is that these do not vary program length. If
    // single instruction would only be exchanged there would be no code growth.
-   public static void mutate(Program child, LGP manager, RandEngine randEngine) {
+   public static void apply(Program child, LGP manager, RandEngine randEngine) {
       double r=randEngine.uniform();
       List<Instruction> instructions=child.getInstructions();
       if(child.length() < manager.getMacroMutateMaxProgramLength() && ((r < manager.getMacroMutateInsertionRate())  || child.length() == manager.getMacroMutateMinProgramLength()))

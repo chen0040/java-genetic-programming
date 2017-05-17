@@ -34,7 +34,7 @@ public class Population {
       this.manager = manager;
    }
 
-   protected void evaluate(LGP manager) {
+   protected void evaluate() {
 
       double bestCost = Double.MAX_VALUE;
       for(int i=0; i< programs.size(); ++i) {
@@ -52,8 +52,8 @@ public class Population {
    }
 
    public void initialize(){
-      PopulationInitialization.initialize(programs, manager);
-      evaluate(manager);
+      PopulationInitialization.apply(programs, manager);
+      evaluate();
    }
 
 
@@ -98,25 +98,25 @@ public class Population {
          r = randEngine.uniform();
          if (r < manager.getMacroMutationRate())
          {
-            MacroMutation.mutate(tp1, manager, randEngine);
+            MacroMutation.apply(tp1, manager, randEngine);
          }
 
          r = randEngine.uniform();
          if (r < manager.getMacroMutationRate())
          {
-            MacroMutation.mutate(tp2, manager, randEngine);
+            MacroMutation.apply(tp2, manager, randEngine);
          }
 
          r=randEngine.uniform();
          if(r < manager.getMicroMutationRate())
          {
-            MicroMutation.mutate(tp1, manager, randEngine);
+            MicroMutation.apply(tp1, manager, randEngine);
          }
 
          r=randEngine.uniform();
          if(r < manager.getMicroMutationRate())
          {
-            MicroMutation.mutate(tp2, manager, randEngine);
+            MicroMutation.apply(tp2, manager, randEngine);
          }
 
          tp1.setCost(manager.evaluateCost(tp1));

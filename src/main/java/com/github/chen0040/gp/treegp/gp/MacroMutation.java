@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by xschen on 14/5/2017.
  */
-public class Mutation {
+public class MacroMutation {
    /// <summary>
    /// Method that implements the subtree mutation or "headless chicken" crossover described in Section 2.4 of "A Field Guide to Genetic Programming"
    /// </summary>

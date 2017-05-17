@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class PopulationInitialization {
 
-   public static void initialize(List<Solution> solutions, TreeGP programManager){
+   public static void apply(List<Solution> solutions, TreeGP programManager){
       TGPInitializationStrategy initializationStrategy = programManager.getInitializationStrategy();
       if(initializationStrategy == TGPInitializationStrategy.INITIALIZATION_METHOD_FULL
               || initializationStrategy == TGPInitializationStrategy.INITIALIZATION_METHOD_GROW
