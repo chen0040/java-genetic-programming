@@ -6,6 +6,7 @@ import com.github.chen0040.gp.exceptions.InvalidCostException;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -17,7 +18,8 @@ import java.util.function.Supplier;
  */
 @Getter
 @Setter
-public class Solution implements Comparable<Solution> {
+public class Solution implements Comparable<Solution>, Serializable {
+   private static final long serialVersionUID = 5589700036065720457L;
    private double cost;
    private boolean costValid;
    private final List<Program> trees = new ArrayList<>();
