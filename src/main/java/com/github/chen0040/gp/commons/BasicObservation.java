@@ -1,11 +1,15 @@
 package com.github.chen0040.gp.commons;
 
 
+import java.io.Serializable;
+
+
 /**
  * Created by xschen on 2/5/2017.
  */
-public class BasicObservation implements Observation {
+public class BasicObservation implements Observation, Serializable {
 
+   private static final long serialVersionUID = 5930617395756548620L;
    private final double[] inputs;
    private final double[] outputs;
    private final double[] expectedOutputs;

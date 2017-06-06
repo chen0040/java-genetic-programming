@@ -6,6 +6,9 @@ package com.github.chen0040.gp.lgp.program;
  * Containers for the read-only registers
  */
 public class ConstantSet extends RegisterSet {
+   private static final long serialVersionUID = -7609154441590856138L;
+
+
    public ConstantSet(){
       super();
    }

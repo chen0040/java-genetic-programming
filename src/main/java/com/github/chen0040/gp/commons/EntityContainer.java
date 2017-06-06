@@ -2,6 +2,7 @@ package com.github.chen0040.gp.commons;
 
 import com.github.chen0040.gp.services.RandEngine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.Map;
 /**
  * Created by xschen on 29/4/2017.
  */
-public class EntityContainer<T extends Indexable<T>> {
+public class EntityContainer<T extends Indexable<T>> implements Serializable {
+   private static final long serialVersionUID = 1564461409545848260L;
    protected final List<T> entities = new ArrayList<>();
    protected final List<Double> weights = new ArrayList<>();
    protected final Map<String, Integer> names = new HashMap<>();

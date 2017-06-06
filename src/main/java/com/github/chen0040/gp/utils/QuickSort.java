@@ -19,7 +19,7 @@ public class QuickSort {
    private static <T> void sort(List<T> a, int lo, int hi, Comparator<T> comparator){
       if(lo >= hi) return;
 
-      if(hi - lo >= 7){
+      if(hi - lo < 7){
          insertionSort(a, lo, hi, comparator);
          return;
       }
@@ -45,16 +45,16 @@ public class QuickSort {
       int i, j;
       T v = a.get(lo);
       i = lo;
-      j = hi;
+      j = hi+1;
       while(true){
-         while(comparator.compare(a.get(i++), v) < 0){
+         while(comparator.compare(a.get(++i), v) < 0){
             if(i >= hi) break;
          }
-         while(comparator.compare(v, a.get(j--)) < 0) {
+         while(comparator.compare(v, a.get(--j)) < 0) {
             if(j <= lo) break;
          }
 
-         if(i > j) {
+         if(i >= j) {
             break;
          }
 
