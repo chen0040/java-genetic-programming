@@ -15,7 +15,7 @@ To install the package using maven, add the following dependency to your POM fil
     <dependency>
       <groupId>com.github.chen0040</groupId>
       <artifactId>java-genetic-programming</artifactId>
-      <version>1.0.3</version>
+      <version>1.0.7</version>
     </dependency>
 
 
@@ -37,7 +37,7 @@ To use the algorithms or data structures in your java code:
     lgp.getOperatorSet().addIfLessThanOperator();
     lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
     lgp.setRegisterCount(6);
-    lgp.fit(trainingData);
+
     lgp.setCostEvaluator((program, observations)->{
      double error = 0;
      for(Observation observation : observations){
@@ -48,17 +48,9 @@ To use the algorithms or data structures in your java code:
      return error;
     });
 
-    long startTime = System.currentTimeMillis();
-    Population pop = lgp.newPopulation();
-    pop.initialize();
-    while (!pop.isTerminated())
-    {
-     pop.evolve();
-     logger.info("Mexican Hat Symbolic Regression Generation: {}, elapsed: {} seconds", pop.getCurrentGeneration(), (System.currentTimeMillis() - startTime) / 1000);
-     logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
-    }
+    Program program = lgp.fit(trainingData);
 
-    logger.info("best solution found: {}", pop.getGlobalBestProgram());
+    logger.info("best solution found: {}", program);
 
 
 Features

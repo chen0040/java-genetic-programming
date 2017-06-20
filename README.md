@@ -13,7 +13,7 @@ Add the following dependency to your POM file:
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-genetic-programming</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
 </dependency>
 ```
 
@@ -183,7 +183,7 @@ import com.github.chen0040.gp.treegp.gp.Population;
 import com.github.chen0040.gp.treegp.program.operators.*;
 
 TreeGP tgp = TreeGP.defaultConfig();
-tgp.setVariableCount(2); // equal to the number of input parameter in an observation
+tgp.setVariableCount(2); // equal to the number of input dimension of the training data
 tgp.setCostEvaluator((program, observations)->{
  double error = 0;
  for(Observation observation : observations){

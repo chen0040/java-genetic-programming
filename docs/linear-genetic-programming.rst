@@ -105,7 +105,7 @@ The sample code below shows how the LGP can be created and trained:
     lgp.getOperatorSet().addIfLessThanOperator();
     lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
     lgp.setRegisterCount(6);
-    lgp.fit(trainingData);
+
     lgp.setCostEvaluator((program, observations)->{
      double error = 0;
      for(Observation observation : observations){
@@ -116,17 +116,9 @@ The sample code below shows how the LGP can be created and trained:
      return error;
     });
 
-    long startTime = System.currentTimeMillis();
-    Population pop = lgp.newPopulation();
-    pop.initialize();
-    while (!pop.isTerminated())
-    {
-     pop.evolve();
-     logger.info("Mexican Hat Symbolic Regression Generation: {}, elapsed: {} seconds", pop.getCurrentGeneration(), (System.currentTimeMillis() - startTime) / 1000);
-     logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
-    }
+    Program program  = lgp.fit(trainingData);
 
-    logger.info("best solution found: {}", pop.getGlobalBestProgram());
+    logger.info("best solution found: {}", program);
 
 
 The last line prints the linear program found by the LGP evolution, a sample of which is shown below:
@@ -181,7 +173,6 @@ The best program in the LGP population obtained from the training in the above s
 
 .. code-block:: java
 
-    Program program = pop.getGlobalBestProgram();
     logger.info("global: {}", program);
 
     for(Observation observation : testingData) {
