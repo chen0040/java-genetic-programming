@@ -22,7 +22,7 @@ To install the package using maven, add the following dependency to your POM fil
 Usage
 -----
 
-To use the algorithms or data structures in your python code:
+To use the algorithms or data structures in your java code:
 
 .. code-block:: java
 
@@ -37,7 +37,7 @@ To use the algorithms or data structures in your python code:
     lgp.getOperatorSet().addIfLessThanOperator();
     lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
     lgp.setRegisterCount(6);
-    lgp.getObservations().addAll(trainingData);
+    lgp.fit(trainingData);
     lgp.setCostEvaluator((program, observations)->{
      double error = 0;
      for(Observation observation : observations){

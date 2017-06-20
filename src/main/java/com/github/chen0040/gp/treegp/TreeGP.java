@@ -10,6 +10,7 @@ import com.github.chen0040.gp.treegp.enums.TGPMutationStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPPopulationReplacementStrategy;
 import com.github.chen0040.gp.treegp.gp.Population;
 import com.github.chen0040.gp.treegp.program.*;
+import com.github.chen0040.gp.treegp.program.operators.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,6 +44,8 @@ public class TreeGP {
 
    private int populationSize = 1000;
    private int maxGeneration = 1000;
+
+   private int displayEvery = -1;
 
    private int variableCount;
    private OperatorSet operatorSet = new OperatorSet();
@@ -95,6 +98,34 @@ public class TreeGP {
       for(int i=0; i < constants.length; ++i){
          addConstant(constants[0], 1.0);
       }
+   }
+
+   public Solution fit(List<Observation> observations) {
+      this.observations.clear();
+      this.observations.addAll(observations);
+
+      long startTime = System.currentTimeMillis();
+      Population pop = this.newPopulation();
+      pop.initialize();
+      while (!pop.isTerminated())
+      {
+         pop.evolve();
+         if(displayEvery > 0 && pop.getCurrentGeneration() % displayEvery == 0) {
+            long seconds = (System.currentTimeMillis() - startTime) / 1000;
+            System.out.println("Generation: " + pop.getCurrentGeneration() + " (Pop: " + pop.size() + "), elapsed: " + seconds + " seconds");
+            System.out.println("Global Cost: " + pop.getGlobalBestSolution().getCost() + "\tCurrent Cost: " + pop.getCostInCurrentGeneration());
+         }
+      }
+
+      return pop.getGlobalBestSolution();
+   }
+
+   public static TreeGP defaultConfig(){
+      TreeGP tgp = new TreeGP();
+      tgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
+      tgp.getOperatorSet().addIfLessThanOperator();
+      tgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
+      return tgp;
    }
 
 

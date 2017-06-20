@@ -105,7 +105,7 @@ The sample code below shows how the LGP can be created and trained:
     lgp.getOperatorSet().addIfLessThanOperator();
     lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
     lgp.setRegisterCount(6);
-    lgp.getObservations().addAll(trainingData);
+    lgp.fit(trainingData);
     lgp.setCostEvaluator((program, observations)->{
      double error = 0;
      for(Observation observation : observations){

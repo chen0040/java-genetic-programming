@@ -10,9 +10,9 @@ import java.util.function.BiFunction;
 
 
 /**
- * Created by xschen on 17/5/2017.
+ * Created by xschen on 20/6/2017.
  */
-public class ProblemCatalogue {
+public class Tutorials {
    public static List<Observation> mexican_hat(){
       List<Observation> result = new ArrayList<>();
 

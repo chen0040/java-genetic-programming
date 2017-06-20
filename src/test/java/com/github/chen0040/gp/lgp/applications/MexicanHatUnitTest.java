@@ -6,20 +6,16 @@ import com.github.chen0040.gp.lgp.LGP;
 import com.github.chen0040.gp.lgp.enums.LGPCrossoverStrategy;
 import com.github.chen0040.gp.lgp.enums.LGPInitializationStrategy;
 import com.github.chen0040.gp.lgp.enums.LGPReplacementStrategy;
-import com.github.chen0040.gp.commons.BasicObservation;
 import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
 import com.github.chen0040.gp.lgp.program.Program;
-import com.github.chen0040.gp.lgp.program.operators.*;
-import com.github.chen0040.gp.services.ProblemCatalogue;
+import com.github.chen0040.gp.services.Tutorials;
 import com.github.chen0040.gp.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 
 /**
@@ -35,18 +31,16 @@ public class MexicanHatUnitTest {
 
       boolean silent = false;
       
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       LGP lgp = createLGP();
-      lgp.getObservations().addAll(trainingData);
+      lgp.setDisplayEvery(2);
 
-      Population pop = train(lgp, silent);
-
-      Program program = pop.getGlobalBestProgram();
+      Program program = lgp.fit(trainingData);
       logger.info("global: {}", program);
 
       test(program, testingData, silent);
@@ -66,10 +60,7 @@ public class MexicanHatUnitTest {
    }
    
    private LGP createLGP(){
-      LGP lgp = new LGP();
-      lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
-      lgp.getOperatorSet().addIfLessThanOperator();
-      lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
+      LGP lgp = LGP.defaultConfig();
       lgp.setRegisterCount(6);
       lgp.setCostEvaluator((program, observations)->{
          double error = 0;
@@ -84,90 +75,58 @@ public class MexicanHatUnitTest {
       return lgp;
    }
 
-   private Population train(LGP lgp, boolean silent) {
-      long startTime = System.currentTimeMillis();
-      Population pop = lgp.newPopulation();
-      pop.initialize();
-      while (!pop.isTerminated())
-      {
-         pop.evolve();
-         if(!silent) {
-            logger.info("Mexican Hat Symbolic Regression Generation: {} (Pop: {}), elapsed: {} seconds", pop.getCurrentGeneration(),
-                    pop.size(),
-                    (System.currentTimeMillis() - startTime) / 1000);
-            logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestProgram().getCost(), pop.getCostInCurrentGeneration());
-         }
-      }
-
-      return pop;
-   }
 
    @Test
    public void test_symbolic_regression_with_crossover_onePoint() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       LGP lgp = createLGP();
-      lgp.getObservations().addAll(trainingData);
       lgp.setCrossoverStrategy(LGPCrossoverStrategy.OnePoint);
 
-      Population pop = train(lgp, silent);
+      Program program = lgp.fit(trainingData);
 
-      Program program = pop.getGlobalBestProgram();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 
    @Test
    public void test_symbolic_regression_with_crossover_oneSegment() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       LGP lgp = createLGP();
-      lgp.getObservations().addAll(trainingData);
       lgp.setCrossoverStrategy(LGPCrossoverStrategy.OneSegment);
 
-      Population pop = train(lgp, silent);
+      Program program = lgp.fit(trainingData);
 
-      Program program = pop.getGlobalBestProgram();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 
    @Test
    public void test_symbolic_regression_replacement_direct_compete() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       LGP lgp = createLGP();
-      lgp.getObservations().addAll(trainingData);
       lgp.setReplacementStrategy(LGPReplacementStrategy.DirectCompetition);
 
-      Population pop = train(lgp, silent);
+      Program program = lgp.fit(trainingData);
 
-      Program program = pop.getGlobalBestProgram();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 
@@ -175,46 +134,36 @@ public class MexicanHatUnitTest {
    @Test
    public void test_symbolic_regression_effective_mutation() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       LGP lgp = createLGP();
-      lgp.getObservations().addAll(trainingData);
       lgp.setEffectiveMutation(true);
 
-      Population pop = train(lgp, silent);
+      Program program = lgp.fit(trainingData);
 
-      Program program = pop.getGlobalBestProgram();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 
    @Test
    public void test_symbolic_regression_pop_init_const_length() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       LGP lgp = createLGP();
-      lgp.getObservations().addAll(trainingData);
       lgp.setProgramInitializationStrategy(LGPInitializationStrategy.ConstantLength);
 
-      Population pop = train(lgp, silent);
+      Program program = lgp.fit(trainingData);
 
-      Program program = pop.getGlobalBestProgram();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 }

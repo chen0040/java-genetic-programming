@@ -3,7 +3,7 @@ package com.github.chen0040.gp.treegp.applications;
 
 import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.gp.commons.Observation;
-import com.github.chen0040.gp.services.ProblemCatalogue;
+import com.github.chen0040.gp.services.Tutorials;
 import com.github.chen0040.gp.treegp.TreeGP;
 import com.github.chen0040.gp.treegp.enums.TGPCrossoverStrategy;
 import com.github.chen0040.gp.treegp.enums.TGPInitializationStrategy;
@@ -32,18 +32,15 @@ public class MexicanHatUnitTest {
    @Test
    public void test_symbolic_regression() {
 
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       TreeGP tgp = createTreeGP();
-      tgp.getObservations().addAll(trainingData);
-
-      Population pop = train(tgp, false);
-
-      Solution program = pop.getGlobalBestSolution();
+      tgp.setDisplayEvery(2);
+      Solution program = tgp.fit(trainingData);
       logger.info("global: {}", program.mathExpression());
 
       test(program, testingData, false);
@@ -63,10 +60,7 @@ public class MexicanHatUnitTest {
    }
    
    private TreeGP createTreeGP(){
-      TreeGP tgp = new TreeGP();
-      tgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
-      tgp.getOperatorSet().addIfLessThanOperator();
-      tgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
+      TreeGP tgp = TreeGP.defaultConfig();
       tgp.setVariableCount(2);
       tgp.setCostEvaluator((program, observations)->{
          double error = 0;
@@ -83,65 +77,37 @@ public class MexicanHatUnitTest {
       return tgp;
    }
 
-   private Population train(TreeGP tgp, boolean silent) {
-      long startTime = System.currentTimeMillis();
-      Population pop = tgp.newPopulation();
-      pop.initialize();
-      while (!pop.isTerminated())
-      {
-         pop.evolve();
-         if(!silent) {
-            logger.info("Mexican Hat Symbolic Regression Generation: {} (Pop: {}), elapsed: {} seconds", pop.getCurrentGeneration(),
-                    pop.size(),
-                    (System.currentTimeMillis() - startTime) / 1000);
-            logger.info("Global Cost: {}\tCurrent Cost: {}", pop.getGlobalBestSolution().getCost(), pop.getCostInCurrentGeneration());
-         }
-      }
-
-      return pop;
-   }
-
    @Test
    public void test_symbolic_regression_with_crossover_subtree_no_bias() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       TreeGP tgp = createTreeGP();
-      tgp.getObservations().addAll(trainingData);
       tgp.setCrossoverStrategy(TGPCrossoverStrategy.CROSSVOER_SUBTREE_NO_BIAS);
 
-      Population pop = train(tgp, silent);
+      Solution program = tgp.fit(trainingData);
 
-      Solution program = pop.getGlobalBestSolution();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 
    @Test
    public void test_symbolic_regression_with_mutation_hoist() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       TreeGP tgp = createTreeGP();
-      tgp.getObservations().addAll(trainingData);
       tgp.setMutationStrategy(TGPMutationStrategy.MUTATION_HOIST);
 
-      Population pop = train(tgp, silent);
-
-      Solution program = pop.getGlobalBestSolution();
+      Solution program = tgp.fit(trainingData);
 
       test(program, testingData, true);
    }
@@ -149,46 +115,36 @@ public class MexicanHatUnitTest {
    @Test
    public void test_symbolic_regression_with_mutation_subtree_kinnear() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       TreeGP tgp = createTreeGP();
-      tgp.getObservations().addAll(trainingData);
       tgp.setMutationStrategy(TGPMutationStrategy.MUTATION_SUBTREE_KINNEAR);
 
-      Population pop = train(tgp, silent);
+      Solution program = tgp.fit(trainingData);
 
-      Solution program = pop.getGlobalBestSolution();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 
    @Test
    public void test_symbolic_regression_replacement_mu_plus_lambda() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       TreeGP tgp = createTreeGP();
-      tgp.getObservations().addAll(trainingData);
       tgp.setReplacementStrategy(TGPPopulationReplacementStrategy.MuPlusLambda);
 
-      Population pop = train(tgp, silent);
+      Solution program = tgp.fit(trainingData);
 
-      Solution program = pop.getGlobalBestSolution();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 
@@ -198,23 +154,18 @@ public class MexicanHatUnitTest {
    @Test
    public void test_symbolic_regression_pop_init_ptc_1() {
 
-      boolean silent = true;
-
-      List<Observation> data = ProblemCatalogue.mexican_hat();
+      List<Observation> data = Tutorials.mexican_hat();
       CollectionUtils.shuffle(data);
       TupleTwo<List<Observation>, List<Observation>> split_data = CollectionUtils.split(data, 0.9);
       List<Observation> trainingData = split_data._1();
       List<Observation> testingData = split_data._2();
 
       TreeGP tgp = createTreeGP();
-      tgp.getObservations().addAll(trainingData);
       tgp.setPopulationInitializationStrategy(TGPInitializationStrategy.INITIALIZATION_METHOD_PTC1);
 
-      Population pop = train(tgp, silent);
+      Solution program = tgp.fit(trainingData);
 
-      Solution program = pop.getGlobalBestSolution();
-
-      test(program, testingData, silent);
+      test(program, testingData, true);
 
    }
 }

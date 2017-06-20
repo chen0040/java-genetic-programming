@@ -8,6 +8,7 @@ import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.lgp.gp.Population;
 import com.github.chen0040.gp.lgp.program.OperatorSet;
 import com.github.chen0040.gp.lgp.program.Program;
+import com.github.chen0040.gp.lgp.program.operators.*;
 import com.github.chen0040.gp.services.RandEngine;
 import com.github.chen0040.gp.services.SimpleRandEngine;
 import lombok.AccessLevel;
@@ -97,6 +98,7 @@ public class LGP {
    // END
 
 
+   private int displayEvery = -1;
 
 
    public double undefined(){
@@ -137,10 +139,40 @@ public class LGP {
       constantWeights.add(weight);
    }
 
+   public Program fit(List<Observation> observations) {
+      this.observations.clear();
+      this.observations.addAll(observations);
+
+      long startTime = System.currentTimeMillis();
+      Population pop = this.newPopulation();
+      pop.initialize();
+
+      while (!pop.isTerminated())
+      {
+         pop.evolve();
+         if(displayEvery > 0 && pop.getCurrentGeneration() % displayEvery == 0) {
+            long seconds = (System.currentTimeMillis() - startTime) / 1000;
+            System.out.println("Generation: " + pop.getCurrentGeneration() + " (Pop: " + pop.size() + "), elapsed: " + seconds + " seconds");
+            System.out.println("Global Cost: " + pop.getGlobalBestProgram().getCost() + "\tCurrent Cost: " + pop.getCostInCurrentGeneration());
+         }
+      }
+
+      return pop.getGlobalBestProgram();
+   }
+
 
    public void addConstants(double... constants) {
       for(int i=0; i < constants.length; ++i){
          addConstant(constants[0], 1.0);
       }
+   }
+
+
+   public static LGP defaultConfig() {
+      LGP lgp = new LGP();
+      lgp.getOperatorSet().addAll(new Plus(), new Minus(), new Divide(), new Multiply(), new Power());
+      lgp.getOperatorSet().addIfLessThanOperator();
+      lgp.addConstants(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
+      return lgp;
    }
 }

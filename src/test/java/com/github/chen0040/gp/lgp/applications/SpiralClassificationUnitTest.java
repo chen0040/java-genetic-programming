@@ -41,7 +41,7 @@ public class SpiralClassificationUnitTest {
       List<Observation> testingData = split_data._2();
 
       LGP lgp = createLGP();
-      lgp.getObservations().addAll(trainingData);
+      lgp.fit(trainingData);
 
       Population pop = train(lgp);
 
