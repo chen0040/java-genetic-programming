@@ -130,6 +130,8 @@ lgp.setCostEvaluator((program, observations)->{
  return error;
 });
 
+lgp.setDisplayEvery(10); // to display iteration results every 10 generation
+
 Program program = lgp.fit(trainingData);
 ```
 The number of registers of a linea program is set by calling LGP.setRegisterCount(...), the number of registers is usually the a multiple of the 
