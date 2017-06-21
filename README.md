@@ -133,8 +133,9 @@ lgp.setCostEvaluator((program, observations)->{
 lgp.setDisplayEvery(10); // to display iteration results every 10 generation
 
 Program program = lgp.fit(trainingData);
+System.out.println(program);
 ```
-The number of registers of a linea program is set by calling LGP.setRegisterCount(...), the number of registers is usually the a multiple of the 
+The number of registers of a linear program is set by calling LGP.setRegisterCount(...), the number of registers is usually the a multiple of the 
 input dimension of a training data instance. For example if the training data has input (x, y) which is 2 dimension, then the number of registers
 may be set to 6 = 2 * 3.
 
@@ -198,9 +199,10 @@ tgp.setCostEvaluator((program, observations)->{
 tgp.setDisplayEvery(10); // to display iteration results every 10 generation
 
 Solution program = tgp.fit(trainingData);
+System.out.println(program.mathExpression());
 ```
 
-The last line prints the TreeGP program found by the TreeGP evolution, a sample of which is shown below (by calling program.mathExpress()):
+The last line prints the TreeGP program found by the TreeGP evolution, a sample of which is shown below (by calling program.mathExpression()):
 
 ```
 Trees[0]: 1.0 - (if(1.0 < if(1.0 < 1.0, if(1.0 < v0, 1.0, 1.0), if(1.0 < (v1 * v0) + (1.0 / 1.0), 1.0 + 1.0, 1.0)), 1.0, v0 ^ 1.0))
