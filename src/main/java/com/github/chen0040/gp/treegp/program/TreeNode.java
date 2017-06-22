@@ -63,9 +63,24 @@ public class TreeNode implements Serializable {
       for(int i=0; i <count; ++i){
          inputs.add(children.get(i).execute(observation));
       }
+
       primitive.beforeExecute(inputs, observation);
+
       primitive.execute(observation);
       return primitive.getValue();
+   }
+
+   public String executeWithText(Observation observation){
+      int count = arity();
+      List<String> inputs = new ArrayList<>();
+      for(int i=0; i <count; ++i){
+         inputs.add(children.get(i).executeWithText(observation));
+      }
+
+      primitive.beforeExecuteWithText(inputs, observation);
+
+      primitive.executeWithText(observation);
+      return primitive.getTextValue();
    }
 
    public TreeNode makeCopy(OperatorSet operatorSet, VariableSet variableSet, ConstantSet constantSet){

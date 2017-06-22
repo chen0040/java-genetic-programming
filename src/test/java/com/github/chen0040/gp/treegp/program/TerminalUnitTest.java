@@ -57,6 +57,7 @@ public class TerminalUnitTest {
       Terminal t = new Terminal("mutable");
       t.setValue(0.3);
       t.beforeExecute(Arrays.asList(0.1, 0.2), null);
+      t.beforeExecuteWithText(Arrays.asList("Hello", "World"), null);
    }
 
    @Test

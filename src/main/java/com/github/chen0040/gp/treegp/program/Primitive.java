@@ -17,6 +17,8 @@ import java.util.List;
 public abstract class Primitive implements Serializable, Indexable<Primitive> {
    private static final long serialVersionUID = -249257238928605728L;
    private final List<Double> inputs = new ArrayList<>();
+   private final List<String> textInputs = new ArrayList<>();
+   private String textValue;
    private double value;
    private final String symbol;
    private final boolean readOnly;
@@ -31,6 +33,10 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       for(int i=0; i < inputCount; ++i){
          inputs.add(0.0);
       }
+      for(int i=0; i < inputCount; ++i) {
+         textInputs.add(null);
+      }
+
       this.symbol = symbol;
       this.value = value;
       this.readOnly = readOnly;
@@ -56,7 +62,12 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       for(int i=0; i < that.inputs.size(); ++i) {
          inputs.add(that.inputs.get(i));
       }
+      textInputs.clear();
+      textInputs.addAll(that.textInputs);
+
       value = that.value;
+      textValue = that.textValue;
+
       index = that.index;
       return this;
    }
@@ -74,11 +85,27 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       }
    }
 
+   public void beforeExecuteWithText(List<String> values, Observation observation){
+      if(textInputs.size() != values.size()) {
+         throw new SizeMismatchedException(inputs.size(), values.size());
+      }
+      for(int i=0; i < values.size(); ++i) {
+         textInputs.set(i, values.get(i));
+      }
+   }
+
    public void setInput(int index, double value){
       if(index >= arity()){
          throw new IndexOutOfBoundsException(index + " is greater or equal to input size" + arity());
       }
       inputs.set(index, value);
+   }
+
+   public void setInput(int index, String value){
+      if(index >= arity()){
+         throw new IndexOutOfBoundsException(index + " is greater or equal to input size" + arity());
+      }
+      textInputs.set(index, value);
    }
 
    public double getInput(int index) {
@@ -88,6 +115,13 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       return inputs.get(index);
    }
 
+   public String getTextInput(int index) {
+      if(index >= arity()){
+         throw new IndexOutOfBoundsException(index + " is greater or equal to input size" + arity());
+      }
+      return textInputs.get(index);
+   }
+
    public void setValue(double val){
       if(readOnly){
          throw new RuntimeException("The primitive is readonly");
@@ -95,10 +129,20 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       value = val;
    }
 
+   public void setValue(String val) {
+      if(readOnly){
+         throw new RuntimeException("The primitive is readonly");
+      }
+      textValue = val;
+   }
+
    public double getValue(){
       return value;
    }
 
+   public String getTextValue() {
+      return textValue;
+   }
 
    public String getSymbol(){
       return symbol;
@@ -168,4 +212,8 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
    }
 
    public abstract void execute(Observation observation);
+
+   public void executeWithText(Observation observation) {
+
+   }
 }

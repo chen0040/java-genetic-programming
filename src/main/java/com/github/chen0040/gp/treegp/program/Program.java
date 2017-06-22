@@ -91,6 +91,10 @@ public class Program implements Serializable, Comparable<Program> {
       return root.execute(observation);
    }
 
+   public String executeWithText(Observation observation) {
+      return root.executeWithText(observation);
+   }
+
    public void read(Observation observation){
       int inputCount = observation.inputCount();
       for(int i=0; i < variableSet.size(); ++i){
