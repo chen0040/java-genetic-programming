@@ -94,6 +94,16 @@ public class Solution implements Comparable<Solution>, Serializable {
       }
    }
 
+   public void executeWithText(Observation observation){
+
+      for(int i=0; i < trees.size(); ++i){
+         Program tree = trees.get(i);
+         tree.readText(observation);
+         String output = tree.executeWithText(observation);
+         observation.setPredictedOutput(i % observation.outputCount(), output);
+      }
+   }
+
    public int averageTreeDepth()
    {
       if (trees.isEmpty()) return 0;

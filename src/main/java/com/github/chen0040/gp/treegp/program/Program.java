@@ -103,6 +103,14 @@ public class Program implements Serializable, Comparable<Program> {
       }
    }
 
+   public void readText(Observation observation){
+      int inputCount = observation.inputCount();
+      for(int i=0; i < variableSet.size(); ++i){
+         int j = i % inputCount;
+         variableSet.set(j, observation.getTextInput(j));
+      }
+   }
+
    /// <summary>
    /// Method that randomly select and returns a terminal primitive
    /// </summary>
