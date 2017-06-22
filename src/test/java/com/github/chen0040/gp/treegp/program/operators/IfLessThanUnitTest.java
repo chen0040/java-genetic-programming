@@ -2,7 +2,6 @@ package com.github.chen0040.gp.treegp.program.operators;
 
 
 import com.github.chen0040.gp.exceptions.SizeMismatchedException;
-import com.github.chen0040.gp.treegp.program.Operator;
 import com.github.chen0040.gp.treegp.program.Primitive;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.testng.annotations.Test;
@@ -28,7 +27,7 @@ public class IfLessThanUnitTest {
    @Test
    public void test_ifNotLessThan(){
       IfLessThan op1 = new IfLessThan();
-      op1.read(Arrays.asList(0.1, 0.05, 1.0, 2.0));
+      op1.beforeExecute(Arrays.asList(0.1, 0.05, 1.0, 2.0), null);
       op1.execute(null);
       assertThat(op1.getValue()).isEqualTo(2.0);
    }
@@ -36,7 +35,7 @@ public class IfLessThanUnitTest {
    @Test
    public void test_ifLessThan(){
       IfLessThan op1 = new IfLessThan();
-      op1.read(Arrays.asList(0.1, 0.5, 1.0, 2.0));
+      op1.beforeExecute(Arrays.asList(0.1, 0.5, 1.0, 2.0), null);
       op1.execute(null);
       assertThat(op1.getValue()).isEqualTo(1.0);
    }
@@ -45,7 +44,7 @@ public class IfLessThanUnitTest {
    public void test_readException(){
 
       IfLessThan op1 = new IfLessThan();
-      op1.read(Arrays.asList(0.1, 0.5, 1.0));
+      op1.beforeExecute(Arrays.asList(0.1, 0.5, 1.0), null);
    }
 
 }

@@ -63,7 +63,7 @@ public class TreeNode implements Serializable {
       for(int i=0; i <count; ++i){
          inputs.add(children.get(i).execute(observation));
       }
-      primitive.read(inputs);
+      primitive.beforeExecute(inputs, observation);
       primitive.execute(observation);
       return primitive.getValue();
    }

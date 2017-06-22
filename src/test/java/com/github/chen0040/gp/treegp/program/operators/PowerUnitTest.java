@@ -23,7 +23,7 @@ public class PowerUnitTest {
    @Test
    public void test_execute(){
       Power op = new Power();
-      op.read(Arrays.asList(2.0, 2.0));
+      op.beforeExecute(Arrays.asList(2.0, 2.0), null);
       op.execute(null);
       assertThat(op.getValue()).isEqualTo(4.0);
    }
@@ -31,7 +31,7 @@ public class PowerUnitTest {
    @Test
    public void test_execute_large(){
       Power op = new Power();
-      op.read(Arrays.asList(12.0, 0.0));
+      op.beforeExecute(Arrays.asList(12.0, 0.0), null);
       op.execute(null);
       assertThat(op.getValue()).isEqualTo(13.0);
    }

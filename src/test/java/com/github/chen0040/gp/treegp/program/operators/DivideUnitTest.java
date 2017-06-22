@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.testng.Assert.*;
 
 
 /**
@@ -24,7 +23,7 @@ public class DivideUnitTest {
    @Test
    public void test_execute(){
       Divide op = new Divide();
-      op.read(Arrays.asList(2.0, 2.0));
+      op.beforeExecute(Arrays.asList(2.0, 2.0), null);
       op.execute(null);
       assertThat(op.getValue()).isEqualTo(1.0);
    }
@@ -32,7 +31,7 @@ public class DivideUnitTest {
    @Test
    public void test_execute_divideByZero(){
       Divide op = new Divide();
-      op.read(Arrays.asList(2.0, 0.0));
+      op.beforeExecute(Arrays.asList(2.0, 0.0), null);
       op.execute(null);
       assertThat(op.getValue()).isEqualTo(2.0);
    }

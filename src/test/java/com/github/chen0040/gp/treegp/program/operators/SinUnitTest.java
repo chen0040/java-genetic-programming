@@ -26,7 +26,7 @@ public class SinUnitTest {
    public void test_execute(){
       Sin op = new Sin();
       double input = 0.2;
-      op.read(Collections.singletonList(input));
+      op.beforeExecute(Collections.singletonList(input), null);
       op.execute(null);
       assertThat(op.getValue()).isEqualTo(Math.sin(input));
    }
@@ -34,7 +34,7 @@ public class SinUnitTest {
    @Test(expectedExceptions = SizeMismatchedException.class)
    public void test_readException() {
       Sin op = new Sin();
-      op.read(Arrays.asList(0.1, 0.2));
+      op.beforeExecute(Arrays.asList(0.1, 0.2), null);
    }
 
 }

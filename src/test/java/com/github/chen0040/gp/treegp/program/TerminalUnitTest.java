@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.testng.Assert.*;
 
 
 /**
@@ -57,7 +56,7 @@ public class TerminalUnitTest {
    public void testReadException(){
       Terminal t = new Terminal("mutable");
       t.setValue(0.3);
-      t.read(Arrays.asList(0.1, 0.2));
+      t.beforeExecute(Arrays.asList(0.1, 0.2), null);
    }
 
    @Test

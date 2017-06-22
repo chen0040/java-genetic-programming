@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.testng.Assert.*;
 
 
 /**
@@ -24,22 +23,22 @@ public class AndUnitTest {
    @Test
    public void test_execute(){
       And op1 = new And();
-      op1.read(Arrays.asList(1.0, 0.2));
+      op1.beforeExecute(Arrays.asList(1.0, 0.2), null);
       op1.execute(null);
       assertThat(op1.getValue()).isEqualTo(1.0);
 
       And op2 = new And();
-      op2.read(Arrays.asList(0.0, 0.2));
+      op2.beforeExecute(Arrays.asList(0.0, 0.2), null);
       op2.execute(null);
       assertThat(op2.getValue()).isEqualTo(0.0);
 
       And op3 = new And();
-      op3.read(Arrays.asList(1.0, 0.0));
+      op3.beforeExecute(Arrays.asList(1.0, 0.0), null);
       op3.execute(null);
       assertThat(op3.getValue()).isEqualTo(0.0);
 
       And op4 = new And();
-      op4.read(Arrays.asList(0.0, 0.0));
+      op4.beforeExecute(Arrays.asList(0.0, 0.0), null);
       op4.execute(null);
       assertThat(op4.getValue()).isEqualTo(0.0);
    }

@@ -26,7 +26,7 @@ public class LogUnitTest {
    public void test_execute(){
       Log op = new Log();
       double input = 0.2;
-      op.read(Collections.singletonList(input));
+      op.beforeExecute(Collections.singletonList(input), null);
       op.execute(null);
       assertThat(op.getValue()).isEqualTo(Math.log(input));
    }
@@ -34,7 +34,7 @@ public class LogUnitTest {
    @Test(expectedExceptions = SizeMismatchedException.class)
    public void test_readException() {
       Log op = new Log();
-      op.read(Arrays.asList(0.1, 0.2));
+      op.beforeExecute(Arrays.asList(0.1, 0.2), null);
    }
 
 }

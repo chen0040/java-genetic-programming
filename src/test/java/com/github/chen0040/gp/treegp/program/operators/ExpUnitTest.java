@@ -26,7 +26,7 @@ public class ExpUnitTest {
    public void test_execute(){
       Exp op = new Exp();
       double input = 0.2;
-      op.read(Collections.singletonList(input));
+      op.beforeExecute(Collections.singletonList(input), null);
       op.execute(null);
       assertThat(op.getValue()).isEqualTo(Math.exp(input));
    }
@@ -34,7 +34,7 @@ public class ExpUnitTest {
    @Test(expectedExceptions = SizeMismatchedException.class)
    public void test_readException() {
       Exp op = new Exp();
-      op.read(Arrays.asList(0.1, 0.2));
+      op.beforeExecute(Arrays.asList(0.1, 0.2), null);
    }
 
 }

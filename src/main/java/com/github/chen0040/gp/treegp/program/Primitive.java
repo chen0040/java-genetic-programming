@@ -65,7 +65,7 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       return inputs.size();
    }
 
-   public void read(List<Double> values){
+   public void beforeExecute(List<Double> values, Observation observation){
       if(inputs.size() != values.size()) {
          throw new SizeMismatchedException(inputs.size(), values.size());
       }

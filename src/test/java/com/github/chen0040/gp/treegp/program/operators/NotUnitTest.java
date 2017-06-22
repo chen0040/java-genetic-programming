@@ -28,7 +28,7 @@ public class NotUnitTest {
    public void test_execute(){
       Not op = new Not();
       for(Double input : Arrays.asList(0.2, 0.0)){
-         op.read(Collections.singletonList(input));
+         op.beforeExecute(Collections.singletonList(input), null);
          op.execute(null);
          assertThat(op.getValue()).isEqualTo(isTrue(input) ? 1.0 : 0.0);
       }
@@ -37,7 +37,7 @@ public class NotUnitTest {
    @Test(expectedExceptions = SizeMismatchedException.class)
    public void test_readException() {
       Not op = new Not();
-      op.read(Arrays.asList(0.1, 0.2));
+      op.beforeExecute(Arrays.asList(0.1, 0.2), null);
    }
 
    public boolean isTrue(double x)
