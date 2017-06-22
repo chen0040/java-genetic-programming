@@ -27,7 +27,7 @@ public class IfLessThanUnitTest {
 
       Register destination = new Register();
 
-      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_SKIP_NEXT_INSTRUCTION);
+      assertThat(op.execute(reg1, reg2, destination, null)).isEqualTo(OperatorExecutionStatus.LGP_SKIP_NEXT_INSTRUCTION);
    }
 
    @Test
@@ -42,7 +42,7 @@ public class IfLessThanUnitTest {
 
       Register destination = new Register();
 
-      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
+      assertThat(op.execute(reg1, reg2, destination, null)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
    }
 
    @Test

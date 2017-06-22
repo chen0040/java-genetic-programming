@@ -171,11 +171,11 @@ public class Program implements Serializable, Comparable<Program> {
       }
    }
 
-   public void execute(Observation fitness_case)
+   public void execute(Observation observation)
    {
       int inputRegisterCount = registerSet.size();
       for(int i=0; i < inputRegisterCount; ++i) {
-         registerSet.get(i).setValue(fitness_case.getInput(i % fitness_case.inputCount()));
+         registerSet.get(i).setValue(observation.getInput(i % observation.inputCount()));
       }
 
       OperatorExecutionStatus command = OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION;
@@ -191,7 +191,7 @@ public class Program implements Serializable, Comparable<Program> {
          current_effective_instruction = instruction;
          if (command == OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION)
          {
-            command = current_effective_instruction.execute();
+            command = current_effective_instruction.execute(observation);
             //fitness_case.ReportProgress(instruction.Operator, instruction.Operand1, instruction.Operand2, instruction.DestinationRegister, RegisterSet);
          }
          else
@@ -214,10 +214,10 @@ public class Program implements Serializable, Comparable<Program> {
       }
 
 
-      int outputRegisterCount = Math.min(registerSet.size(), fitness_case.outputCount());
+      int outputRegisterCount = Math.min(registerSet.size(), observation.outputCount());
       for (int i = 0; i < outputRegisterCount; ++i)
       {
-         fitness_case.setPredictedOutput(i, registerSet.get(i).getValue());
+         observation.setPredictedOutput(i, registerSet.get(i).getValue());
       }
    }
 

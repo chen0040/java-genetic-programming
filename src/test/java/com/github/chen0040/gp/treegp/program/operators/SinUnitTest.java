@@ -27,7 +27,7 @@ public class SinUnitTest {
       Sin op = new Sin();
       double input = 0.2;
       op.read(Collections.singletonList(input));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(Math.sin(input));
    }
 

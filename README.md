@@ -13,7 +13,7 @@ Add the following dependency to your POM file:
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-genetic-programming</artifactId>
-  <version>1.0.7</version>
+  <version>1.0.8</version>
 </dependency>
 ```
 
@@ -91,7 +91,7 @@ Future Works
 
 ### Create training data
 
-The sample code below shows how to generate data from the "Mexican Hat" regression problem:
+The sample code below shows how to generate data from the "Mexican Hat" regression problem (Please refers to the Tutorials.mexican_hat() in the source code on how to create the data):
 
 ```java
 List<Observation> data = Tutorials.mexican_hat();

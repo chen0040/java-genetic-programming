@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program.operators;
 
 
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.treegp.program.Operator;
 import com.github.chen0040.gp.treegp.program.Primitive;
 
@@ -19,7 +20,7 @@ public class IfLessThan extends Operator {
 
 
    @Override
-   public void execute(Object... tags)
+   public void execute(Observation observation)
    {
       setValue(0);
       if (this.getInput(0) < this.getInput(1))

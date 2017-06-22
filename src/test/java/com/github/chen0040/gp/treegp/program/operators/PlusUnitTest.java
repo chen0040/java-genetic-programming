@@ -24,7 +24,7 @@ public class PlusUnitTest {
    public void test_execute(){
       Plus op = new Plus();
       op.read(Arrays.asList(2.0, 2.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(4.0);
    }
 }

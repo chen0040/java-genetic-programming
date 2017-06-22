@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program.operators;
 
 
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import com.github.chen0040.gp.lgp.program.Operator;
 import com.github.chen0040.gp.lgp.LGP;
@@ -32,7 +33,7 @@ public class Log extends Operator {
    }
 
 
-   @Override public OperatorExecutionStatus execute(Register operand1, Register operand2, Register destination_register) {
+   @Override public OperatorExecutionStatus execute(Register operand1, Register operand2, Register destination_register, Observation observation) {
       double x = operand1.getValue();
       if (x == 0)
       {

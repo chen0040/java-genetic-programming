@@ -89,7 +89,7 @@ public class Solution implements Comparable<Solution>, Serializable {
       for(int i=0; i < trees.size(); ++i){
          Program tree = trees.get(i);
          tree.read(observation);
-         double output = tree.execute();
+         double output = tree.execute(observation);
          observation.setPredictedOutput(i % observation.outputCount(), output);
       }
    }

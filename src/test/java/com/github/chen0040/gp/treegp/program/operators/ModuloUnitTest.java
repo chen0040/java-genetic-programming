@@ -24,7 +24,7 @@ public class ModuloUnitTest {
    public void test_execute(){
       Modulo op = new Modulo();
       op.read(Arrays.asList(3.5, 2.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(1.5);
    }
 
@@ -32,7 +32,7 @@ public class ModuloUnitTest {
    public void test_execute_neg(){
       Modulo op = new Modulo();
       op.read(Arrays.asList(-3.5, -2.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(1.5);
    }
 
@@ -40,7 +40,7 @@ public class ModuloUnitTest {
    public void test_execute_moduloByZero(){
       Modulo op = new Modulo();
       op.read(Arrays.asList(2.0, 0.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(2.0);
    }
 }

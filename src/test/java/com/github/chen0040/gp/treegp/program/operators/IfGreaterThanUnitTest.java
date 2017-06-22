@@ -30,7 +30,7 @@ public class IfGreaterThanUnitTest {
    public void test_ifGreaterThan(){
       IfGreaterThan op1 = new IfGreaterThan();
       op1.read(Arrays.asList(0.1, 0.05, 1.0, 2.0));
-      op1.execute();
+      op1.execute(null);
       assertThat(op1.getValue()).isEqualTo(1.0);
    }
 
@@ -38,7 +38,7 @@ public class IfGreaterThanUnitTest {
    public void test_ifNotGreaterThan(){
       IfGreaterThan op1 = new IfGreaterThan();
       op1.read(Arrays.asList(0.1, 0.5, 1.0, 2.0));
-      op1.execute();
+      op1.execute(null);
       assertThat(op1.getValue()).isEqualTo(2.0);
    }
 

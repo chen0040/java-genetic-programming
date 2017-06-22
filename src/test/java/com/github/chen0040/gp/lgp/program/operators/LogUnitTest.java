@@ -26,7 +26,7 @@ public class LogUnitTest {
 
       reg1.setValue(2);
 
-      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
+      assertThat(op.execute(reg1, reg2, destination, null)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(Math.log(2));
    }
@@ -41,7 +41,7 @@ public class LogUnitTest {
 
       reg1.setValue(0);
 
-      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
+      assertThat(op.execute(reg1, reg2, destination, null)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(LGP.DEFAULT_UNDEFINED_LOW);
    }

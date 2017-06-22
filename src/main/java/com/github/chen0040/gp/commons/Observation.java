@@ -1,10 +1,13 @@
 package com.github.chen0040.gp.commons;
 
 
+import java.io.Serializable;
+
+
 /**
  * Created by xschen on 2/5/2017.
  */
-public interface Observation {
+public interface Observation extends Serializable {
 
    double getInput(int index);
    double getOutput(int index);
@@ -17,4 +20,7 @@ public interface Observation {
 
    int inputCount();
    int outputCount();
+
+   Serializable getTag();
+   void setTag(Serializable obj);
 }

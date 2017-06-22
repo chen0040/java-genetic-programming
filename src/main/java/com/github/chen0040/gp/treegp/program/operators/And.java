@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program.operators;
 
 
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.treegp.program.Operator;
 import com.github.chen0040.gp.treegp.program.Primitive;
 
@@ -16,7 +17,7 @@ public class And extends Operator {
       super(2, "AND");
    }
 
-   @Override public void execute(Object... tags)        {
+   @Override public void execute(Observation observation)       {
       double x1 = this.getInput(0);
       double x2 = this.getInput(1);
       if (isTrue(x1) && isTrue(x2))

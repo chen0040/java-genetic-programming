@@ -13,6 +13,7 @@ public class BasicObservation implements Observation, Serializable {
    private final double[] inputs;
    private final double[] outputs;
    private final double[] expectedOutputs;
+   private Serializable tag;
 
    public BasicObservation(int inputCount, int outputCount) {
       inputs = new double[inputCount];
@@ -55,5 +56,15 @@ public class BasicObservation implements Observation, Serializable {
 
    public int outputCount() {
       return outputs.length;
+   }
+
+
+   @Override public Serializable getTag() {
+      return tag;
+   }
+
+
+   @Override public void setTag(Serializable obj) {
+      this.tag = obj;
    }
 }

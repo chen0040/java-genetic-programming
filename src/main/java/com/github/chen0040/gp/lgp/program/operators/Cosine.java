@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program.operators;
 
 
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import com.github.chen0040.gp.lgp.program.Register;
 import com.github.chen0040.gp.lgp.program.Operator;
@@ -25,7 +26,7 @@ public class Cosine extends Operator {
    }
 
 
-   @Override public OperatorExecutionStatus execute(Register operand1, Register operand2, Register destination_register) {
+   @Override public OperatorExecutionStatus execute(Register operand1, Register operand2, Register destination_register, Observation observation) {
       double x = operand1.getValue();
       destination_register.setValue(Math.cos(x));
       return OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION;

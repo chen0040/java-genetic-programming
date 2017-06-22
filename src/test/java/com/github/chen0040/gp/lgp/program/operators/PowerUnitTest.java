@@ -26,7 +26,7 @@ public class PowerUnitTest {
       reg1.setValue(2);
       reg2.setValue(2);
 
-      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
+      assertThat(op.execute(reg1, reg2, destination, null)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(4);
    }
@@ -42,7 +42,7 @@ public class PowerUnitTest {
       reg1.setValue(14);
       reg2.setValue(2);
 
-      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
+      assertThat(op.execute(reg1, reg2, destination, null)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(17);
    }

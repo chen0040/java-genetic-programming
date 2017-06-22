@@ -2,6 +2,7 @@ package com.github.chen0040.gp.treegp.program;
 
 
 import com.github.chen0040.data.utils.StringUtils;
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.exceptions.SizeMismatchedException;
 import com.github.chen0040.gp.commons.Indexable;
 
@@ -166,5 +167,5 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       return result;
    }
 
-   public abstract void execute(Object... tags);
+   public abstract void execute(Observation observation);
 }

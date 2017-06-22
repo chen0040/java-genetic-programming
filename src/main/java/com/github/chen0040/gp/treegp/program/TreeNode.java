@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.gp.commons.Observation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,14 +57,14 @@ public class TreeNode implements Serializable {
       return maxDepth;
    }
 
-   public double execute(Object... tags) {
+   public double execute(Observation observation){
       int count = arity();
       List<Double> inputs = new ArrayList<>();
       for(int i=0; i <count; ++i){
-         inputs.add(children.get(i).execute(tags));
+         inputs.add(children.get(i).execute(observation));
       }
       primitive.read(inputs);
-      primitive.execute(tags);
+      primitive.execute(observation);
       return primitive.getValue();
    }
 

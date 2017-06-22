@@ -26,7 +26,7 @@ public class MultiplyUnitTest {
       reg1.setValue(2);
       reg2.setValue(2);
 
-      assertThat(op.execute(reg1, reg2, destination)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
+      assertThat(op.execute(reg1, reg2, destination, null)).isEqualTo(OperatorExecutionStatus.LGP_EXECUTE_NEXT_INSTRUCTION);
 
       assertThat(destination.getValue()).isEqualTo(4);
    }

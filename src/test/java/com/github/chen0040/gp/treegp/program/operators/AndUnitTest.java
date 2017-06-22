@@ -25,22 +25,22 @@ public class AndUnitTest {
    public void test_execute(){
       And op1 = new And();
       op1.read(Arrays.asList(1.0, 0.2));
-      op1.execute();
+      op1.execute(null);
       assertThat(op1.getValue()).isEqualTo(1.0);
 
       And op2 = new And();
       op2.read(Arrays.asList(0.0, 0.2));
-      op2.execute();
+      op2.execute(null);
       assertThat(op2.getValue()).isEqualTo(0.0);
 
       And op3 = new And();
       op3.read(Arrays.asList(1.0, 0.0));
-      op3.execute();
+      op3.execute(null);
       assertThat(op3.getValue()).isEqualTo(0.0);
 
       And op4 = new And();
       op4.read(Arrays.asList(0.0, 0.0));
-      op4.execute();
+      op4.execute(null);
       assertThat(op4.getValue()).isEqualTo(0.0);
    }
 }

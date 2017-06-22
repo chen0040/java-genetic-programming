@@ -25,7 +25,7 @@ public class DivideUnitTest {
    public void test_execute(){
       Divide op = new Divide();
       op.read(Arrays.asList(2.0, 2.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(1.0);
    }
 
@@ -33,7 +33,7 @@ public class DivideUnitTest {
    public void test_execute_divideByZero(){
       Divide op = new Divide();
       op.read(Arrays.asList(2.0, 0.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(2.0);
    }
 }

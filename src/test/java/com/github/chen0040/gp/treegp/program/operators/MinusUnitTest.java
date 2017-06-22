@@ -24,7 +24,7 @@ public class MinusUnitTest {
    public void test_execute(){
       Minus op = new Minus();
       op.read(Arrays.asList(2.0, 2.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(0.0);
    }
 

@@ -1,6 +1,8 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.gp.commons.Observation;
+
 import java.io.Serializable;
 
 
@@ -22,7 +24,7 @@ public class Terminal extends Primitive implements Serializable {
    }
 
 
-   @Override public void execute(Object... tags) {
+   @Override public void execute(Observation observation){
 
    }
 

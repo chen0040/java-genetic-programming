@@ -28,7 +28,7 @@ public class CosUnitTest {
       Cos op = new Cos();
       double input = 0.2;
       op.read(Collections.singletonList(input));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(Math.cos(input));
    }
 

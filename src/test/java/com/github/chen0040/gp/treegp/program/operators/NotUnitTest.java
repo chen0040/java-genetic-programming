@@ -29,7 +29,7 @@ public class NotUnitTest {
       Not op = new Not();
       for(Double input : Arrays.asList(0.2, 0.0)){
          op.read(Collections.singletonList(input));
-         op.execute();
+         op.execute(null);
          assertThat(op.getValue()).isEqualTo(isTrue(input) ? 1.0 : 0.0);
       }
    }

@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program.operators;
 
 
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.treegp.program.Operator;
 import com.github.chen0040.gp.treegp.program.Primitive;
 
@@ -17,7 +18,7 @@ public class Sqrt extends Operator {
       super(1, "sqrt");
    }
 
-   @Override public void execute(Object... tags) {
+   @Override public void execute(Observation observation){
       setValue(Math.sqrt(getInput(0)));
    }
 

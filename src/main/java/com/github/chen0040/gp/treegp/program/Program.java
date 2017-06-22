@@ -87,8 +87,8 @@ public class Program implements Serializable, Comparable<Program> {
       return clone;
    }
 
-   public double execute(Object... tags){
-      return root.execute(tags);
+   public double execute(Observation observation){
+      return root.execute(observation);
    }
 
    public void read(Observation observation){

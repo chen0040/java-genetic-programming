@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.lgp.program;
 
 
+import com.github.chen0040.gp.commons.Observation;
 import com.github.chen0040.gp.lgp.enums.OperatorExecutionStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,9 +27,9 @@ public class Instruction implements Serializable {
 
    }
 
-   public OperatorExecutionStatus execute()
+   public OperatorExecutionStatus execute(Observation observation)
    {
-      return operator.execute(operand1, operand2, targetOperand);
+      return operator.execute(operand1, operand2, targetOperand, observation);
    }
 
 

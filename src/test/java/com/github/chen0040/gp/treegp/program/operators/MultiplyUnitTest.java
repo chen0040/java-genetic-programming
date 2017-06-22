@@ -24,7 +24,7 @@ public class MultiplyUnitTest {
    public void test_execute(){
       Multiply op = new Multiply();
       op.read(Arrays.asList(2.0, 2.0));
-      op.execute();
+      op.execute(null);
       assertThat(op.getValue()).isEqualTo(4.0);
    }
 
