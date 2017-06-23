@@ -13,7 +13,7 @@ Add the following dependency to your POM file:
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-genetic-programming</artifactId>
-  <version>1.0.12</version>
+  <version>1.0.13</version>
 </dependency>
 ```
 
