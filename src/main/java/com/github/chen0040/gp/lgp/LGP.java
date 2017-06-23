@@ -163,7 +163,7 @@ public class LGP {
 
    public void addConstants(double... constants) {
       for(int i=0; i < constants.length; ++i){
-         addConstant(constants[0], 1.0);
+         addConstant(constants[i], 1.0);
       }
    }
 

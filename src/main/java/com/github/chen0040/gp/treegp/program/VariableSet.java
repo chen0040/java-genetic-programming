@@ -25,7 +25,12 @@ public class VariableSet extends EntityContainer<Primitive> implements Serializa
    }
 
    public void add(String symbol, double value, double weight){
-      Terminal register = new Terminal(symbol, value, isReadOnly());
+      Terminal register = new Terminal(symbol, value, "", isReadOnly());
+      add(register, weight);
+   }
+
+   public void add(String symbol, String value, double weight) {
+      Terminal register = new Terminal(symbol, 0, value, isReadOnly());
       add(register, weight);
    }
 

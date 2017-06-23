@@ -16,7 +16,7 @@ public abstract class Operator extends Primitive implements Serializable {
    }
 
    public Operator(int parameterCount, String symbol){
-      super(parameterCount, symbol, 0, false);
+      super(parameterCount, symbol, 0, "", false);
    }
 
 

@@ -46,6 +46,12 @@ public class MexicanHatUnitTest {
       test(program, testingData, false);
 
    }
+
+   @Test
+   public void test_add_text_constants() {
+      TreeGP tgp = createTreeGP();
+      tgp.addConstants("Hello", "World");
+   }
    
    private void test(Solution program, List<Observation> testingData, boolean silent) {
       for(Observation observation : testingData) {

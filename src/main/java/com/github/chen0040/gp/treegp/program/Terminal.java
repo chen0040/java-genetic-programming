@@ -18,7 +18,7 @@ public class Terminal extends Primitive implements Serializable {
 
 
    @Override public Terminal makeCopy() {
-      Terminal clone = new Terminal(getSymbol(), getValue(), isReadOnly());
+      Terminal clone = new Terminal(getSymbol(), getValue(), getTextValue(), isReadOnly());
       clone.copy(this);
       return clone;
    }
@@ -29,12 +29,12 @@ public class Terminal extends Primitive implements Serializable {
    }
 
 
-   public Terminal(String symbol, double value, boolean readonly) {
-      super(0, symbol, value, readonly);
+   public Terminal(String symbol, double value, String textValue, boolean readonly) {
+      super(0, symbol, value, textValue, readonly);
    }
 
    public Terminal(String symbol) {
-      super(0, symbol, 0, false);
+      super(0, symbol, 0, "", false);
    }
 
    @Override

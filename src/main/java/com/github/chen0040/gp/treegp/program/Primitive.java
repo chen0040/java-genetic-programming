@@ -29,7 +29,7 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       readOnly = false;
    }
 
-   public Primitive(int inputCount, String symbol, double value, boolean readOnly) {
+   public Primitive(int inputCount, String symbol, double value, String textValue, boolean readOnly) {
       for(int i=0; i < inputCount; ++i){
          inputs.add(0.0);
       }
@@ -39,6 +39,7 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
 
       this.symbol = symbol;
       this.value = value;
+      this.textValue = textValue;
       this.readOnly = readOnly;
    }
 
@@ -59,9 +60,8 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
          throw new RuntimeException("Symbol not matched for copy to proceed");
       }
       inputs.clear();
-      for(int i=0; i < that.inputs.size(); ++i) {
-         inputs.add(that.inputs.get(i));
-      }
+      inputs.addAll(that.inputs);
+
       textInputs.clear();
       textInputs.addAll(that.textInputs);
 

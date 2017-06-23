@@ -14,7 +14,7 @@ public class TerminalUnitTest {
 
    @Test(expectedExceptions = RuntimeException.class)
    public void testReadonlyTerminal(){
-      Terminal t = new Terminal("read-only-value", 0.1, true);
+      Terminal t = new Terminal("read-only-value", 0.1, "", true);
       t.setValue(0.2);
       assertThat(t.getSymbol()).isEqualTo("read-only-value");
       assertThat(t.arity()).isEqualTo(0);

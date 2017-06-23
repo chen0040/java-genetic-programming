@@ -160,12 +160,12 @@ public class Program implements Serializable, Comparable<Program> {
 
       final int constantCount = manager.getConstants().size();
       for(int i=0; i < constantCount; ++i){
-         constantSet.add(new Terminal("c" + i, manager.constant(i), true), manager.constantWeight(i));
+         constantSet.add(new Terminal("c" + i, manager.constant(i), manager.constantText(i), true), manager.constantWeight(i));
       }
 
       final int registerCount = manager.getVariableCount();
       for(int i=0; i < registerCount; ++i) {
-         variableSet.add(new Terminal("v" + i, 0.0, false), 1.0);
+         variableSet.add(new Terminal("v" + i, 0.0, "", false), 1.0);
       }
 
       final int operatorCount = manager.getOperatorSet().size();

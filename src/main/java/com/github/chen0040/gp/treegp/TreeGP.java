@@ -52,6 +52,8 @@ public class TreeGP {
    @Setter(AccessLevel.NONE)
    private List<Double> constants = new ArrayList<>();
    @Setter(AccessLevel.NONE)
+   private List<String> constantTexts = new ArrayList<>();
+   @Setter(AccessLevel.NONE)
    private List<Double> constantWeights = new ArrayList<>();
 
    // SEC: parameters for cost evaluation
@@ -75,6 +77,10 @@ public class TreeGP {
       return constants.get(index);
    }
 
+   public String constantText(int index) {
+      return constantTexts.get(index);
+   }
+
    public double evaluateCost(Solution solution) {
       if(costEvaluator != null){
          return costEvaluator.apply(solution.makeCopy(), observations);
@@ -91,12 +97,25 @@ public class TreeGP {
    public void addConstant(double constant, double weight) {
       constants.add(constant);
       constantWeights.add(weight);
+      constantTexts.add("");
+   }
+
+   public void addConstant(String constant, double weight) {
+      constants.add(0.0);
+      constantWeights.add(weight);
+      constantTexts.add(constant);
+   }
+
+   public void addConstants(String... constants) {
+      for(int i=0; i < constants.length; ++i){
+         addConstant(constants[i], 1.0);
+      }
    }
 
 
    public void addConstants(double... constants) {
       for(int i=0; i < constants.length; ++i){
-         addConstant(constants[0], 1.0);
+         addConstant(constants[i], 1.0);
       }
    }
 
