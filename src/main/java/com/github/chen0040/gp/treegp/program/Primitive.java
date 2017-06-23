@@ -211,7 +211,9 @@ public abstract class Primitive implements Serializable, Indexable<Primitive> {
       return result;
    }
 
-   public abstract void execute(Observation observation);
+   public void execute(Observation observation) {
+
+   }
 
    public void executeWithText(Observation observation) {
 

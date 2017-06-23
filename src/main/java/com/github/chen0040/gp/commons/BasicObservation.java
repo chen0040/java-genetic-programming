@@ -12,13 +12,20 @@ public class BasicObservation implements Observation, Serializable {
    private static final long serialVersionUID = 5930617395756548620L;
    private final double[] inputs;
    private final double[] outputs;
-   private final double[] expectedOutputs;
+   private final double[] predictedOutputs;
+   private final String[] textInputs;
+   private final String[] textOutputs;
+   private final String[] predictedTextOutputs;
    private Serializable tag;
 
    public BasicObservation(int inputCount, int outputCount) {
       inputs = new double[inputCount];
       outputs = new double[outputCount];
-      expectedOutputs = new double[outputCount];
+      predictedOutputs = new double[outputCount];
+
+      textInputs = new String[inputCount];
+      textOutputs = new String[outputCount];
+      predictedTextOutputs = new String[outputCount];
    }
 
    public void setInput(int index, double value) {
@@ -27,8 +34,10 @@ public class BasicObservation implements Observation, Serializable {
 
 
    @Override public void setPredictedOutput(int index, double value) {
-      expectedOutputs[index] = value;
+      predictedOutputs[index] = value;
    }
+
+   @Override public void setPredictedOutput(int index, String value) { predictedTextOutputs[index] = value; }
 
 
    public double getInput(int index) {
@@ -46,7 +55,7 @@ public class BasicObservation implements Observation, Serializable {
 
 
    @Override public double getPredictedOutput(int index) {
-      return expectedOutputs[index];
+      return predictedOutputs[index];
    }
 
 
@@ -67,4 +76,15 @@ public class BasicObservation implements Observation, Serializable {
    @Override public void setTag(Serializable obj) {
       this.tag = obj;
    }
+
+   @Override public void setOutput(int index, String value) {
+      textOutputs[index] = value;
+   }
+   @Override public void setInput(int index, String value) {
+      textInputs[index] = value;
+   }
+
+   @Override public String getTextInput(int index) { return textInputs[index]; }
+   @Override public String getTextOutput(int index) { return textOutputs[index]; }
+   @Override public String getPredictedTextOutput(int index) { return predictedTextOutputs[index]; }
 }

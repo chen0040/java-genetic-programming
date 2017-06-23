@@ -1,6 +1,7 @@
 package com.github.chen0040.gp.treegp.program;
 
 
+import com.github.chen0040.data.utils.StringUtils;
 import com.github.chen0040.gp.commons.Observation;
 
 import java.io.Serializable;
@@ -40,7 +41,13 @@ public class Terminal extends Primitive implements Serializable {
    @Override
    public String toString(){
       if(isReadOnly()){
-         return "" + getValue();
+         if(StringUtils.isEmpty(getTextValue())) {
+            return "" + getValue();
+         } else if(getValue() == 0) {
+            return getTextValue();
+         } else {
+            return getTextValue() + "(" + getValue() + ")";
+         }
       } else {
          return getName();
       }

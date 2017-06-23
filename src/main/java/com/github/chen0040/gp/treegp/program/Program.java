@@ -218,7 +218,7 @@ public class Program implements Serializable, Comparable<Program> {
 
       if(r < 0.3333) {
          return constantSet.any(randEngine);
-      } else if(r < 0.6666) {
+      } else if(r < 0.6666 && variableSet.size() > 0) {
          return variableSet.any(randEngine);
       } else {
          return anyOperator(randEngine);
